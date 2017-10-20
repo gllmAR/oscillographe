@@ -1,0 +1,5 @@
+*.app
+.DS_Store
+*.d
+*.o
+*.wav
