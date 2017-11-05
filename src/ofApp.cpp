@@ -10,47 +10,16 @@ void ofApp::setup(){
     
     
     sampleRate = 44100;
-    ofSetFrameRate(60);
+    ofSetFrameRate(0.1);
     
-    //soundStream.printDeviceList();
+
     soundSettingsGui.setup();
-    // soundSettingsGui.getBufferSize
-//    int bufferSize = 256;
-//    
-//    left.assign(buffer_size, 0.0);
-//    right.assign(buffer_size, 0.0);
+
+
     volHistory.assign(400, 0.0);
     
-
-    
     bufferCounter	= 0;
-//    drawCounter		= 0;
-//    smoothedVol     = 0.0;
-//    scaledVol		= 0.0;
-//    
-    
-//    ofSoundStreamSettings settings;
-//
-//#ifdef TARGET_LINUX_ARM
-//	auto devices = soundStream.getDeviceList();
-//    settings.setInDevice(devices[0]);
-//        
-//
-//#else
-//    auto devices = soundStream.getDeviceList();
-//    settings.setInDevice(devices[3]);
-//#endif
-//    
-//    settings.setInListener(this);
-//    settings.sampleRate = 44100;
-//    settings.numOutputChannels = 0;
-//    settings.numInputChannels = 2;
-//    settings.bufferSize = buffer_size;
-//    soundStream.setup(settings);
 
-    
-
-    
     
     // gui setup
     parameters.setName("parameters");
@@ -83,12 +52,15 @@ void ofApp::update(){
 // ici, application devrait passer soundSettingGui.buffer_size vers une classe pour dessiner oscillo
     
     
-    timestamp=ofGetElapsedTimeMillis();
+   // timestamp=ofGetElapsedTimeMillis();
     
+    vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
+    vbo_mesh.enableColors();
+    
+
     int vertex_buffer = vbo_mesh.getNumVertices();
 
-      for (unsigned int i = 0; i < (soundSettingsGui.buffer_size); i++)
-        
+    for (unsigned int i = 0; i < (soundSettingsGui.buffer_size); i++)
     {
         ofVec3f coord (soundSettingsGui.left[i]*app_size_w/2*shapeScale,
                        soundSettingsGui.right[i]*app_size_w/2*shapeScale,
@@ -98,36 +70,22 @@ void ofApp::update(){
         {
             vbo_mesh.removeVertex(i);
             vbo_mesh.setVertex(buffer_history-i, coord);
-            
-            
         } else {
             vbo_mesh.addVertex(coord);
         }
-    
-
-        
     }
     
     //au lieu de faire une lecture et une ecriture, mieux vaudrait utiliser un pointeur pour changer la derniere donnee
-    
-    for (unsigned int i =0; i< vertex_buffer; i++)
+    //
+
+//        for (unsigned int i =0; i< vertex_buffer; i++)
+    for (unsigned int i =0; i< vbo_mesh.getNumVertices(); i++)
     {
         ofVec3f coord = vbo_mesh.getVertex(i);
         coord[2] = mesh_width_z*i*0.1;
         vbo_mesh.setVertex(i, coord);
-
+   
     }
-    vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
-    
-//    if (vertex_buffer > 1024)
-//    {
-//        for (int i =0; i <512; i++)
-//        {
-//            vbo_mesh.removeVertex(i);
-//        }
-//    }
-    
-    
     
 }
 
@@ -153,9 +111,9 @@ void ofApp::draw(){
     ofPushMatrix();
 
     
-    ofSetColor(line_color);
+ 
     ofSetLineWidth(line_width);
-    
+
     vbo_mesh.draw();
    
     ofPopMatrix();
