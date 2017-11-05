@@ -10,10 +10,10 @@ void ofApp::setup(){
     
     
     sampleRate = 44100;
-    ofSetFrameRate(0.1);
+    ofSetFrameRate(60);
     
 
-    soundSettingsGui.setup();
+  
 
 
     volHistory.assign(400, 0.0);
@@ -32,6 +32,7 @@ void ofApp::setup(){
     parameters.add(cam_set_reset.set("cam_set_reset", 1));
     parameters.add(set_fullscreen.set("fullscreen", 0));
 
+    soundSettingsGui.setup();
     
     gui.setup(parameters);
     
@@ -113,6 +114,7 @@ void ofApp::draw(){
     
  
     ofSetLineWidth(line_width);
+    ofSetColor(line_color);
 
     vbo_mesh.draw();
    
