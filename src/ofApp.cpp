@@ -80,8 +80,8 @@ void ofApp::update(){
     
     
     
-    soundSettingsGui.update();
-
+// ici, application devrait passer soundSettingGui.buffer_size vers une classe pour dessiner oscillo
+    
     
     timestamp=ofGetElapsedTimeMillis();
     
@@ -89,7 +89,6 @@ void ofApp::update(){
 
       for (unsigned int i = 0; i < (soundSettingsGui.buffer_size); i++)
         
-//    for (unsigned int i = 0; i < (left.size()+right.size())/2; i++)
     {
         ofVec3f coord (soundSettingsGui.left[i]*app_size_w/2*shapeScale,
                        soundSettingsGui.right[i]*app_size_w/2*shapeScale,
@@ -159,17 +158,6 @@ void ofApp::draw(){
     
     vbo_mesh.draw();
    
-    
-//    ofBeginShape();
-//        for (unsigned int i = 0; i < right.size(); i++)
-//        {
-//            ofVertex(left[i]*app_size_w*shapeScale,
-//                     0 -right[i]*app_size_h*shapeScale,
-//                     i);
-//       
-//        }
-//    ofEndShape(false);
-
     ofPopMatrix();
     ofPopStyle();
     
@@ -180,7 +168,7 @@ void ofApp::draw(){
     if (gui_draw)
     {
         gui.draw();
-        soundSettingsGui.draw();
+       soundSettingsGui.draw();
     }
     if (screen_workaround_to_update)
     {
@@ -191,28 +179,7 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 
 
-//void ofApp::audioIn(ofSoundBuffer & input){
-//    
-//    float curVol = 0.0;
-//    
-//    // samples are "interleaved"
-//    int numCounted = 0;
-//    
-//    for (int i = 0; i < input.getNumFrames(); i++){
-//        left[i]		= input[i*2]*0.5;
-//        right[i]	= input[i*2+1]*0.5;
-//        
-//        numCounted+=2;
-//    }
-//    
-//    bufferCounter++;
-//    
-//}
-//--------------------------------------------------------------
 
-
-
-//--------------------------------------------------------------
 
 
 //--------------------------------------------------------------

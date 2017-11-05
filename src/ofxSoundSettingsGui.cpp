@@ -23,19 +23,15 @@ void ofxSoundSettingsGui::setup()
 #ifdef TARGET_LINUX_ARM
     auto devices = soundStream.getDeviceList();
     settings.setInDevice(devices[0]);
-    settings.setOutDevice(devices[0]);
 
     
 #else
     auto devices = soundStream.getDeviceList();
-    settings.setInDevice(devices[4]);
-    settings.setOutDevice(devices[3]);
+    settings.setInDevice(devices[2]);
 #endif
     
     settings.setInListener(this);
-    settings.setOutListener(this);
     settings.sampleRate = sample_rate;
-    settings.numOutputChannels = 2;
     settings.numInputChannels = 2;
     settings.bufferSize = buffer_size;
     soundStream.setup(settings);
@@ -43,8 +39,7 @@ void ofxSoundSettingsGui::setup()
     // ici un init vector de channels
         left.assign(buffer_size, 0.0);
         right.assign(buffer_size, 0.0);
-        out1.assign(buffer_size, 0.0);
-        out2.assign(buffer_size, 0.0);
+
 
 }
 
@@ -77,31 +72,7 @@ void ofxSoundSettingsGui::audioIn(ofSoundBuffer & input){
      
 }
 
-void ofxSoundSettingsGui::audioOut(ofSoundBuffer & output){
-    
-    // pas besoins d'out pour maintenant
-//    float curVol = 0.0;
-//    
-//    // au lieu d avoir left right mieux de travailler en un vecteur de channel input
-//    // samples are "interleaved"
-//    int numCounted = 0;
-//    
-//    for (int i = 0; i < output.getNumFrames(); i++){
-//        out1[i] = output[i*output.getNumChannels()    ] = left[i];
-//        out2[i] = output[i*output.getNumChannels()  +1] = right[i];
-//        
-//        numCounted+=2;
-//    }
-    
 
-    
-}
-
-void ofxSoundSettingsGui::update()
-{
-    // regarder si les param ont change et reinit le cas echeant
-    //ofSoundUpdate();
-}
 
 void ofxSoundSettingsGui::draw()
 {
@@ -109,5 +80,5 @@ void ofxSoundSettingsGui::draw()
     soundStreamGuiGroup.draw();
 }
 
-// soundSettingsGui.getBufferSize
+
 

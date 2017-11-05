@@ -27,7 +27,7 @@ public:
     void draw();
     void exit();
     void audioIn(ofSoundBuffer & input);
-    void audioOut(ofSoundBuffer & output);
+
     
     ofSoundStream soundStream;
 
@@ -39,8 +39,7 @@ public:
     vector <vector <float>> in;
     vector <float> left;
      vector <float> right;
-    vector <float> out1;
-    vector <float> out2;
+
     vector <float> volHistory;
     int 	bufferCounter;
 
