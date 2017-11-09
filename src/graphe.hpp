@@ -6,13 +6,13 @@
 //
 //
 
-#ifndef oscillo_hpp
-#define oscillo_hpp
+#ifndef graphe_hpp
+#define graphe_hpp
 
 #include "ofMain.h"
 #include "ofxGui.h"
 
-class Oscillo
+class Graphe
 {
 public:
     ofxGuiGroup gui;
@@ -36,4 +36,4 @@ public:
     
 };
 
-#endif /* oscillo_hpp */
+#endif /* graphe_hpp */

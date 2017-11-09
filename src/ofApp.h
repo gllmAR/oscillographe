@@ -4,11 +4,11 @@
 #include "ofxGui.h"
 #include "ofxOscParameterSync.h"
 #include "audio_in.hpp"
-#include "oscillo.hpp"
+#include "graphe.hpp"
 
 #define HOST "localhost"
-#define RHIZOME_INPORT 9000
-#define RHIZOME_OUTPORT 9001
+#define SYNC_INPORT 9000
+#define SYNC_OUTPORT 9001
 
 class ofApp : public ofBaseApp{
 
@@ -31,12 +31,12 @@ class ofApp : public ofBaseApp{
 		
     void exit();
     
-    void rhizome_init();
+    
     
     
 
     Audio_in audio_in;
-    Oscillo oscillo;
+    Graphe graphe;
     
     ofEasyCam cam;
 
@@ -47,7 +47,7 @@ class ofApp : public ofBaseApp{
     int 	drawCounter;
     
 
-    ofxOscSender sender;
+    ofxOscParameterSync sync;
     ofxPanel gui;
     ofxGuiGroup camera_gui;
     ofParameter<bool> cam_set_ortho = 0;

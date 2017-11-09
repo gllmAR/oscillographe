@@ -16,7 +16,7 @@
 		34D85073C3DADECF7F272558 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6964077FE4480BC841B2DE9B /* OscTypes.cpp */; };
 		41289FE3BC4C172A1130E694 /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ACE30EDE55AA3139268EDF6C /* ofxBaseGui.cpp */; };
 		46D83EBDA8A99CE5D2CA053F /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1BC3A7708B5E7B6381E56669 /* OscReceivedElements.cpp */; };
-		4DE318CB1FB4A8AB0094465B /* oscillo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DE318C91FB4A8AB0094465B /* oscillo.cpp */; };
+		4DE318CB1FB4A8AB0094465B /* graphe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4DE318C91FB4A8AB0094465B /* graphe.cpp */; };
 		5355E49988061C05B6018252 /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = FA07BBC23F0CBE754FCEFB8A /* ofxGuiGroup.cpp */; };
 		56288E3A7BC2FBE13FA54E68 /* ofxOscParameterSync.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9559C284AB96294063A5F131 /* ofxOscParameterSync.cpp */; };
 		66631DC37C95E6D35D9CAF66 /* OscOutboundPacketStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 88DECD2F11E089389A2C471F /* OscOutboundPacketStream.cpp */; };
@@ -80,8 +80,8 @@
 		4706140B53847F2B3AF20D58 /* ofxOsc.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; name = ofxOsc.h; path = ../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/src/ofxOsc.h; sourceTree = SOURCE_ROOT; };
 		492DB7EC2C9D529F7DAB2DED /* ofxOscBundle.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofxOscBundle.cpp; path = ../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/src/ofxOscBundle.cpp; sourceTree = SOURCE_ROOT; };
 		49B87D3EE9E082F9C767E678 /* ofxOscReceiver.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofxOscReceiver.cpp; path = ../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/src/ofxOscReceiver.cpp; sourceTree = SOURCE_ROOT; };
-		4DE318C91FB4A8AB0094465B /* oscillo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = oscillo.cpp; sourceTree = "<group>"; };
-		4DE318CA1FB4A8AB0094465B /* oscillo.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = oscillo.hpp; sourceTree = "<group>"; };
+		4DE318C91FB4A8AB0094465B /* graphe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graphe.cpp; sourceTree = "<group>"; };
+		4DE318CA1FB4A8AB0094465B /* graphe.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = graphe.hpp; sourceTree = "<group>"; };
 		4F57646EEAB62801CA184D5B /* audio_in.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = audio_in.cpp; path = src/audio_in.cpp; sourceTree = SOURCE_ROOT; };
 		54402C4EA317446C2C718A31 /* ofxOscSender.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofxOscSender.cpp; path = ../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/src/ofxOscSender.cpp; sourceTree = SOURCE_ROOT; };
 		5B3221EB4106E2B2309A47AF /* ofxButton.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; name = ofxButton.cpp; path = ../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxGui/src/ofxButton.cpp; sourceTree = SOURCE_ROOT; };
@@ -296,8 +296,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
-				4DE318C91FB4A8AB0094465B /* oscillo.cpp */,
-				4DE318CA1FB4A8AB0094465B /* oscillo.hpp */,
+				4DE318C91FB4A8AB0094465B /* graphe.cpp */,
+				4DE318CA1FB4A8AB0094465B /* graphe.hpp */,
 				4F57646EEAB62801CA184D5B /* audio_in.cpp */,
 				B4CD63FFD82910A62BE031E0 /* audio_in.hpp */,
 			);
@@ -446,7 +446,7 @@
 				5355E49988061C05B6018252 /* ofxGuiGroup.cpp in Sources */,
 				7B53CEC1116B586EA3311AFA /* ofxInputField.cpp in Sources */,
 				98D04C285DE21328A39B1F94 /* ofxLabel.cpp in Sources */,
-				4DE318CB1FB4A8AB0094465B /* oscillo.cpp in Sources */,
+				4DE318CB1FB4A8AB0094465B /* graphe.cpp in Sources */,
 				C7257A74966F1FD12B0F25B0 /* ofxPanel.cpp in Sources */,
 				0168CB9D366855B9699D2D2B /* ofxSlider.cpp in Sources */,
 				B3DC9E1129BAA86EE7273A1D /* ofxSliderGroup.cpp in Sources */,

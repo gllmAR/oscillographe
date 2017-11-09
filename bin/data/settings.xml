@@ -18,4 +18,11 @@
 		<color>255, 249, 0, 255</color>
 		<mesh_width_z>-0.285714</mesh_width_z>
 	</oscillo>
+	<graphe>
+		<buffer_history>2048</buffer_history>
+		<shapeScale>0.85</shapeScale>
+		<line_width>1</line_width>
+		<color>255, 245, 16, 255</color>
+		<mesh_width_z>-0.714286</mesh_width_z>
+	</graphe>
 </oscillo>

@@ -1,27 +1,27 @@
 //
-//  oscillo.cpp
-//  oscillographe
+//  Graphe.cpp
+//  Graphegraphe
 //
 //  Created by Guillaume Arseneault on 17-11-09.
 //
 //
 
-#include "oscillo.hpp"
+#include "graphe.hpp"
 
-void Oscillo::setup()
+void Graphe::setup()
 {
     gui.setup();
-    gui.setName("oscillo");
+    gui.setName("graphe");
     gui.add(buffer_history.set("buffer_history", 2048,buffer_size+1,4096));
     gui.add(shapeScale.set("shapeScale",.85,0,2));
     gui.add(line_width.set("line_width",1, 0.1,10));
-    gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
     gui.add(mesh_width_z.set("mesh_width_z", 1, -2, 2));
+    gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
 }
 
-void Oscillo::update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y)
+void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y)
 {
-    // ici, application devrait passer soundSettingGui.buffer_size vers une classe pour dessiner oscillo
+    // ici, application devrait passer soundSettingGui.buffer_size vers une classe pour dessiner Graphe
     
     
     // timestamp=ofGetElapsedTimeMillis();
@@ -60,7 +60,7 @@ void Oscillo::update(int input_buffer_size, vector <float> input_buffer_x, vecto
     }
 }
 
-void Oscillo::draw()
+void Graphe::draw()
 {
     ofNoFill();
     
@@ -79,7 +79,7 @@ void Oscillo::draw()
     ofPopStyle();
 }
 
-void Oscillo::set_size(int w, int h)
+void Graphe::set_size(int w, int h)
 {
     app_size_w = w;
     app_size_h = h;

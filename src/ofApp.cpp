@@ -4,7 +4,7 @@
 void ofApp::setup(){
 
     ofSetVerticalSync(true);
-
+    
   //  cam.setDistance(buffer_history*0.01);
     ofBackground(0, 0, 0);
     
@@ -20,16 +20,17 @@ void ofApp::setup(){
     camera_gui.add(set_fullscreen.set("fullscreen", 0));
 
     audio_in.setup();
-    oscillo.setup();
+    graphe.setup();
     
     gui.setup();
     gui.setName("oscillo");
     gui.add(&camera_gui);
     gui.add(&audio_in.gui);
-    gui.add(&oscillo.gui);
+    gui.add(&graphe.gui);
     
     gui.loadFromFile("settings.xml");
-
+    sync.setup((ofParameterGroup&)gui.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
+    
 }
 
 
@@ -38,8 +39,8 @@ void ofApp::setup(){
 void ofApp::update(){
     
     
-    oscillo.update(audio_in.buffer_size, audio_in.left, audio_in.right);
-
+    graphe.update(audio_in.buffer_size, audio_in.left, audio_in.right);
+    sync.update();
     
 }
 
@@ -59,17 +60,13 @@ void ofApp::draw(){
  
     cam.begin();
     
-    oscillo.draw();
+    graphe.draw();
 
     cam.end();
     
     ofDisableDepthTest();
     
-    if (gui_draw)
-    {
-        gui.draw();
-
-    }
+    if (gui_draw){gui.draw();}
     if (screen_workaround_to_update)
     {
         windowResized(ofGetWidth(), ofGetHeight());
@@ -84,13 +81,9 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-    if( key == 'g' ){
-        gui_draw=!gui_draw;
-    }
+    if( key == 'g' ){gui_draw=!gui_draw;}
     
-    if (key == 'f'){
-        set_fullscreen=!set_fullscreen;
-    }
+    if (key == 'f'){set_fullscreen=!set_fullscreen;}
     
 
 }
@@ -136,7 +129,7 @@ void ofApp::windowResized(int w, int h){
     app_size_w = w;
     app_size_h = h;
     cout << "app size = " << w << " by " << h <<endl;
-    oscillo.set_size(w,h);
+    graphe.set_size(w,h);
 }
 
 //--------------------------------------------------------------
@@ -156,12 +149,4 @@ void ofApp::exit(){
     
 }
 
-void ofApp::rhizome_init()
-{
-    sender.setup(HOST, RHIZOME_INPORT);
-    ofxOscMessage m;
-    m.setAddress("/sys/subscribe");
-    m.addIntArg(RHIZOME_OUTPORT);
-    m.addStringArg("/");
-    sender.sendMessage(m, false);
-}
+
