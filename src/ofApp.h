@@ -3,7 +3,8 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOscParameterSync.h"
-#include "ofxSoundSettingsGui.hpp"
+#include "audio_in.hpp"
+#include "oscillo.hpp"
 
 #define HOST "localhost"
 #define RHIZOME_INPORT 9000
@@ -33,24 +34,15 @@ class ofApp : public ofBaseApp{
     void rhizome_init();
     
     
-  // void audioIn(ofSoundBuffer & input);
-   // ofSoundStream soundStream;
-    ofxSoundSettingsGui soundSettingsGui;
-    double sampleRate;
+
+    Audio_in audio_in;
+    Oscillo oscillo;
     
     ofEasyCam cam;
-    ofParameter<bool> cam_set_ortho = 0;
-    ofParameter<bool> cam_set_reset = 0;
-    ofParameter<float> mesh_width_z = 0;
 
+    bool set_fullscreen_old = 0;
     
-//    vector <float> left;
-//    vector <float> right;
-    vector <float> volHistory;
-    
-    vector <float> recLeft;
-    vector <float> recRight;
-    
+
     int 	bufferCounter;
     int 	drawCounter;
     
@@ -58,22 +50,17 @@ class ofApp : public ofBaseApp{
     ofxOscSender sender;
     ofxPanel gui;
     ofParameterGroup parameters;
-    ofParameter<ofColor> line_color;
-    ofParameter<float> shapeScale =.5;
-    ofParameter<float> line_width = 1;
+    ofParameter<bool> cam_set_ortho = 0;
+    ofParameter<bool> cam_set_reset = 0;
+    ofParameter<float> cam_set_distance = 0;
     ofParameter<bool> set_fullscreen = 0;
-    bool set_fullscreen_old = 0;
-        ofParameter<int> buffer_history = 1024;
-    ofParameter<int> buffer_size = 256;
     
     bool gui_draw = 0;
     int app_size_w=100;
     int app_size_h=100;
     
-    ofVboMesh vbo_mesh;
+
     
-    double timestamp;
-    double vertex_remover;
     
 
     bool screen_workaround_to_update = 1;

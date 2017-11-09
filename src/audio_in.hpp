@@ -10,15 +10,15 @@
 
 
 
-#ifndef ofxSoundSettingsGui_hpp
-#define ofxSoundSettingsGui_hpp
+#ifndef audio_in_hpp
+#define audio_in_hpp
 
 #include "ofMain.h"
 #include "ofxGui.h"
 
 
 
-class ofxSoundSettingsGui
+class Audio_in
 {
 public:
     void setup();
@@ -35,10 +35,11 @@ public:
     ofxGuiGroup soundStreamGuiGroup;
     ofParameter <int> buffer_size;
     ofParameter <int> sample_rate;
-    
-    vector <vector <float>> in;
+
+// not ready for prime time
+//    vector <vector <float>> channel;
     vector <float> left;
-     vector <float> right;
+    vector <float> right;
 
     vector <float> volHistory;
     int 	bufferCounter;
