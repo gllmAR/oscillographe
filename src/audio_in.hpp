@@ -23,21 +23,27 @@ class Audio_in
 public:
     void setup();
     void init();
+    void init(int selection);
     void update();
-    void draw();
+
     void exit();
     void audioIn(ofSoundBuffer & input);
 
+    void audio_select_change(int &audio_select);
     
     ofSoundStream soundStream;
+    ofSoundStreamSettings settings;
+    
+    vector <ofSoundDevice> audio_devices;
 
     
-    ofxGuiGroup soundStreamGuiGroup;
+    ofxGuiGroup gui;
     ofParameter <int> buffer_size;
     ofParameter <int> sample_rate;
+    ofParameter <int> audio_select;
+    ofxLabel audio_label;
 
-// not ready for prime time
-//    vector <vector <float>> channel;
+
     vector <float> left;
     vector <float> right;
 

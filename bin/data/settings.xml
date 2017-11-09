@@ -1,23 +1,21 @@
 <?xml version="1.0"?>
-<parameters>
-	<shapeScale>1</shapeScale>
-	<line_width>0.199</line_width>
-	<color>200, 204, 28, 255</color>
-	<buffer_history>2022</buffer_history>
-	<cam_set_ortho>0</cam_set_ortho>
-	<cam_set_reset>0</cam_set_reset>
-	<fullscreen>1</fullscreen>
-	<mesh_width_z>-0.0915</mesh_width_z>
-	<sound_settings>
+<oscillo>
+	<camera>
+		<cam_set_ortho>0</cam_set_ortho>
+		<cam_set_reset>0</cam_set_reset>
+		<cam_set_distance>1</cam_set_distance>
+		<fullscreen>1</fullscreen>
+	</camera>
+	<sound_setup>
+		<audio_select>3</audio_select>
 		<buffer_size>64</buffer_size>
 		<sample_rate>44100</sample_rate>
-	</sound_settings>
+	</sound_setup>
 	<oscillo>
-		<buffer_history>1024</buffer_history>
-		<shapeScale>0.387755</shapeScale>
+		<buffer_history>2048</buffer_history>
+		<shapeScale>0.85</shapeScale>
 		<line_width>1</line_width>
-		<color>253, 255, 39, 255</color>
-		<mesh_width_z>-0.346939</mesh_width_z>
+		<color>255, 249, 0, 255</color>
+		<mesh_width_z>-0.285714</mesh_width_z>
 	</oscillo>
-	<cam_set_distance>1</cam_set_distance>
-</parameters>
+</oscillo>

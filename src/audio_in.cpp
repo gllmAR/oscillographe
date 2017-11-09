@@ -11,48 +11,65 @@
 
 void Audio_in::setup()
 {
-    soundStreamGuiGroup.setup();
-    soundStreamGuiGroup.setName("sound_settings");
-    soundStreamGuiGroup.add(buffer_size.set("buffer_size",64,64,4096));
-    soundStreamGuiGroup.add(sample_rate.set("sample_rate",44100,8000,192000));
     
+    gui.setup();
+    gui.setName("sound_setup");
+    gui.add(audio_select.set("audio_select",0,0,1));
+    gui.add(audio_label.setup("", ""));
+    gui.add(buffer_size.set("buffer_size",64,64,4096));
+    gui.add(sample_rate.set("sample_rate",44100,8000,192000));
     
     init();
-
+    audio_select.addListener(this, &Audio_in::audio_select_change);
 
 }
 
-
 void Audio_in::init()
 {
+    auto devices = soundStream.getDeviceList();
     soundStream.printDeviceList();
-    ofSoundStreamSettings settings;
-    // mettre tout ce qui est de l ordre des settings dans ce segments et l appeler a partir du setup
-    // lorsque que les settings on change
+    audio_select.setMax(devices.size());
+    
+    left.assign(buffer_size, 0.0);
+    right.assign(buffer_size, 0.0);
+}
+
+void Audio_in::init(int selection)
+{
     
 
-#ifdef TARGET_LINUX_ARM
-    auto devices = soundStream.getDeviceList();
-    settings.setInDevice(devices[0]);
+auto devices = soundStream.getDeviceList();
+//settings.setInDevice(devices[selection]);
+//#ifdef TARGET_LINUX_ARM
+//
+//    settings.setInDevice(devices[0]);
+//    
+//    
+//#else
+//
+//#endif
     
-#else
-    auto devices = soundStream.getDeviceList();
-    settings.setInDevice(devices[3]);
-#endif
     
+    //cout<< devices[0].name << endl;
+    audio_select.setMax(devices.size());
+    
+    if (!devices[selection].inputChannels)
+    {
+        cout<<"error, no input on device"<<endl;
+        audio_label = "[X] " + devices[selection].name;
+        
+    } else {
+    audio_label = devices[selection].name;
     settings.setInListener(this);
+    settings.setInDevice(devices[selection]);
     settings.sampleRate = sample_rate;
     settings.numInputChannels = 2;
     settings.bufferSize = buffer_size;
     soundStream.setup(settings);
-    
-    // ici un init vector de channels(
-    
-    
-    
+        
     left.assign(buffer_size, 0.0);
     right.assign(buffer_size, 0.0);
-
+    }
     
 }
 
@@ -64,26 +81,31 @@ void Audio_in::audioIn(ofSoundBuffer & input){
     
     // au lieu d avoir left right mieux de travailler en un vecteur de channel input
     // samples are "interleaved"
-   // int numCounted = 0;
     
     for (int i = 0; i < input.getNumFrames(); i++)
     {
         left[i]	 = input[i*2];
         right[i] = input[i*2+1];
-        //numCounted+=2;
     }
     
     bufferCounter++;
      
 }
 
-
-
-void Audio_in::draw()
+void Audio_in::exit()
 {
-    //probablement mettre un if drawGui
-    soundStreamGuiGroup.draw();
+    
+    left.assign(buffer_size, 0.0);
+    right.assign(buffer_size, 0.0);
+
 }
+
+void Audio_in::audio_select_change(int &audio_select)
+{
+    init(audio_select);
+}
+
+
 
 
 

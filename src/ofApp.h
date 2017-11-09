@@ -49,7 +49,7 @@ class ofApp : public ofBaseApp{
 
     ofxOscSender sender;
     ofxPanel gui;
-    ofParameterGroup parameters;
+    ofxGuiGroup camera_gui;
     ofParameter<bool> cam_set_ortho = 0;
     ofParameter<bool> cam_set_reset = 0;
     ofParameter<float> cam_set_distance = 0;

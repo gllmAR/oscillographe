@@ -12,18 +12,20 @@ void ofApp::setup(){
     
     
     // gui setup
-    parameters.setName("parameters");
+    camera_gui.setup("camera");
     
-    parameters.add(cam_set_ortho.set("cam_set_ortho", 1));
-    parameters.add(cam_set_reset.set("cam_set_reset", 1));
-    parameters.add(cam_set_distance.set("cam_set_distance", 1, -1, 2));
-    parameters.add(set_fullscreen.set("fullscreen", 0));
+    camera_gui.add(cam_set_ortho.set("cam_set_ortho", 1));
+    camera_gui.add(cam_set_reset.set("cam_set_reset", 1));
+    camera_gui.add(cam_set_distance.set("cam_set_distance", 1, -1, 2));
+    camera_gui.add(set_fullscreen.set("fullscreen", 0));
 
     audio_in.setup();
     oscillo.setup();
     
-    gui.setup(parameters);
-    gui.add(&audio_in.soundStreamGuiGroup);
+    gui.setup();
+    gui.setName("oscillo");
+    gui.add(&camera_gui);
+    gui.add(&audio_in.gui);
     gui.add(&oscillo.gui);
     
     gui.loadFromFile("settings.xml");
