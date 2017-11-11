@@ -13,9 +13,11 @@ void Audio_in::setup()
 {
     
     gui.setup();
-    gui.setName("sound_setup");
+    gui.setName("audio_in");
     gui.add(audio_select.set("audio_select",0,0,1));
     gui.add(audio_label.setup("", ""));
+    gui.add(volume.set("volume",1,0,2));
+    gui.add(pan.set("pan",0,-1,1));
     gui.add(buffer_size.set("buffer_size",64,64,4096));
     gui.add(sample_rate.set("sample_rate",44100,8000,192000));
     
@@ -30,8 +32,8 @@ void Audio_in::init()
     soundStream.printDeviceList();
     audio_select.setMax(devices.size());
     
-    left.assign(buffer_size, 0.0);
-    right.assign(buffer_size, 0.0);
+    buffer_1.assign(buffer_size, 0.0);
+    buffer_2.assign(buffer_size, 0.0);
 }
 
 void Audio_in::init(int selection)
@@ -39,18 +41,8 @@ void Audio_in::init(int selection)
     
 
 auto devices = soundStream.getDeviceList();
-//settings.setInDevice(devices[selection]);
-//#ifdef TARGET_LINUX_ARM
-//
-//    settings.setInDevice(devices[0]);
-//    
-//    
-//#else
-//
-//#endif
-    
-    
-    //cout<< devices[0].name << endl;
+
+
     audio_select.setMax(devices.size());
     
     if (!devices[selection].inputChannels)
@@ -67,25 +59,26 @@ auto devices = soundStream.getDeviceList();
     settings.bufferSize = buffer_size;
     soundStream.setup(settings);
         
-    left.assign(buffer_size, 0.0);
-    right.assign(buffer_size, 0.0);
+    buffer_1.assign(buffer_size, 0.0);
+    buffer_2.assign(buffer_size, 0.0);
     }
     
 }
 
-// voir si channel out ce comporte de la meme facon
 
 void Audio_in::audioIn(ofSoundBuffer & input){
     
-   // float curVol = 0.0;
     
     // au lieu d avoir left right mieux de travailler en un vecteur de channel input
     // samples are "interleaved"
+    // process pan
+    float pan_1 = 1-(pan*0.5 +0.5);
+    float pan_2 = pan*0.5 +0.5;
     
     for (int i = 0; i < input.getNumFrames(); i++)
     {
-        left[i]	 = input[i*2];
-        right[i] = input[i*2+1];
+        buffer_1[i]	= input[i*2  ] * volume * pan_1 ;
+        buffer_2[i] = input[i*2+1] * volume * pan_2 ;
     }
     
     bufferCounter++;
@@ -95,8 +88,8 @@ void Audio_in::audioIn(ofSoundBuffer & input){
 void Audio_in::exit()
 {
     
-    left.assign(buffer_size, 0.0);
-    right.assign(buffer_size, 0.0);
+    buffer_1.assign(buffer_size, 0.0);
+    buffer_2.assign(buffer_size, 0.0);
 
 }
 

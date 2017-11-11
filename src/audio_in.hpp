@@ -38,14 +38,16 @@ public:
 
     
     ofxGuiGroup gui;
+    ofParameter <float> volume;
+    ofParameter <float> pan;
     ofParameter <int> buffer_size;
     ofParameter <int> sample_rate;
     ofParameter <int> audio_select;
     ofxLabel audio_label;
 
 
-    vector <float> left;
-    vector <float> right;
+    vector <float> buffer_1;
+    vector <float> buffer_2;
 
     vector <float> volHistory;
     int 	bufferCounter;

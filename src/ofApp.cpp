@@ -39,7 +39,7 @@ void ofApp::setup(){
 void ofApp::update(){
     
     
-    graphe.update(audio_in.buffer_size, audio_in.left, audio_in.right);
+    graphe.update(audio_in.buffer_size, audio_in.buffer_1, audio_in.buffer_2);
     sync.update();
     
 }

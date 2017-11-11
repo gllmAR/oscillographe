@@ -25,4 +25,9 @@
 		<color>255, 245, 16, 255</color>
 		<mesh_width_z>-0.714286</mesh_width_z>
 	</graphe>
+	<audio_in>
+		<audio_select>3</audio_select>
+		<buffer_size>64</buffer_size>
+		<sample_rate>44100</sample_rate>
+	</audio_in>
 </oscillo>
