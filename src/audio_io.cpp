@@ -1,11 +1,11 @@
 //
-//  ofxSoundSettingsGui.
+//  audio_in.cpp
 //  oscillograph
 //
 //  Created by Guillaume Arseneault on 17-08-07.
 //
 //
-// todo: clean
+// todo: -> audio in -> audio io
 // 
 #include "audio_in.hpp"
 

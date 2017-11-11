@@ -1,5 +1,5 @@
 //
-//  SoundStreamSettings.hpp
+//  audio_in.hpp
 //  oscillograph
 //
 //  Created by Guillaume Arseneault on 17-08-07.
