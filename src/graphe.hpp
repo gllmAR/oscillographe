@@ -32,7 +32,7 @@ public:
     void set_size(int w, int h);
     
     int app_size_w = 100000;
-     int app_size_h = 100000;
+    int app_size_h = 100000;
     
 };
 

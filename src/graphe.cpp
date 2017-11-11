@@ -51,6 +51,7 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
     //
     
     //        for (unsigned int i =0; i< vertex_buffer; i++)
+    
     for (unsigned int i =0; i< vbo_mesh.getNumVertices(); i++)
     {
         ofVec3f coord = vbo_mesh.getVertex(i);
