@@ -3,7 +3,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOscParameterSync.h"
-#include "audio_in.hpp"
+#include "audio_io.hpp"
 #include "graphe.hpp"
 
 #define HOST "localhost"
@@ -35,7 +35,7 @@ class ofApp : public ofBaseApp{
     
     
 
-    Audio_in audio_in;
+    Audio_io audio_io;
     Graphe graphe;
     
     ofEasyCam cam;

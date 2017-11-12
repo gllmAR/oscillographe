@@ -1,2 +1,3 @@
+ofxBasicSoundPlayer
 ofxGui
 ofxOsc

@@ -19,13 +19,13 @@ void ofApp::setup(){
     camera_gui.add(cam_set_distance.set("cam_set_distance", 1, -1, 2));
     camera_gui.add(set_fullscreen.set("fullscreen", 0));
 
-    audio_in.setup();
+    audio_io.setup();
     graphe.setup();
     
     gui.setup();
     gui.setName("oscillo");
     gui.add(&camera_gui);
-    gui.add(&audio_in.gui);
+    gui.add(&audio_io.gui);
     gui.add(&graphe.gui);
     
     gui.loadFromFile("settings.xml");
@@ -39,7 +39,7 @@ void ofApp::setup(){
 void ofApp::update(){
     
     
-    graphe.update(audio_in.buffer_size, audio_in.buffer_1, audio_in.buffer_2);
+    graphe.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
     sync.update();
     
 }

@@ -6,96 +6,270 @@
 //
 //
 // todo: -> audio in -> audio io
-// 
-#include "audio_in.hpp"
+// tester dans le cas ou le sound stream est sur la même carte si ça enleve les glitch audio
+#include "audio_io.hpp"
 
-void Audio_in::setup()
+void Audio_io::setup()
 {
     
     gui.setup();
-    gui.setName("audio_in");
-    gui.add(audio_select.set("audio_select",0,0,1));
-    gui.add(audio_label.setup("", ""));
-    gui.add(volume.set("volume",1,0,2));
-    gui.add(pan.set("pan",0,-1,1));
+    gui.setName("audio_io");
     gui.add(buffer_size.set("buffer_size",64,64,4096));
     gui.add(sample_rate.set("sample_rate",44100,8000,192000));
     
+    gui.add(input_active.set("input_active", 1));
+    gui.add(input_select.set("input_select",0,0,1));
+    gui.add(input_label.setup("", ""));
+    gui.add(input_volume.set("input_volume",1,0,2));
+    gui.add(input_pan.set("input_pan",0,-1,1));
+
+
+    gui.add(output_active.set("output_active", 1));
+    gui.add(output_select.set("output_select",0,0,1));
+    gui.add(output_label.setup("", ""));
+    gui.add(output_volume.set("output_volume",1,0,2));
+    gui.add(output_pan.set("output_pan",0,-1,1));
+
+    gui.add(player_active.set("player_active", 1));
+    gui.add(player_speed.set("player_speed",1,-2,2));
+    gui.add(player_volume.set("player_volume",1,0,2));
+    gui.add(player_pan.set("player_pan",0,-1,1));
+
+    
     init();
-    audio_select.addListener(this, &Audio_in::audio_select_change);
+    
+    player.load("sounds/lasers.wav");
+    player_1.load("sounds/lasers_1.wav");
+    player_2.load("sounds/lasers_2.wav");
+    player.play();
+    player_1.play();
+    player_2.play();
+    player.setLoop(1);
+    player_1.setLoop(1);
+    player_2.setLoop(1);
+    player_1.setPan(-1);
+    player_2.setPan(1);
+
+    
+    input_select.addListener(this, &Audio_io::input_select_change);
+    input_active.addListener(this, &Audio_io::input_active_change);
+    
+    output_select.addListener(this, &Audio_io::output_select_change);
+    output_active.addListener(this, &Audio_io::output_active_change);
+    
+    player_speed.addListener(this, &Audio_io::player_speed_change);
+    player_volume.addListener(this, &Audio_io::player_volume_change);
+    player_pan.addListener(this, &Audio_io::player_pan_change);
 
 }
 
-void Audio_in::init()
+
+
+void Audio_io::init()
 {
-    auto devices = soundStream.getDeviceList();
-    soundStream.printDeviceList();
-    audio_select.setMax(devices.size());
+    auto input_devices = input_stream.getDeviceList();
     
-    buffer_1.assign(buffer_size, 0.0);
-    buffer_2.assign(buffer_size, 0.0);
+    //input_stream.printDeviceList();
+    input_select.setMax(input_devices.size());
+    input_buffer_1.assign(buffer_size, 0.0);
+    input_buffer_2.assign(buffer_size, 0.0);
+
+    
+    auto output_devices = output_stream.getDeviceList();
+    
+    //output_stream.printDeviceList();
+    output_select.setMax(output_devices.size());
+    output_buffer_1.assign(buffer_size, 0.0);
+    output_buffer_2.assign(buffer_size, 0.0);
+    
+  
+    player_buffer.allocate(buffer_size, 2);
+     player_buffer_1.allocate(buffer_size, 2);
+     player_buffer_2.allocate(buffer_size, 2);
+
 }
 
-void Audio_in::init(int selection)
+void Audio_io::exit()
 {
-    
-
-auto devices = soundStream.getDeviceList();
-
-
-    audio_select.setMax(devices.size());
-    
-    if (!devices[selection].inputChannels)
-    {
-        cout<<"error, no input on device"<<endl;
-        audio_label = "[X] " + devices[selection].name;
-        
-    } else {
-    audio_label = devices[selection].name;
-    settings.setInListener(this);
-    settings.setInDevice(devices[selection]);
-    settings.sampleRate = sample_rate;
-    settings.numInputChannels = 2;
-    settings.bufferSize = buffer_size;
-    soundStream.setup(settings);
-        
-    buffer_1.assign(buffer_size, 0.0);
-    buffer_2.assign(buffer_size, 0.0);
-    }
-    
+    input_buffer_1.assign(buffer_size, 0.0);
+    input_buffer_2.assign(buffer_size, 0.0);
 }
 
 
-void Audio_in::audioIn(ofSoundBuffer & input){
-    
-    
-    // au lieu d avoir left right mieux de travailler en un vecteur de channel input
-    // samples are "interleaved"
+void Audio_io::audioIn(ofSoundBuffer & input)
+{
     // process pan
-    float pan_1 = 1-(pan*0.5 +0.5);
-    float pan_2 = pan*0.5 +0.5;
+    float pan_1 = 1-(input_pan*0.5 +0.5);
+    float pan_2 = input_pan*0.5 +0.5;
     
     for (int i = 0; i < input.getNumFrames(); i++)
     {
-        buffer_1[i]	= input[i*2  ] * volume * pan_1 ;
-        buffer_2[i] = input[i*2+1] * volume * pan_2 ;
+        input_buffer_1[i] = input[i*2  ] * input_volume * pan_1 ;
+        input_buffer_2[i] = input[i*2+1] * input_volume * pan_2 ;
     }
-    
-    bufferCounter++;
-     
 }
 
-void Audio_in::exit()
-{
-    
-    buffer_1.assign(buffer_size, 0.0);
-    buffer_2.assign(buffer_size, 0.0);
 
+
+void Audio_io::input_init(int selection)
+{
+    auto devices = input_stream.getDeviceList();
+    input_select.setMax(devices.size());
+    if (!devices[selection].inputChannels)
+    {
+        cout<<"error, no input on device"<<endl;
+        input_label = "[X] " + devices[selection].name;
+    } else {
+        input_label = devices[selection].name;
+        input_settings.setInListener(this);
+        input_settings.setInDevice(devices[selection]);
+        input_settings.sampleRate = sample_rate;
+        input_settings.numInputChannels = 2;
+        input_settings.bufferSize = buffer_size;
+        input_stream.setup(input_settings);
+        input_buffer_1.assign(buffer_size, 0.0);
+        input_buffer_2.assign(buffer_size, 0.0);
+    }
 }
 
-void Audio_in::audio_select_change(int &audio_select)
+
+void Audio_io::input_select_change(int &input_select)
 {
-    init(audio_select);
+    input_init(input_select);
+}
+
+void Audio_io::input_active_change(bool &input_active)
+{
+    if (input_active)
+    {
+        input_stream.start();
+    }
+    else
+    {
+        input_stream.stop();
+        input_buffer_1.assign(buffer_size, 0.0);
+        input_buffer_2.assign(buffer_size, 0.0);
+    }
+}
+
+
+
+void Audio_io::audioOut(ofSoundBuffer& output)
+{
+    // process pan
+    float pan_1 = 1-(output_pan*0.5 +0.5);
+    float pan_2 = output_pan*0.5 +0.5;
+    
+    //player_2.audioOut(player_buffer);
+    
+    //player_1.audioOut(player_buffer);
+    //player_2.audioOut(output);
+    //output = player_buffer;
+    player_1.audioOut(output);
+    player_buffer_1 = output;
+    
+    player_2.audioOut(output);
+    player_buffer_2 = output;
+    
+    
+    player_buffer = player.getCurrentBuffer();
+    
+    //player_buffer.addTo(output);
+        
+
+    
+        for (int i = 0; i < output.getNumFrames(); i++)
+    
+        {
+            output_buffer_1[i] = output[i*2  ] =
+            (input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1;
+    
+            output_buffer_2[i] = output[i*2+1] = 
+            (input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume * pan_2;
+        }
+
+    
+//    for (int i = 0; i < output.getNumFrames(); i++)
+//    
+//    {
+//        output[i*2  ] = output_buffer_1[i] =
+//        (input_buffer_1[i] +  player_buffer[i*2  ]) * output_volume * pan_1;
+//        
+//        output[i*2+1] = output_buffer_2[i] =
+//        (input_buffer_2[i] +  player_buffer[i*2+1]) * output_volume * pan_2;
+//    }
+}
+
+
+
+void Audio_io::output_init(int selection)
+{
+    auto devices = output_stream.getDeviceList();
+    output_select.setMax(devices.size());
+    if (!devices[selection].outputChannels)
+    {
+        cout<<"error, no output on device"<<endl;
+        output_label = "[X] " + devices[selection].name;
+    } else {
+        output_label = devices[selection].name;
+        output_settings.setInListener(this);
+        output_settings.setInDevice(devices[selection]);
+        output_settings.sampleRate = sample_rate;
+        output_settings.numOutputChannels = 2;
+        output_settings.bufferSize = buffer_size;
+        output_settings.setOutListener(this);
+        output_stream.setup(output_settings);
+        output_buffer_1.assign(buffer_size, 0.0);
+        output_buffer_2.assign(buffer_size, 0.0);
+
+
+    }
+}
+
+
+void Audio_io::output_select_change(int &output_select)
+{
+    output_init(output_select);
+}
+
+void Audio_io::output_active_change(bool &output_active)
+{
+    if (output_active)
+    {
+        output_stream.start();
+    }
+    else
+    {
+        output_stream.stop();
+        output_buffer_1.assign(buffer_size, 0.0);
+        output_buffer_2.assign(buffer_size, 0.0);
+    }
+}
+
+
+
+
+
+void Audio_io::player_speed_change(float &f)
+{
+    player.setSpeed(player_speed);
+    player_1.setSpeed(player_speed);
+    player_2.setSpeed(player_speed);
+}
+
+void Audio_io::player_pan_change(float &f)
+{
+    player.setPan(player_pan);
+    player_1.setPan(1-player_pan);
+    player_2.setPan(player_pan);
+}
+
+
+void Audio_io::player_volume_change(float &f)
+{
+    player.setVolume(player_volume);
+      player_1.setVolume(player_volume);
+      player_2.setVolume(player_volume);
 }
 
 

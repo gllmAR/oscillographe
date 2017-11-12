@@ -30,4 +30,16 @@
 		<buffer_size>64</buffer_size>
 		<sample_rate>44100</sample_rate>
 	</audio_in>
+	<audio_io>
+		<input_select>3</input_select>
+		<input_volume>1</input_volume>
+		<input_pan>0</input_pan>
+		<buffer_size>64</buffer_size>
+		<sample_rate>44100</sample_rate>
+		<input_active>1</input_active>
+		<output_active>1</output_active>
+		<output_select>1</output_select>
+		<output_volume>1</output_volume>
+		<output_pan>0</output_pan>
+	</audio_io>
 </oscillo>

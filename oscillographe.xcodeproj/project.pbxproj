@@ -1139,6 +1139,322 @@
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
+			<key>DB06718059E2AC9F13BB4C0D</key>
+			<dict>
+				<key>fileRef</key>
+				<string>3D89A66A4AD928F92CC34310</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>3D89A66A4AD928F92CC34310</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>file</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>%</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include/apple/%</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>9705DEEEBE290DEB11805D3F</key>
+			<dict>
+				<key>fileRef</key>
+				<string>0007688F3848782C3B58A697</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>0007688F3848782C3B58A697</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>audiodecodercoreaudio.cpp</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/src/audiodecodercoreaudio.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>6F67FF0E8835EC8E8F80F81F</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>3FAFCE24820CE3AAC1DD2CAD</string>
+					<string>0007688F3848782C3B58A697</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>src</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>5B42515FA57423853694DF2B</key>
+			<dict>
+				<key>fileRef</key>
+				<string>3FAFCE24820CE3AAC1DD2CAD</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>3FAFCE24820CE3AAC1DD2CAD</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>audiodecoderbase.cpp</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/src/audiodecoderbase.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>5BFE0C59A583ABBDC2C1A4F8</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>audiodecodercoreaudio.h</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include/audiodecodercoreaudio.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>F3651CE997BC860E584A4CE5</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>audiodecoderbase.h</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include/audiodecoderbase.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>89E3A33EE0C00C7B83A8B3A2</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>audiodecoder.h</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include/audiodecoder.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>3C5EC1D9873CB4022AA12070</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>CAStreamBasicDescription.h</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include/apple/CAStreamBasicDescription.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>30111C490356BC17C8084286</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>61D0126A7D8C02EA58B2E274</string>
+					<string>3C5EC1D9873CB4022AA12070</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>apple</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>125168EE6DBE652F327A08F2</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>30111C490356BC17C8084286</string>
+					<string>89E3A33EE0C00C7B83A8B3A2</string>
+					<string>F3651CE997BC860E584A4CE5</string>
+					<string>5BFE0C59A583ABBDC2C1A4F8</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>include</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>7F481D9B62E7FAA4AFFF86BF</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>125168EE6DBE652F327A08F2</string>
+					<string>6F67FF0E8835EC8E8F80F81F</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>libaudiodecoder</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>C766AF4FA3357C518FD31DE5</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>7F481D9B62E7FAA4AFFF86BF</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>libs</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>61D0126A7D8C02EA58B2E274</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>CADebugMacros.h</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include/apple/CADebugMacros.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>9CCFB42E69C24FF805B7988F</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxSoundFile.h</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src/ofxSoundFile.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>7BCCF2458F00292998F2D56C</key>
+			<dict>
+				<key>fileRef</key>
+				<string>9746620EBFF7FD083C73A8A0</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>9746620EBFF7FD083C73A8A0</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxSoundFile.cpp</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src/ofxSoundFile.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>8D6B8A508D79CDE5690241BF</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.c.h</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxBasicSoundPlayer.h</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src/ofxBasicSoundPlayer.h</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
+			<key>DA8B4F95777CB51775D8C55F</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>34F4D8DB90E76B84300F13DE</string>
+					<string>8D6B8A508D79CDE5690241BF</string>
+					<string>9746620EBFF7FD083C73A8A0</string>
+					<string>9CCFB42E69C24FF805B7988F</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>src</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>66656FC950895F14797AF991</key>
+			<dict>
+				<key>children</key>
+				<array>
+					<string>DA8B4F95777CB51775D8C55F</string>
+					<string>C766AF4FA3357C518FD31DE5</string>
+				</array>
+				<key>isa</key>
+				<string>PBXGroup</string>
+				<key>name</key>
+				<string>ofxBasicSoundPlayer</string>
+				<key>sourceTree</key>
+				<string>&lt;group&gt;</string>
+			</dict>
+			<key>E66766CBBB2343F047227A66</key>
+			<dict>
+				<key>fileRef</key>
+				<string>34F4D8DB90E76B84300F13DE</string>
+				<key>isa</key>
+				<string>PBXBuildFile</string>
+			</dict>
+			<key>34F4D8DB90E76B84300F13DE</key>
+			<dict>
+				<key>explicitFileType</key>
+				<string>sourcecode.cpp.cpp</string>
+				<key>fileEncoding</key>
+				<string>4</string>
+				<key>isa</key>
+				<string>PBXFileReference</string>
+				<key>name</key>
+				<string>ofxBasicSoundPlayer.cpp</string>
+				<key>path</key>
+				<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src/ofxBasicSoundPlayer.cpp</string>
+				<key>sourceTree</key>
+				<string>SOURCE_ROOT</string>
+			</dict>
 			<key>3770EEFFD44F35A955206FD9</key>
 			<dict>
 				<key>explicitFileType</key>
@@ -1176,7 +1492,7 @@
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
-			<key>3ED10FCABD10DF49848413D2</key>
+			<key>50C73E850129129E93940C06</key>
 			<dict>
 				<key>explicitFileType</key>
 				<string>sourcecode.c.h</string>
@@ -1185,20 +1501,20 @@
 				<key>isa</key>
 				<string>PBXFileReference</string>
 				<key>name</key>
-				<string>audio_in.hpp</string>
+				<string>audio_io.hpp</string>
 				<key>path</key>
-				<string>src/audio_in.hpp</string>
+				<string>src/audio_io.hpp</string>
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
-			<key>73A4E30931ADF13C421BDB06</key>
+			<key>AB5CF855E7D0386EFD26C5B1</key>
 			<dict>
 				<key>fileRef</key>
-				<string>A35F0F0F9D553DE6C02A8F84</string>
+				<string>154E4C80A82194083019B3B9</string>
 				<key>isa</key>
 				<string>PBXBuildFile</string>
 			</dict>
-			<key>A35F0F0F9D553DE6C02A8F84</key>
+			<key>154E4C80A82194083019B3B9</key>
 			<dict>
 				<key>explicitFileType</key>
 				<string>sourcecode.cpp.cpp</string>
@@ -1207,9 +1523,9 @@
 				<key>isa</key>
 				<string>PBXFileReference</string>
 				<key>name</key>
-				<string>audio_in.cpp</string>
+				<string>audio_io.cpp</string>
 				<key>path</key>
-				<string>src/audio_in.cpp</string>
+				<string>src/audio_io.cpp</string>
 				<key>sourceTree</key>
 				<string>SOURCE_ROOT</string>
 			</dict>
@@ -1344,6 +1660,11 @@ fi
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxGui/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs/oscpack</string>
@@ -1413,6 +1734,11 @@ fi
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxGui/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs/oscpack</string>
@@ -1461,6 +1787,7 @@ fi
 			<dict>
 				<key>children</key>
 				<array>
+					<string>66656FC950895F14797AF991</string>
 					<string>480A780D8D0308AE4A368801</string>
 					<string>E6053AB7FEC63D5F83825B88</string>
 				</array>
@@ -1618,6 +1945,11 @@ fi
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxGui/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs/oscpack</string>
@@ -1685,6 +2017,11 @@ fi
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxGui/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs/oscpack</string>
@@ -1750,8 +2087,13 @@ fi
 				<array>
 					<string>E4B69E200A3A1BDC003C02F2</string>
 					<string>E4B69E210A3A1BDC003C02F2</string>
-					<string>73A4E30931ADF13C421BDB06</string>
+					<string>AB5CF855E7D0386EFD26C5B1</string>
 					<string>04C57E361AA4881C8B186711</string>
+					<string>E66766CBBB2343F047227A66</string>
+					<string>7BCCF2458F00292998F2D56C</string>
+					<string>5B42515FA57423853694DF2B</string>
+					<string>9705DEEEBE290DEB11805D3F</string>
+					<string>DB06718059E2AC9F13BB4C0D</string>
 					<string>41289FE3BC4C172A1130E694</string>
 					<string>1FFB6D68F125CCC50E065BAA</string>
 					<string>FCBF6180E7E42F8383378BAA</string>
@@ -1860,6 +2202,11 @@ fi
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxGui/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs/oscpack</string>
@@ -1912,6 +2259,11 @@ fi
 					<array>
 						<string>$(OF_CORE_HEADERS)</string>
 						<string>src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/include</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/libs/libaudiodecoder/src</string>
+						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxBasicSoundPlayer/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxGui/src</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs</string>
 						<string>../../../../Documents/_gllm/of_git/of_v20170714_osx_release/addons/ofxOsc/libs/oscpack</string>
@@ -1961,8 +2313,8 @@ fi
 					<string>E4B69E1D0A3A1BDC003C02F2</string>
 					<string>E4B69E1E0A3A1BDC003C02F2</string>
 					<string>E4B69E1F0A3A1BDC003C02F2</string>
-					<string>A35F0F0F9D553DE6C02A8F84</string>
-					<string>3ED10FCABD10DF49848413D2</string>
+					<string>154E4C80A82194083019B3B9</string>
+					<string>50C73E850129129E93940C06</string>
 					<string>49777DA78499AB27D9C3DD25</string>
 					<string>3770EEFFD44F35A955206FD9</string>
 				</array>
