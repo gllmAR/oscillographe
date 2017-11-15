@@ -13,7 +13,7 @@ void ofApp::setup(){
     
     // gui setup
     camera_gui.setup("camera");
-    
+    camera_gui.add(fps_label.setup("FPS"," "));
     camera_gui.add(cam_set_ortho.set("cam_set_ortho", 1));
     camera_gui.add(cam_set_reset.set("cam_set_reset", 1));
     camera_gui.add(cam_set_distance.set("cam_set_distance", 1, -1, 2));
@@ -27,6 +27,7 @@ void ofApp::setup(){
     gui.add(&camera_gui);
     gui.add(&audio_io.gui);
     gui.add(&graphe.gui);
+
     
     gui.loadFromFile("settings.xml");
     sync.setup((ofParameterGroup&)gui.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
@@ -41,6 +42,10 @@ void ofApp::update(){
     
     graphe.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
     sync.update();
+    if(gui_draw)
+        {
+            fps_label= ofToString(ofGetFrameRate());
+        };
     
 }
 

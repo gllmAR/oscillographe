@@ -63,7 +63,7 @@ public:
     ofxBasicSoundPlayer player_1;
     ofxBasicSoundPlayer player_2;
     ofSoundBuffer player_buffer;
-        ofSoundBuffer player_buffer_1;
+    ofSoundBuffer player_buffer_1;
     ofSoundBuffer player_buffer_2;
     ofParameter <bool> player_active;
     ofParameter <float> player_volume;

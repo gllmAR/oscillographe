@@ -2,4 +2,7 @@
 .DS_Store
 *.d
 *.o
+bin/libfmodex.so  
+bin/oscillographe 
+obj/linux64/  
 

@@ -7,6 +7,7 @@
 //
 // todo: -> audio in -> audio io
 // tester dans le cas ou le sound stream est sur la même carte si ça enleve les glitch audio
+// test
 #include "audio_io.hpp"
 
 void Audio_io::setup()
@@ -77,15 +78,15 @@ void Audio_io::init()
     
     auto output_devices = output_stream.getDeviceList();
     
-    //output_stream.printDeviceList();
+    output_stream.printDeviceList();
     output_select.setMax(output_devices.size());
     output_buffer_1.assign(buffer_size, 0.0);
     output_buffer_2.assign(buffer_size, 0.0);
     
   
     player_buffer.allocate(buffer_size, 2);
-     player_buffer_1.allocate(buffer_size, 2);
-     player_buffer_2.allocate(buffer_size, 2);
+    player_buffer_1.allocate(buffer_size, 2);
+    player_buffer_2.allocate(buffer_size, 2);
 
 }
 
@@ -113,6 +114,7 @@ void Audio_io::audioIn(ofSoundBuffer & input)
 
 void Audio_io::input_init(int selection)
 {
+	input_stream.stop();
     auto devices = input_stream.getDeviceList();
     input_select.setMax(devices.size());
     if (!devices[selection].inputChannels)
@@ -127,6 +129,12 @@ void Audio_io::input_init(int selection)
         input_settings.numInputChannels = 2;
         input_settings.bufferSize = buffer_size;
         input_stream.setup(input_settings);
+        if(input_active)
+        	{
+        		input_stream.start();
+        	} else {
+        		input_stream.stop();
+        	}
         input_buffer_1.assign(buffer_size, 0.0);
         input_buffer_2.assign(buffer_size, 0.0);
     }
@@ -212,8 +220,7 @@ void Audio_io::output_init(int selection)
         output_label = "[X] " + devices[selection].name;
     } else {
         output_label = devices[selection].name;
-        output_settings.setInListener(this);
-        output_settings.setInDevice(devices[selection]);
+        output_settings.setOutDevice(devices[selection]);
         output_settings.sampleRate = sample_rate;
         output_settings.numOutputChannels = 2;
         output_settings.bufferSize = buffer_size;
@@ -221,8 +228,6 @@ void Audio_io::output_init(int selection)
         output_stream.setup(output_settings);
         output_buffer_1.assign(buffer_size, 0.0);
         output_buffer_2.assign(buffer_size, 0.0);
-
-
     }
 }
 
