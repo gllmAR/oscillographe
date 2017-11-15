@@ -260,7 +260,7 @@ void Audio_io::player_speed_change(float &f)
 void Audio_io::player_pan_change(float &f)
 {
     player.setPan(player_pan);
-    player_1.setPan(1-player_pan);
+    player_1.setPan(player_pan);
     player_2.setPan(player_pan);
 }
 

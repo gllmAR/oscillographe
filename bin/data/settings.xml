@@ -39,7 +39,11 @@
 		<input_active>1</input_active>
 		<output_active>1</output_active>
 		<output_select>1</output_select>
-		<output_volume>1</output_volume>
+		<output_volume>0.0714286</output_volume>
 		<output_pan>0</output_pan>
+		<player_active>1</player_active>
+		<player_speed>1</player_speed>
+		<player_volume>1</player_volume>
+		<player_pan>0</player_pan>
 	</audio_io>
 </oscillo>
