@@ -59,10 +59,8 @@ public:
     void output_select_change(int &output_select);
     void output_active_change(bool &output_active);
     
-    ofxBasicSoundPlayer player;
     ofxBasicSoundPlayer player_1;
     ofxBasicSoundPlayer player_2;
-    ofSoundBuffer player_buffer;
     ofSoundBuffer player_buffer_1;
     ofSoundBuffer player_buffer_2;
     ofParameter <bool> player_active;
