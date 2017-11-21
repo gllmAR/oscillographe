@@ -16,22 +16,43 @@ void ofApp::setup(){
     camera_gui.add(fps_label.setup("FPS"," "));
     camera_gui.add(cam_set_ortho.set("cam_set_ortho", 1));
     camera_gui.add(cam_set_reset.set("cam_set_reset", 1));
-    camera_gui.add(cam_set_distance.set("cam_set_distance", 1, -1, 2));
+    camera_gui.add(cam_set_distance.set("cam_set_distance", 0, 0, 1000));
     camera_gui.add(set_fullscreen.set("fullscreen", 0));
 
     audio_io.setup();
-    graphe.setup();
     
+    graphe_input.setup();
+    graphe_player.setup();
+    graphe_output.setup();
+
+
     gui.setup();
     gui.setName("oscillo");
-    gui.add(&camera_gui);
-    gui.add(&audio_io.gui);
-    gui.add(&graphe.gui);
-
     
+    gui.add(&camera_gui);
+    
+    
+    graphe_gui.setup();
+    graphe_gui.setName("graphe");
+    graphe_input.gui.setName("input");
+    graphe_player.gui.setName("player");
+    graphe_output.gui.setName("output");
+    
+    graphe_gui.add(&graphe_input.gui);
+    graphe_gui.add(&graphe_player.gui);
+    graphe_gui.add(&graphe_output.gui);
+    
+    gui.add(&graphe_gui);
+    gui.add(&audio_io.gui);
+ 
+
+    cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
+
     gui.loadFromFile("settings.xml");
     sync.setup((ofParameterGroup&)gui.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
     
+
+   
 }
 
 
@@ -39,13 +60,19 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    
-    graphe.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
+    // mettre if enable dans la classe pour optimiser
+    graphe_input.update(audio_io.buffer_size, audio_io.input_buffer_1, audio_io.input_buffer_2);
+    graphe_player.update(audio_io.buffer_size, audio_io.player_buffer_1_wo, audio_io.player_buffer_2_wo);
+    graphe_output.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
+
+    // pas clair play quoi faire pour que ce soit clean... 
     sync.update();
     if(gui_draw)
         {
             fps_label= ofToString(ofGetFrameRate());
         };
+    
+   
     
 }
 
@@ -62,10 +89,14 @@ void ofApp::draw(){
     if (cam_set_ortho){cam.enableOrtho();}else{cam.disableOrtho();};
     if (cam_set_reset){cam.reset(); cam_set_reset=0;};
     
+
+    
  
     cam.begin();
     
-    graphe.draw();
+    graphe_input.draw();
+    graphe_player.draw();
+    graphe_output.draw();
 
     cam.end();
     
@@ -134,7 +165,11 @@ void ofApp::windowResized(int w, int h){
     app_size_w = w;
     app_size_h = h;
     cout << "app size = " << w << " by " << h <<endl;
-    graphe.set_size(w,h);
+    
+    graphe_input.set_size(w,h);
+    graphe_player.set_size(w,h);
+    graphe_output.set_size(w,h);
+    
 }
 
 //--------------------------------------------------------------
@@ -150,8 +185,13 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 //--------------------------------------------------------------
 
 void ofApp::exit(){
-    
-    
+    audio_io.exit();
+}
+
+void ofApp::cam_set_distance_change(float &f)
+{
+    cam.setDistance( cam_set_distance);
+    cout<<cam.getDistance()<<endl;
 }
 
 

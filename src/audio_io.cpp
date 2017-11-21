@@ -12,61 +12,54 @@
 
 void Audio_io::setup()
 {
-    
+    setup_gui();
+    setup_audio();
+    setup_gui_listener();
+}
+
+
+void Audio_io::setup_gui()
+{
     gui.setup();
     gui.setName("audio_io");
     gui.add(buffer_size.set("buffer_size",64,64,4096));
     gui.add(sample_rate.set("sample_rate",44100,8000,192000));
     
-    gui.add(input_active.set("input_active", 1));
-    gui.add(input_select.set("input_select",0,0,1));
-    gui.add(input_label.setup("", ""));
-    gui.add(input_volume.set("input_volume",1,0,2));
-    gui.add(input_pan.set("input_pan",0,-1,1));
-
-
-    gui.add(output_active.set("output_active", 1));
-    gui.add(output_select.set("output_select",0,0,1));
-    gui.add(output_label.setup("", ""));
-    gui.add(output_volume.set("output_volume",1,0,2));
-    gui.add(output_pan.set("output_pan",0,-1,1));
-
-    gui.add(player_active.set("player_active", 1));
-    gui.add(player_speed.set("player_speed",1,-2,2));
-    gui.add(player_volume.set("player_volume",1,0,2));
-    gui.add(player_pan.set("player_pan",0,-1,1));
-
+    gui_input.setup();
+    gui_input.setName("input");
+        
+    gui_input.add(input_active.set("active", 1));
+    gui_input.add(input_select.set("select",0,0,1));
+    gui_input.add(input_label.setup("", ""));
+    gui_input.add(input_volume.set("volume",1,0,2));
+    gui_input.add(input_pan.set("pan",0,-1,1));
     
-    init();
     
-
-    player_1.load("sounds/lasers_1.wav");
-    player_2.load("sounds/lasers_2.wav");
-
-    player_1.play();
-    player_2.play();
-
-    player_1.setLoop(1);
-    player_2.setLoop(1);
-    player_1.setPan(-1);
-    player_2.setPan(1);
-
+    gui_output.setup();
+    gui_output.setName("output");
     
-    input_select.addListener(this, &Audio_io::input_select_change);
-    input_active.addListener(this, &Audio_io::input_active_change);
+    gui_output.add(output_active.set("active", 1));
+    gui_output.add(output_select.set("select",0,0,1));
+    gui_output.add(output_label.setup("", ""));
+    gui_output.add(output_volume.set("volume",1,0,2));
+    gui_output.add(output_pan.set("pan",0,-1,1));
     
-    output_select.addListener(this, &Audio_io::output_select_change);
-    output_active.addListener(this, &Audio_io::output_active_change);
     
-    player_speed.addListener(this, &Audio_io::player_speed_change);
-    player_volume.addListener(this, &Audio_io::player_volume_change);
-    player_pan.addListener(this, &Audio_io::player_pan_change);
+    gui_player.setup();
+    gui_player.setName("player");
 
+    gui_player.add(player_active.set("active", 1));
+    gui_player.add(player_volume.set("volume",1,0,2));
+    gui_player.add(player_pan.set("pan",0,-1,1));
+    gui_player.add(player_speed.set("speed",1,-2,2));
+    gui_player.add(player_position.set("position",0,0,1));
+
+    gui.add(&gui_input);
+    gui.add(&gui_output);
+    gui.add(&gui_player);
 }
 
-
-
-void Audio_io::init()
+void Audio_io::setup_audio()
 {
     auto input_devices = input_stream.getDeviceList();
     
@@ -87,12 +80,41 @@ void Audio_io::init()
     //player_buffer.allocate(buffer_size, 2);
     player_buffer_1.allocate(buffer_size, 2);
     player_buffer_2.allocate(buffer_size, 2);
+    player_buffer_1_wo.assign(buffer_size, 0.0);
+    player_buffer_2_wo.assign(buffer_size, 0.0);
+    
+    player_1.load("sounds/redux_1.wav");
+    player_2.load("sounds/redux_2.wav");
+    
+    player_1.play();
+    player_2.play();
+    
+    player_1.setLoop(1);
+    player_2.setLoop(1);
+    player_1.setPan(-1);
+    player_2.setPan(1);
 
+}
+
+
+void Audio_io::setup_gui_listener()
+{
+    input_select.addListener(this, &Audio_io::input_select_change);
+    input_active.addListener(this, &Audio_io::input_active_change);
+    
+    output_select.addListener(this, &Audio_io::output_select_change);
+    output_active.addListener(this, &Audio_io::output_active_change);
+    
+    player_active.addListener(this, &Audio_io::player_active_change);
+    player_speed.addListener(this, &Audio_io::player_speed_change);
+    player_volume.addListener(this, &Audio_io::player_volume_change);
+    player_pan.addListener(this, &Audio_io::player_pan_change);
+    player_position.addListener(this, &Audio_io::player_position_change);
 }
 
 void Audio_io::exit()
 {
-	input_stream.start();
+	input_stream.stop();
 	output_stream.stop();
     input_buffer_1.assign(buffer_size, 0.0);
     input_buffer_2.assign(buffer_size, 0.0);
@@ -101,14 +123,18 @@ void Audio_io::exit()
 
 void Audio_io::audioIn(ofSoundBuffer & input)
 {
+    if(input_active)
+    {
     // process pan
     float pan_1 = 1-(input_pan*0.5 +0.5);
     float pan_2 = input_pan*0.5 +0.5;
+    input_buffer = input;
     
     for (int i = 0; i < input.getNumFrames(); i++)
     {
-        input_buffer_1[i] = input[i*2  ] * input_volume * pan_1 ;
-        input_buffer_2[i] = input[i*2+1] * input_volume * pan_2 ;
+        input_buffer_1[i] = input_buffer[i*2  ] * input_volume * pan_1 ;
+        input_buffer_2[i] = input_buffer[i*2+1] * input_volume * pan_2 ;
+    }
     }
 }
 
@@ -170,6 +196,7 @@ void Audio_io::audioOut(ofSoundBuffer& output)
     float pan_1 = 1-(output_pan*0.5 +0.5);
     float pan_2 = output_pan*0.5 +0.5;
     
+    // workaroud de monoification du signal
     player_1.audioOut(output);
     player_buffer_1 = output;
     
@@ -177,10 +204,26 @@ void Audio_io::audioOut(ofSoundBuffer& output)
     player_buffer_2 = output;
     
     
+    
+    
+    
+    
     //player_buffer = player.getCurrentBuffer();
     
         for (int i = 0; i < output.getNumFrames(); i++)
         {
+            // traiter le player si actif
+            
+                if(player_active)
+                {
+                    player_buffer_1_wo[i] = player_buffer_1[i*2  ];
+                    player_buffer_2_wo[i] = player_buffer_2[i*2+1];
+                } else {
+                    player_buffer_1_wo[i] = 0;
+                    player_buffer_2_wo[i] = 0;
+                }
+            
+            //traiter l'output
             output_buffer_1[i] = output[i*2  ] =
             (input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1;
             
@@ -216,8 +259,12 @@ void Audio_io::output_init(int selection)
         	}
         output_buffer_1.assign(buffer_size, 0.0);
         output_buffer_2.assign(buffer_size, 0.0);
+
+
     }
 }
+
+
 
 
 void Audio_io::output_select_change(int &output_select)
@@ -239,17 +286,26 @@ void Audio_io::output_active_change(bool &output_active)
     }
 }
 
+void Audio_io::player_active_change(bool &player_active)
+{
+    if(player_active)
+    {
+        player_1.play();
+        player_2.play();
+    } else {
+        player_1.stop();
+        player_2.stop();
+    }
+}
 
 void Audio_io::player_speed_change(float &f)
 {
-    //player.setSpeed(player_speed);
     player_1.setSpeed(player_speed);
     player_2.setSpeed(player_speed);
 }
 
 void Audio_io::player_pan_change(float &f)
 {
-   // player.setPan(player_pan);
     player_1.setPan(player_pan);
     player_2.setPan(player_pan);
 }
@@ -257,9 +313,15 @@ void Audio_io::player_pan_change(float &f)
 
 void Audio_io::player_volume_change(float &f)
 {
-    //player.setVolume(player_volume);
       player_1.setVolume(player_volume);
       player_2.setVolume(player_volume);
+}
+
+
+void Audio_io::player_position_change(float &f)
+{
+    player_1.setPosition(f);
+    player_2.setPosition(f);
 }
 
 

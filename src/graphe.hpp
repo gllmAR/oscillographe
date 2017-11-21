@@ -17,6 +17,7 @@ class Graphe
 public:
     ofxGuiGroup gui;
     
+    ofParameter<bool> graphe_active = 1;
     ofParameter<ofColor> line_color;
     ofParameter<float> shapeScale =.5;
     ofParameter<float> line_width = 1;

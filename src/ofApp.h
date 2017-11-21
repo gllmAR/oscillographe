@@ -33,7 +33,9 @@ class ofApp : public ofBaseApp{
     
 
     Audio_io audio_io;
-    Graphe graphe;
+    Graphe graphe_input;
+    Graphe graphe_output;
+    Graphe graphe_player;
     
     ofEasyCam cam;
     // workaround pour faire fonctionner le fullscreen sur le raspberry pi
@@ -46,6 +48,7 @@ class ofApp : public ofBaseApp{
     ofxOscParameterSync sync;
     ofxPanel gui;
     ofxGuiGroup camera_gui;
+    ofxGuiGroup graphe_gui;
     ofParameter<bool> cam_set_ortho = 0;
     ofParameter<bool> cam_set_reset = 0;
     ofParameter<float> cam_set_distance = 0;
@@ -55,5 +58,8 @@ class ofApp : public ofBaseApp{
     bool gui_draw = 0;
     int app_size_w=100;
     int app_size_h=100;
+    
+    void cam_set_distance_change(float &f);
+    bool cam_workaroud_to_update = 1;
 
 };

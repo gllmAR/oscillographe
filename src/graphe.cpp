@@ -12,6 +12,7 @@ void Graphe::setup()
 {
     gui.setup();
     gui.setName("graphe");
+    gui.add(graphe_active.set("active",1));
     gui.add(buffer_history.set("buffer_history", 2048,buffer_size+1,4096));
     gui.add(shapeScale.set("shapeScale",.85,0,2));
     gui.add(line_width.set("line_width",1, 0.1,10));
@@ -21,6 +22,7 @@ void Graphe::setup()
 
 void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y)
 {
+    if (graphe_active) {
     // ici, application devrait passer soundSettingGui.buffer_size vers une classe pour dessiner Graphe
     
     
@@ -59,10 +61,13 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
         vbo_mesh.setVertex(i, coord);
         
     }
+    }
 }
 
 void Graphe::draw()
 {
+    if (graphe_active)
+    {
     ofNoFill();
     
     // draw the OSCILO channel:
@@ -78,6 +83,7 @@ void Graphe::draw()
     
     ofPopMatrix();
     ofPopStyle();
+    }
 }
 
 void Graphe::set_size(int w, int h)

@@ -23,16 +23,25 @@ class Audio_io
 {
 public:
     void setup();
-    void init();
+    
     void exit();
+    void setup_gui();
+    void setup_gui_listener();
+    void setup_audio();
+    
     vector <ofSoundDevice> audio_devices;
     
     ofxGuiGroup gui;
+    ofxGuiGroup gui_input;
+    ofxGuiGroup gui_output;
+    ofxGuiGroup gui_player;
+    
     ofParameter <int> buffer_size;
     ofParameter <int> sample_rate;
     
     ofSoundStream input_stream;
     ofSoundStreamSettings input_settings;
+    ofSoundBuffer input_buffer;
     ofParameter <float> input_volume;
     ofParameter <float> input_pan;
     ofParameter <int> input_select;
@@ -40,6 +49,8 @@ public:
     ofxLabel input_label;
     vector <float> input_buffer_1;
     vector <float> input_buffer_2;
+    
+    
     void input_init(int selection);
     void audioIn(ofSoundBuffer & input);
     void input_select_change(int &input_select);
@@ -59,6 +70,8 @@ public:
     void output_select_change(int &output_select);
     void output_active_change(bool &output_active);
     
+   
+    
     ofxBasicSoundPlayer player_1;
     ofxBasicSoundPlayer player_2;
     ofSoundBuffer player_buffer_1;
@@ -67,11 +80,18 @@ public:
     ofParameter <float> player_volume;
     ofParameter <float> player_speed;
     ofParameter <float> player_pan;
+    ofParameter <float> player_position;
     ofParameter <bool> player_loop;
+    vector <float> player_buffer_1_wo;
+    vector <float> player_buffer_2_wo;
     
+    
+    
+    void player_active_change(bool &player_active);
     void player_speed_change(float &f);
     void player_pan_change(float &f);
     void player_volume_change(float &f);
+    void player_position_change(float &f);
 
     
 };
