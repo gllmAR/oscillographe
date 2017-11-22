@@ -18,6 +18,9 @@ void Graphe::setup()
     gui.add(line_width.set("line_width",1, 0.1,10));
     gui.add(mesh_width_z.set("mesh_width_z", 1, -2, 2));
     gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
+    gui.add(graphe_hue.set("hue", 0, 0, 360 ));
+    
+    graphe_hue.addListener(this, &Graphe::set_hue);
 }
 
 void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y)
@@ -91,4 +94,11 @@ void Graphe::set_size(int w, int h)
     app_size_w = w;
     app_size_h = h;
     
+}
+
+void Graphe::set_hue(float &f)
+{
+    ofColor to_hue = line_color.get();
+    to_hue.setHue(f);
+    line_color.set(to_hue);
 }

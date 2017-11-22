@@ -44,11 +44,12 @@ void ofApp::setup(){
     
     gui.add(&graphe_gui);
     gui.add(&audio_io.gui);
- 
+    
 
+    gui.minimizeAll();
+    gui.loadFromFile("settings.xml");
     cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
 
-    gui.loadFromFile("settings.xml");
     sync.setup((ofParameterGroup&)gui.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
     
 
@@ -56,7 +57,8 @@ void ofApp::setup(){
 }
 
 
-
+// faut passer le buffer minimu, a la classe sinon ca crash quand on va chercher plus bas sur
+// faut clamp avec le minimum buffer que la carte lie
 //--------------------------------------------------------------
 void ofApp::update(){
     

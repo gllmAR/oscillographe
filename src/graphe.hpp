@@ -12,7 +12,11 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 
+
+
 class Graphe
+// rajouter un param de hue de saturation d opacite
+
 {
 public:
     ofxGuiGroup gui;
@@ -24,6 +28,7 @@ public:
     ofParameter<int> buffer_history = 1024;
     ofParameter<int> buffer_size = 256;
     ofParameter<float> mesh_width_z = 1;
+    ofParameter<float> graphe_hue =0;
     
     ofVboMesh vbo_mesh;
     
@@ -31,6 +36,8 @@ public:
     void update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y);
     void draw();
     void set_size(int w, int h);
+    
+    void set_hue(float &f);
     
     int app_size_w = 100000;
     int app_size_h = 100000;
