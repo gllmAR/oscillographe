@@ -22,9 +22,12 @@ void ofApp::setup(){
     audio_io.setup();
     
     graphe_input.setup();
+    graphe_input.gui.setName("input");
     graphe_player.setup();
+    graphe_player.gui.setName("player");
     graphe_output.setup();
-
+    graphe_output.gui.setName("output");
+    
 
     gui.setup();
     gui.setName("oscillo");
@@ -34,9 +37,7 @@ void ofApp::setup(){
     
     graphe_gui.setup();
     graphe_gui.setName("graphe");
-    graphe_input.gui.setName("input");
-    graphe_player.gui.setName("player");
-    graphe_output.gui.setName("output");
+
     
     graphe_gui.add(&graphe_input.gui);
     graphe_gui.add(&graphe_player.gui);

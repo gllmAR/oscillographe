@@ -28,7 +28,9 @@ public:
     ofParameter<int> buffer_history = 1024;
     ofParameter<int> buffer_size = 256;
     ofParameter<float> mesh_width_z = 1;
+    ofParameter<float> graphe_saturation =0;
     ofParameter<float> graphe_hue =0;
+    ofParameter<float> graphe_brightness =0;
     
     ofVboMesh vbo_mesh;
     
@@ -38,6 +40,9 @@ public:
     void set_size(int w, int h);
     
     void set_hue(float &f);
+    void set_saturation(float &f);
+    void set_brightness(float &f);
+    
     
     int app_size_w = 100000;
     int app_size_h = 100000;

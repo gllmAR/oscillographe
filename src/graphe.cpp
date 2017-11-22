@@ -18,9 +18,12 @@ void Graphe::setup()
     gui.add(line_width.set("line_width",1, 0.1,10));
     gui.add(mesh_width_z.set("mesh_width_z", 1, -2, 2));
     gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
-    gui.add(graphe_hue.set("hue", 0, 0, 360 ));
-    
+    gui.add(graphe_saturation.set("saturation", 0, 0, 255));
+    gui.add(graphe_hue.set("hue", 0, 0, 255));
+    gui.add(graphe_brightness.set("brightness", 0, 0, 255));
+    graphe_saturation.addListener(this, &Graphe::set_saturation);
     graphe_hue.addListener(this, &Graphe::set_hue);
+    graphe_brightness.addListener(this, &Graphe::set_brightness);
 }
 
 void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y)
@@ -96,9 +99,22 @@ void Graphe::set_size(int w, int h)
     
 }
 
+void Graphe::set_saturation(float &f)
+{
+    ofColor color = line_color.get();
+    color.setSaturation(f);
+    line_color.set(color);
+}
+void Graphe::set_brightness(float &f)
+{
+    ofColor color = line_color.get();
+    color.setBrightness(f);
+    line_color.set(color);
+}
+
 void Graphe::set_hue(float &f)
 {
-    ofColor to_hue = line_color.get();
-    to_hue.setHue(f);
-    line_color.set(to_hue);
+    ofColor color = line_color.get();
+    color.setHue(f);
+    line_color.set(color);
 }
