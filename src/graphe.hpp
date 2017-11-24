@@ -27,6 +27,7 @@ public:
     ofParameter<float> line_width = 1;
     ofParameter<int> buffer_history = 1024;
     ofParameter<int> buffer_size = 256;
+    int buffer_size_old = 0;
     ofParameter<float> mesh_width_z = 1;
     ofParameter<float> graphe_saturation =0;
     ofParameter<float> graphe_hue =0;

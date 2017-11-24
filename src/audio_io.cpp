@@ -33,7 +33,16 @@ void Audio_io::setup_gui()
     gui_input.add(input_label.setup("", ""));
     gui_input.add(input_volume.set("volume",1,0,2));
     gui_input.add(input_pan.set("pan",0,-1,1));
+
+    gui_player.setup();
+    gui_player.setName("player");
     
+    gui_player.add(player_active.set("active", 1));
+    gui_player.add(player_volume.set("volume",1,0,2));
+    gui_player.add(player_pan.set("pan",0,-1,1));
+    gui_player.add(player_speed.set("speed",1,-2,2));
+    gui_player.add(player_position.set("position",0,0,1));
+
     
     gui_output.setup();
     gui_output.setName("output");
@@ -45,18 +54,10 @@ void Audio_io::setup_gui()
     gui_output.add(output_pan.set("pan",0,-1,1));
     
     
-    gui_player.setup();
-    gui_player.setName("player");
-
-    gui_player.add(player_active.set("active", 1));
-    gui_player.add(player_volume.set("volume",1,0,2));
-    gui_player.add(player_pan.set("pan",0,-1,1));
-    gui_player.add(player_speed.set("speed",1,-2,2));
-    gui_player.add(player_position.set("position",0,0,1));
 
     gui.add(&gui_input);
-    gui.add(&gui_output);
     gui.add(&gui_player);
+    gui.add(&gui_output);
 }
 
 void Audio_io::setup_audio()
@@ -132,8 +133,8 @@ void Audio_io::audioIn(ofSoundBuffer & input)
     
     for (int i = 0; i < input.getNumFrames(); i++)
     {
-        input_buffer_1[i] = input_buffer[i*2  ] * input_volume * pan_1 ;
-        input_buffer_2[i] = input_buffer[i*2+1] * input_volume * pan_2 ;
+        input_buffer_1[i] = input_buffer[i*2  ] * input_volume * pan_1 *100 ;
+        input_buffer_2[i] = input_buffer[i*2+1] * input_volume * pan_2 *100 ;
     }
     }
 }
@@ -203,7 +204,7 @@ void Audio_io::audioOut(ofSoundBuffer& output)
     player_2.audioOut(output);
     player_buffer_2 = output;
     
-    
+ 
     
     
     
@@ -225,10 +226,10 @@ void Audio_io::audioOut(ofSoundBuffer& output)
             
             //traiter l'output
             output_buffer_1[i] = output[i*2  ] =
-            (input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1;
+            (input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1*2;
             
             output_buffer_2[i] = output[i*2+1] = 
-            (input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume * pan_2;
+            (input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume * pan_2*2;
         }
 }
 
@@ -259,6 +260,9 @@ void Audio_io::output_init(int selection)
         	}
         output_buffer_1.assign(buffer_size, 0.0);
         output_buffer_2.assign(buffer_size, 0.0);
+        player_buffer_1_wo.assign(buffer_size, 0.0);
+        player_buffer_2_wo.assign(buffer_size, 0.0);
+
 
 
     }

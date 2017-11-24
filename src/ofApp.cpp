@@ -43,11 +43,17 @@ void ofApp::setup(){
     graphe_gui.add(&graphe_player.gui);
     graphe_gui.add(&graphe_output.gui);
     
-    gui.add(&graphe_gui);
     gui.add(&audio_io.gui);
-    
+    gui.add(&graphe_gui);
 
+    
+    
     gui.minimizeAll();
+    audio_io.gui.minimizeAll();
+    graphe_gui.minimizeAll();
+    
+    
+    
     gui.loadFromFile("settings.xml");
     cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
 
@@ -94,16 +100,19 @@ void ofApp::draw(){
     
 
     
- 
+   ofEnableBlendMode(OF_BLENDMODE_SCREEN);
+
     cam.begin();
-    
     graphe_input.draw();
     graphe_player.draw();
     graphe_output.draw();
 
     cam.end();
     
+    
     ofDisableDepthTest();
+    
+   ofEnableBlendMode(OF_BLENDMODE_DISABLED);
     
     if (gui_draw){gui.draw();}
     if (screen_workaround_to_update)
