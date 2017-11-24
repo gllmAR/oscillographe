@@ -115,10 +115,13 @@ void Audio_io::setup_gui_listener()
 
 void Audio_io::exit()
 {
-	input_stream.stop();
-	output_stream.stop();
+
     input_buffer_1.assign(buffer_size, 0.0);
     input_buffer_2.assign(buffer_size, 0.0);
+    input_stream.stop();
+    input_stream.close();
+    output_stream.stop();
+    output_stream.close();
 }
 
 
@@ -237,7 +240,6 @@ void Audio_io::audioOut(ofSoundBuffer& output)
 
 void Audio_io::output_init(int selection)
 {
-	output_stream.stop();
     auto devices = output_stream.getDeviceList();
     output_select.setMax(devices.size());
     if (!devices[selection].outputChannels)
@@ -245,6 +247,7 @@ void Audio_io::output_init(int selection)
         cout<<"error, no output on device"<<endl;
         output_label = "[X] " + devices[selection].name;
     } else {
+        if(output_active){output_stream.stop();}
         output_label = devices[selection].name;
         output_settings.setOutDevice(devices[selection]);
         output_settings.sampleRate = sample_rate;
