@@ -50,6 +50,7 @@ void ofApp::setup(){
     
     gui.minimizeAll();
     audio_io.gui.minimizeAll();
+    audio_io.gui_device.minimizeAll();
     graphe_gui.minimizeAll();
     
     

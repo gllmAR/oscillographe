@@ -13,14 +13,14 @@ void Graphe::setup()
     gui.setup();
     gui.setName("graphe");
     gui.add(graphe_active.set("active",1));
-    gui.add(buffer_history.set("buffer_history", 2048,buffer_size+1,4096));
+    gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
     gui.add(shapeScale.set("shapeScale",0.10,0,1));
     gui.add(line_width.set("line_width",1, 0.1,1000));
     gui.add(mesh_width_z.set("mesh_width_z", 1, -2, 2));
     gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
-    gui.add(graphe_saturation.set("saturation", 0, 0, 255));
-    gui.add(graphe_hue.set("hue", 0, 0, 255));
-    gui.add(graphe_brightness.set("brightness", 0, 0, 255));
+    gui.add(graphe_saturation.set("saturation", 255, 0, 255));
+    gui.add(graphe_hue.set("hue", 255, 0, 255));
+    gui.add(graphe_brightness.set("brightness", 255, 0, 255));
     graphe_saturation.addListener(this, &Graphe::set_saturation);
     graphe_hue.addListener(this, &Graphe::set_hue);
     graphe_brightness.addListener(this, &Graphe::set_brightness);
