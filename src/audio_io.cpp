@@ -187,9 +187,9 @@ void Audio_io::audioIn(ofSoundBuffer & input)
         }else{
     for (int i = 0; i < input.getNumFrames(); i++)
     {
-        input_buffer_1[i] = input_buffer[i*2  ] * input_volume * pan_1 *100 ;
-        input_buffer_2[i] = input_buffer[i*2+1] * input_volume * pan_2 *100 ;
-    }
+        input_buffer_1[i] = input_buffer[i*2  ] * input_volume * pan_1 *20 ;
+        input_buffer_2[i] = input_buffer[i*2+1] * input_volume * pan_2 *20 ;
+    } // pourquoi 20? test avec du signal et ca sort comme ca 
     }
     }
     
@@ -232,7 +232,7 @@ void Audio_io::audioOut(ofSoundBuffer& output)
             (input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1*2*!output_mute;
             
             output_buffer_2[i] = output[i*2+1] =
-            (input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume * pan_2*2*!output_mute;
+            (input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume  * pan_2*2*!output_mute;
         }
     }
     }
