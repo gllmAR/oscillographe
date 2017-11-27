@@ -54,6 +54,7 @@ void Audio_io::setup_gui()
     gui_input.setup();
     gui_input.setName("input");
     gui_input.add(input_mute.set("mute", 0));
+    gui_input.add(input_trim.set("trim", 1, 0, 100));
     gui_input.add(input_volume.set("volume",1,0,2));
     gui_input.add(input_pan.set("pan",0,-1,1));
 
@@ -187,8 +188,8 @@ void Audio_io::audioIn(ofSoundBuffer & input)
         }else{
     for (int i = 0; i < input.getNumFrames(); i++)
     {
-        input_buffer_1[i] = input_buffer[i*2  ] * input_volume * pan_1 *20 ;
-        input_buffer_2[i] = input_buffer[i*2+1] * input_volume * pan_2 *20 ;
+        input_buffer_1[i] = input_buffer[i*2  ] * input_volume * pan_1 *input_trim ;
+        input_buffer_2[i] = input_buffer[i*2+1] * input_volume * pan_2 *input_trim ;
     } // pourquoi 20? test avec du signal et ca sort comme ca 
     }
     }
