@@ -227,13 +227,16 @@ void Audio_io::audioOut(ofSoundBuffer& output)
                 player_buffer_1_wo[i] = 0;
                 player_buffer_2_wo[i] = 0;
             }
+            float ch1 = ofClamp((input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1*2*!output_mute, -1, 1);
+            float ch2 = ofClamp((input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume  * pan_2*2*!output_mute, -1, 1);
+            output_buffer_1[i] = output[i*2  ] = ch1;
+            output_buffer_2[i] = output[i*2+1] = ch2;
             
             //traiter l'output
-            output_buffer_1[i] = output[i*2  ] =
-            (input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1*2*!output_mute;
+            //output_buffer_1[i] = output[i*2  ] =(input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1*2*!output_mute;
             
-            output_buffer_2[i] = output[i*2+1] =
-            (input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume  * pan_2*2*!output_mute;
+            //output_buffer_2[i] = output[i*2+1] =
+            //(input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume  * pan_2*2*!output_mute;
         }
     }
     }
