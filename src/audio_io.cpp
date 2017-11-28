@@ -14,7 +14,37 @@ void Audio_io::setup()
 {
     setup_gui();
     setup_audio();
+    setup_player();
     setup_gui_listener();
+}
+
+void Audio_io::reset_audio(bool &b)
+{
+    if(reset_audio_b)
+    {
+        exit();
+        setup_audio();
+        int _io_select = io_select;
+        io_select_change(_io_select);
+        
+        bool _io_enable = io_enable;
+        io_enable_change(_io_enable);
+        
+        int _input_select = input_select;
+        io_select_change(_io_select);
+        
+        bool _input_enable = input_enable;
+        input_enable_change(_input_enable);
+        
+        int _output_select = output_select;
+        io_select_change(_io_select);
+        
+        bool _output_enable = output_enable;
+        output_enable_change(_output_enable);
+
+     
+    reset_audio_b=0;
+    }
 }
 
 
@@ -25,6 +55,7 @@ void Audio_io::setup_gui()
     gui_device.setup("");
     gui_device.setName("device");
     // a mettre dans un gui group
+    gui_device.add(reset_audio_b.set("reset_audio",0));
     gui_device.add(buffer_size.set("buffer_size",512,64,4096));
     gui_device.add(sample_rate.set("sample_rate",44100,8000,192000));
     
@@ -109,6 +140,11 @@ void Audio_io::setup_audio()
     output_buffer_2.assign(buffer_size, 0.0);
     
   
+
+}
+
+void Audio_io::setup_player()
+{
     //player_buffer.allocate(buffer_size, 2);
     player_buffer_1.allocate(buffer_size, 2);
     player_buffer_2.allocate(buffer_size, 2);
@@ -117,7 +153,7 @@ void Audio_io::setup_audio()
     
     player_1.load("sounds/redux_1.wav");
     player_2.load("sounds/redux_2.wav");
-
+    
     player_1.setLoop(1);
     player_2.setLoop(1);
     player_1.setPan(-1);
@@ -128,6 +164,7 @@ void Audio_io::setup_audio()
 
 void Audio_io::setup_gui_listener()
 {
+    reset_audio_b.addListener(this, &Audio_io::reset_audio);
     io_select.addListener(this, &Audio_io::io_select_change);
     io_enable.addListener(this, &Audio_io::io_enable_change);
 

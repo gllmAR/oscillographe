@@ -28,14 +28,18 @@ public:
     void setup_gui();
     void setup_gui_listener();
     void setup_audio();
+    void setup_player();
+    void reset_audio(bool &b);
     
     vector <ofSoundDevice> audio_devices;
     
     //meta stuff
     ofxGuiGroup gui;
     ofxGuiGroup gui_device;
+    ofParameter <bool> reset_audio_b;
     ofParameter <int> buffer_size;
     ofParameter <int> sample_rate;
+    
    
  
     // input output stuff
