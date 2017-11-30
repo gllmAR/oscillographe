@@ -28,7 +28,7 @@ public:
     void setup_gui();
     void setup_gui_listener();
     void setup_audio();
-    void setup_player();
+    void setup_player(int file_index);
     void reset_audio(bool &b);
     
     vector <ofSoundDevice> audio_devices;
@@ -119,6 +119,8 @@ public:
     ofParameter <float> player_pan;
     ofParameter <float> player_position;
     ofParameter <bool> player_loop;
+    ofParameter <int> player_file_index;
+    int player_file_index_old = -1;
     vector <float> player_buffer_1_wo;
     vector <float> player_buffer_2_wo;
     
@@ -129,7 +131,7 @@ public:
     void player_pan_change(float &f);
     void player_volume_change(float &f);
     void player_position_change(float &f);
-
+    void player_file_index_change(int &i);
     
 };
 

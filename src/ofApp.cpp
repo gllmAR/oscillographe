@@ -163,6 +163,10 @@ void ofApp::keyPressed(int key){
     
     if (key == 'f'){set_fullscreen=!set_fullscreen;}
     
+    if (key >=48  && key <= 57)
+    {
+        audio_io.player_file_index = key-48;
+    }
 
 }
 

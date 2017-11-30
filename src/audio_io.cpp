@@ -14,7 +14,7 @@ void Audio_io::setup()
 {
     setup_gui();
     setup_audio();
-    setup_player();
+    setup_player(0);
     setup_gui_listener();
 }
 
@@ -96,6 +96,7 @@ void Audio_io::setup_gui()
     gui_player.add(player_enable.set("enable", 0));
     gui_player.add(player_volume.set("volume",1,0,2));
     gui_player.add(player_pan.set("pan",0,-1,1));
+    gui_player.add(player_file_index.set("file_index",0,0,9));
     gui_player.add(player_speed.set("speed",1,-2,2));
     gui_player.add(player_position.set("position",0,0,1));
 
@@ -143,22 +144,34 @@ void Audio_io::setup_audio()
 
 }
 
-void Audio_io::setup_player()
+void Audio_io::setup_player(int file_index)
 {
-    //player_buffer.allocate(buffer_size, 2);
+    if (player_file_index_old != player_file_index)
+    {
     player_buffer_1.allocate(buffer_size, 2);
     player_buffer_2.allocate(buffer_size, 2);
     player_buffer_1_wo.assign(buffer_size, 0.0);
     player_buffer_2_wo.assign(buffer_size, 0.0);
     
-    player_1.load("sounds/redux_1.wav");
-    player_2.load("sounds/redux_2.wav");
+    
+    std::ostringstream path_1;
+    std::ostringstream path_2;
+    path_1 << "sounds/" << file_index << "_1.wav";
+    path_2 << "sounds/" << file_index << "_2.wav";
+    
+    cout<<"loading sounds --> " <<path_1.str()<<" "<<path_2.str()<<endl;
+    
+    player_1.load(path_1.str());
+    player_2.load(path_2.str());
     
     player_1.setLoop(1);
     player_2.setLoop(1);
     player_1.setPan(-1);
     player_2.setPan(1);
-
+    bool _player_enable = player_enable;
+    player_enable_change(_player_enable);
+    player_file_index_old = player_file_index;
+    }
 }
 
 
@@ -180,6 +193,7 @@ void Audio_io::setup_gui_listener()
     player_volume.addListener(this, &Audio_io::player_volume_change);
     player_pan.addListener(this, &Audio_io::player_pan_change);
     player_position.addListener(this, &Audio_io::player_position_change);
+    player_file_index.addListener(this, &Audio_io::player_file_index_change);
 }
 
 void Audio_io::exit()
@@ -490,6 +504,10 @@ void Audio_io::player_position_change(float &f)
     player_2.setPosition(f);
 }
 
+void Audio_io::player_file_index_change(int &i)
+{
+    setup_player(i);
+}
 
 
 
