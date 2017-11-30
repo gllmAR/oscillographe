@@ -44,16 +44,30 @@ class ofApp : public ofBaseApp{
     
     int 	bufferCounter;
     int 	drawCounter;
+    int     buffer_size_old=0;
     
     ofxOscParameterSync sync;
     ofxPanel gui;
+    
     ofxGuiGroup camera_gui;
     ofxGuiGroup graphe_gui;
+    
+    
+    
     ofParameter<bool> cam_set_ortho = 0;
     ofParameter<bool> cam_set_reset = 0;
     ofParameter<float> cam_set_distance = 0;
     ofParameter<bool> set_fullscreen = 0;
     ofxLabel fps_label;
+    
+    ofTexture screen_texture;
+    ofPlanePrimitive feedback_plane;
+    ofxGuiGroup feedback_gui;
+    ofParameter<bool> feedback_enable=0;
+    ofParameter<float> feedback_ammount = 0 ;
+    ofParameter<float> feedback_pos_x = 0;
+    ofParameter<float> feedback_pos_y = 0;
+    ofParameter<float> feedback_scale = 0;
     
     bool gui_draw = 0;
     int app_size_w=100;
@@ -61,5 +75,7 @@ class ofApp : public ofBaseApp{
     
     void cam_set_distance_change(float &f);
     bool cam_workaroud_to_update = 1;
+    
+
 
 };

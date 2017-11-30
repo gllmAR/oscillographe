@@ -4,8 +4,6 @@
 void ofApp::setup(){
 
     ofSetVerticalSync(true);
-    
-  //  cam.setDistance(buffer_history*0.01);
     ofBackground(0, 0, 0);
     
     ofSetFrameRate(60);
@@ -43,9 +41,19 @@ void ofApp::setup(){
     graphe_gui.add(&graphe_player.gui);
     graphe_gui.add(&graphe_output.gui);
     
+    feedback_gui.setup();
+    feedback_gui.setName("feedback");
+    feedback_gui.add(feedback_enable.set("enable",0));
+    feedback_gui.add(feedback_ammount.set("ammount", 0, 0, 1));
+    feedback_gui.add(feedback_pos_x.set("x", 1, 0, 2 ));
+    feedback_gui.add(feedback_pos_y.set("y", 1, 0, 2 ));
+    feedback_gui.add(feedback_scale.set("scale", 1, 0 ,2));
+    
     gui.add(&audio_io.gui);
     gui.add(&graphe_gui);
+    gui.add(&feedback_gui);
 
+    
     
     
     gui.minimizeAll();
@@ -60,7 +68,7 @@ void ofApp::setup(){
 
     sync.setup((ofParameterGroup&)gui.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
     
-
+feedback_plane.rotateDeg(180, 1, 0, 0);
    
 }
 
@@ -82,6 +90,7 @@ void ofApp::update(){
             fps_label= ofToString(ofGetFrameRate());
         };
     
+   ofEnableAlphaBlending();
    
     
 }
@@ -94,24 +103,44 @@ void ofApp::draw(){
         ofSetFullscreen(set_fullscreen);
         set_fullscreen_old = set_fullscreen;
     };
-    
+    if(feedback_enable)
+    {
+        ofSetColor(255, 255, 255, feedback_ammount*255);
+        feedback_plane.setPosition(app_size_w/2, app_size_h/2, 0);
+        screen_texture.bind();
+        feedback_plane.setScale(feedback_scale);
+        feedback_plane.setPosition(feedback_pos_x*app_size_w/2, feedback_pos_y*app_size_h/2, 0);
+        
+        feedback_plane.draw();
+        screen_texture.unbind();
+    }
     ofEnableDepthTest();
     if (cam_set_ortho){cam.enableOrtho();}else{cam.disableOrtho();};
     if (cam_set_reset){cam.reset(); cam_set_reset=0;};
     
-
     
-   ofEnableBlendMode(OF_BLENDMODE_SCREEN);
-
     cam.begin();
+    ofSetColor(255);
     graphe_input.draw();
     graphe_player.draw();
     graphe_output.draw();
-
+    
     cam.end();
     
+    ofEnableBlendMode( OF_BLENDMODE_ADD );
+    
+    if(feedback_enable)
+    {
+        
+        screen_texture.loadScreenData(0,0,app_size_w,app_size_h);
+    
+    }
+    
+
     
     ofDisableDepthTest();
+
+
     
    ofEnableBlendMode(OF_BLENDMODE_DISABLED);
     
@@ -184,6 +213,10 @@ void ofApp::windowResized(int w, int h){
     graphe_input.set_size(w,h);
     graphe_player.set_size(w,h);
     graphe_output.set_size(w,h);
+    
+    screen_texture.allocate(w,h,GL_RGBA);
+    feedback_plane.resizeToTexture(screen_texture);
+
     
 }
 

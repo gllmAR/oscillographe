@@ -29,6 +29,13 @@ void Graphe::setup()
 void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y)
 {
     if (graphe_active) {
+        if (buffer_size_old != input_buffer_size)
+        {
+                        buffer_history.setMin(input_buffer_size+1);
+                        buffer_size_old = input_buffer_size;
+                        cout<<input_buffer_size<<endl;
+        }
+        
     // ici, application devrait passer soundSettingGui.buffer_size vers une classe pour dessiner Graphe
     
     
@@ -55,10 +62,7 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
         }
     }
     
-    //au lieu de faire une lecture et une ecriture, mieux vaudrait utiliser un pointeur pour changer la derniere donnee
-    //
-    
-    //        for (unsigned int i =0; i< vertex_buffer; i++)
+
     
     for (unsigned int i =0; i< vbo_mesh.getNumVertices(); i++)
     {
@@ -67,12 +71,7 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
         vbo_mesh.setVertex(i, coord);
         
     }
-        if (buffer_size_old != input_buffer_size)
-        {
-//            buffer_history.setMin(input_buffer_size+1);
-//            buffer_size_old = input_buffer_size;
-//            cout<<input_buffer_size<<endl;
-        }
+        
     }
 }
 
@@ -80,13 +79,12 @@ void Graphe::draw()
 {
     if (graphe_active)
     {
-    ofNoFill();
-    
+        
     // draw the OSCILO channel:
     ofPushStyle();
     ofPushMatrix();
     
-    
+    ofNoFill();
     
     ofSetLineWidth(line_width);
     ofSetColor(line_color);
