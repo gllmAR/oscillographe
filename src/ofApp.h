@@ -5,6 +5,7 @@
 #include "ofxOscParameterSync.h"
 #include "audio_io.hpp"
 #include "graphe.hpp"
+#include "interact.hpp"
 
 #define HOST "localhost"
 #define SYNC_INPORT 9000
@@ -36,6 +37,7 @@ class ofApp : public ofBaseApp{
     Graphe graphe_input;
     Graphe graphe_output;
     Graphe graphe_player;
+    Interact interact;
     
     ofEasyCam cam;
     // workaround pour faire fonctionner le fullscreen sur le raspberry pi

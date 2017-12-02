@@ -8,6 +8,7 @@ void ofApp::setup(){
     
     ofSetFrameRate(60);
     
+    interact.setup();
     
     // gui setup
     camera_gui.setup("camera");
@@ -49,10 +50,13 @@ void ofApp::setup(){
     feedback_gui.add(feedback_pos_y.set("y", 1, 0, 2 ));
     feedback_gui.add(feedback_scale.set("scale", 1, 0 ,2));
     
+    
+    
     gui.add(&audio_io.gui);
     gui.add(&graphe_gui);
     gui.add(&feedback_gui);
 
+    gui.add(&interact.gui);
     
     
     
@@ -78,17 +82,23 @@ feedback_plane.rotateDeg(180, 1, 0, 0);
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    // mettre if enable dans la classe pour optimiser
     graphe_input.update(audio_io.buffer_size, audio_io.input_buffer_1, audio_io.input_buffer_2);
     graphe_player.update(audio_io.buffer_size, audio_io.player_buffer_1_wo, audio_io.player_buffer_2_wo);
     graphe_output.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
 
-    // pas clair play quoi faire pour que ce soit clean... 
+    // pas clair play quoi faire pour que ce soit clean...
+    
+    if (interact.interact_enable)
+    {
+        interact.update();
+        audio_io.player_set_speed(interact.get_speed());
+    } else {
+        audio_io.player_set_speed(audio_io.player_speed);
+    }
     sync.update();
-    if(gui_draw)
-        {
-            fps_label= ofToString(ofGetFrameRate());
-        };
+    
+    
+    if(gui_draw){fps_label= ofToString(ofGetFrameRate());}
     
    ofEnableAlphaBlending();
    
@@ -127,6 +137,7 @@ void ofApp::draw(){
     
     cam.end();
     
+    interact.draw();
     ofEnableBlendMode( OF_BLENDMODE_ADD );
     
     if(feedback_enable)

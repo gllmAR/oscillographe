@@ -133,6 +133,8 @@ public:
     void player_position_change(float &f);
     void player_file_index_change(int &i);
     
+    void player_set_speed(float f);
+    
 };
 
 

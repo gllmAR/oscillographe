@@ -478,6 +478,13 @@ void Audio_io::player_enable_change(bool &player_enable)
     }
 }
 
+void Audio_io::player_set_speed(float f)
+{
+    player_1.setSpeed(f);
+    player_2.setSpeed(f);
+}
+
+
 void Audio_io::player_speed_change(float &f)
 {
     player_1.setSpeed(player_speed);
