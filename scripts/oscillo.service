@@ -1,0 +1,10 @@
+[Unit]
+Description=Oscillographe
+After=syslog.target 
+[Service]
+User=artificiel
+ExecStart=/home/artificiel/src/oscillographe/scripts/start_oscillo.sh
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target
+
