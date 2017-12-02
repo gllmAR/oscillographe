@@ -109,6 +109,8 @@ public:
    
     // player stuff
     ofxGuiGroup gui_player;
+    ofxBasicSoundPlayer player;
+    ofSoundBuffer player_buffer;
     ofxBasicSoundPlayer player_1;
     ofxBasicSoundPlayer player_2;
     ofSoundBuffer player_buffer_1;
