@@ -78,7 +78,7 @@ void Interact::decrement_speed()
     {
             if(now_time-last_increment_time>stop_time_threshold)
             {
-                interact_speed=0;
+                interact_speed=0.01;
                 speed_stop_flag = 1;
                 if(debug){cout<<"stoped!!"<<endl;}
             }else{
