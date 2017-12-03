@@ -14,7 +14,7 @@ void Graphe::setup()
     gui.setName("graphe");
     gui.add(graphe_active.set("active",1));
     gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
-    gui.add(shapeScale.set("shapeScale",0.10,0,1));
+    gui.add(shape_scale.set("shape_scale",0.10,0,1));
     gui.add(line_width.set("line_width",1, 0.1,1000));
     gui.add(mesh_width_z.set("mesh_width_z", 1, -2, 2));
     gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
@@ -49,8 +49,8 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
     
     for (unsigned int i = 0; i < (input_buffer_size); i++)
     {
-        ofVec3f coord (input_buffer_x[i]*app_size_w/2*shapeScale*50,
-                       input_buffer_y[i]*app_size_h/2*shapeScale*50,
+        ofVec3f coord (input_buffer_x[i]*app_size_w/2*shape_scale*50,
+                       input_buffer_y[i]*app_size_h/2*shape_scale*50,
                        buffer_history-i);
         
         if (vertex_buffer > buffer_history)

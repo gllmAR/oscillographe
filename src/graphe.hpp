@@ -23,7 +23,7 @@ public:
     
     ofParameter<bool> graphe_active = 1;
     ofParameter<ofColor> line_color;
-    ofParameter<float> shapeScale =.5;
+    ofParameter<float> shape_scale =.5;
     ofParameter<float> line_width = 1;
     ofParameter<int> buffer_history = 1024;
     ofParameter<int> buffer_size = 256;
