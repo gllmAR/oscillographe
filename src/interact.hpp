@@ -9,8 +9,6 @@
 #ifndef interact_hpp
 #define interact_hpp
 
-
-
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxOsc.h"
@@ -19,7 +17,7 @@
 class Interact
 {
 public:
-   // ofxOscReceiver osc_receiver;
+    // ofxOscReceiver osc_receiver;
     
     ofxGuiGroup gui;
     
@@ -48,8 +46,6 @@ public:
     
     string interact_name;
     string interact_osc_path;
-    
-    
     
 };
 #endif /* interact_hpp */
