@@ -3,7 +3,7 @@
 //  oscillographe
 //
 //  Created by Guillaume Arseneault on 17-12-01.
-//
+//  classe servant à faire fluctuer une valeur asservie à un capteur
 //
 
 #include "interact.hpp"
@@ -18,8 +18,7 @@ void Interact::setup(string name, string _interact_osc_path)
     gui.add(stop_time_threshold.set("stop_time_threshold",500,1,1000));
     gui.add(value_trim.set("value_trim",1,0,2));
     interact_osc_path = _interact_osc_path;
-    //    gui.add(osc_input_port.set("osc_input_port",8001,8000, 8010));
-//    osc_receiver.setup(osc_input_port);
+
 }
 
 void Interact::update()
@@ -83,8 +82,7 @@ void Interact::decrement_value()
     }
     last_decrement_time = now_time;
     
-    // a besoins d'un reference temporelle
-    // si depasse un
+
 }
 
 float Interact::get_value()

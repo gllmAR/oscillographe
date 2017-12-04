@@ -7,10 +7,7 @@ void ofApp::setup(){
     ofBackground(0, 0, 0);
     
     ofSetFrameRate(60);
-    
-    interact_speed.setup("speed", "/gpio/1");
-    interact_volume.setup("volume", "/gpio/2");
-    
+
     // gui setup
     camera_gui.setup("camera");
     camera_gui.add(fps_label.setup("FPS"," "));
@@ -57,10 +54,16 @@ void ofApp::setup(){
     gui.add(&graphe_gui);
     gui.add(&feedback_gui);
 
-    gui.add(&interact_speed.gui);
-    gui.add(&interact_volume.gui);
+    interact_gui.setup();
+    interact_gui.setName("interact");
+    interact_speed.setup("speed", "/gpio/1");
+    interact_volume.setup("volume", "/gpio/2");
     
     
+    interact_gui.add(&interact_speed.gui);
+    interact_gui.add(&interact_volume.gui);
+    
+    gui.add(&interact_gui);
     
     gui.minimizeAll();
     audio_io.gui.minimizeAll();

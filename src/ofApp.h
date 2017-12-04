@@ -42,7 +42,7 @@ class ofApp : public ofBaseApp{
     Graphe graphe_output;
     Graphe graphe_player;
     
-    
+    ofxGuiGroup interact_gui;
     Interact interact_speed;
     Interact interact_volume;
     

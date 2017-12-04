@@ -157,7 +157,10 @@ void Audio_io::setup_player(int file_index)
         player_buffer_1_wo.assign(buffer_size, 0.0);
         player_buffer_2_wo.assign(buffer_size, 0.0);
 
-/*
+/* workaround (double asservissement des lecteurs audio si audiobuffer non patché )
+ // https://github.com/openframeworks/openFrameworks/pull/5815/files -> fix
+ // https://github.com/roymacdonald/ofxSoundObjects/issues/21 -> report
+
     player_buffer_1.allocate(buffer_size, 2);
     player_buffer_2.allocate(buffer_size, 2);
 
@@ -472,6 +475,18 @@ void Audio_io::output_select_change(int &output_select)
     output_init(output_select);
 }
 
+void Audio_io::set_master_vol(float _master_vol)
+{
+    master_vol_ammount = _master_vol;
+}
+
+void Audio_io::set_master_vol_change(float &f)
+{
+    master_vol_ammount = f;
+}
+
+
+
 void Audio_io::output_enable_change(bool &output_enable)
 {
     if (output_enable)
@@ -526,16 +541,14 @@ void Audio_io::player_pan_change(float &f)
 void Audio_io::player_volume_change(float &f)
 {
     player.setVolume(f);
-//        player_1.setVolume(player_volume);
-//      player_2.setVolume(player_volume);
+
 }
 
 
 void Audio_io::player_position_change(float &f)
 {
     player.setPosition(f);
-//    player_1.setPosition(f);
-//    player_2.setPosition(f);
+
 }
 
 void Audio_io::player_file_index_change(int &i)
@@ -543,16 +556,6 @@ void Audio_io::player_file_index_change(int &i)
     setup_player(i);
 }
 
-void Audio_io::set_master_vol(float _master_vol)
-{
-    master_vol_ammount = _master_vol;
-}
-
-
-void Audio_io::set_master_vol_change(float &f)
-{
-    master_vol_ammount = f;
-}
 
 
 

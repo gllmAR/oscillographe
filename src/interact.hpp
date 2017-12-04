@@ -26,7 +26,6 @@ public:
     ofParameter<bool> interact_enable = 1;
     ofParameter<bool> debug = 1;
     ofParameter<bool> draw_value = 0;
-    ofParameter<int> osc_input_port = 8001;
     ofParameter<int> stop_time_threshold = 500;
     ofParameter<float> value_trim = 1;
     int interact_value =0;
@@ -37,7 +36,6 @@ public:
     int last_decrement_time = 0;
     
     bool  value_stop_flag=1;
-  
     
     void setup(string name, string _interact_osc_path);
     void update();
