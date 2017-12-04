@@ -30,7 +30,9 @@ public:
     void setup_audio();
     void setup_player(int file_index);
     void reset_audio(bool &b);
-    
+    void set_master_vol(float _master_vol);
+    void set_master_vol_change(float &f);
+
     vector <ofSoundDevice> audio_devices;
     
     //meta stuff
@@ -40,12 +42,14 @@ public:
     ofParameter <int> buffer_size;
     ofParameter <int> sample_rate;
     
+    ofParameter <float> master_vol;
+    float master_vol_ammount;
    
  
     // input output stuff
      ofxGuiGroup gui_device_io;
     
-  
+    
     ofSoundStreamSettings io_settings;
     ofSoundStream io_stream;
 
@@ -59,6 +63,8 @@ public:
     ofParameter <float> io_input_pan;
     ofParameter <float> io_output_volume;
     ofParameter <float> io_output_pan;
+
+
 
     
     

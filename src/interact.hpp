@@ -19,35 +19,37 @@
 class Interact
 {
 public:
-    ofxOscReceiver osc_receiver;
+   // ofxOscReceiver osc_receiver;
     
     ofxGuiGroup gui;
     
     ofParameter<bool> interact_enable = 1;
     ofParameter<bool> debug = 1;
-    ofParameter<bool> draw_speed = 0;
+    ofParameter<bool> draw_value = 0;
     ofParameter<int> osc_input_port = 8001;
     ofParameter<int> stop_time_threshold = 500;
-    ofParameter<float> speed_trim = 1;
-    int interact_speed =0;
+    ofParameter<float> value_trim = 1;
+    int interact_value =0;
     
     uint64_t interval_time = 0;
     uint64_t now_time = 0;
     int last_increment_time = 0;
     int last_decrement_time = 0;
     
-    bool  speed_stop_flag=1;
+    bool  value_stop_flag=1;
   
     
-    void setup();
+    void setup(string name, string _interact_osc_path);
     void update();
     void draw();
-    void parse_osc();
-    void decrement_speed();
-    void increment_speed();
-    float get_speed();
-    float cooked_speed;
+    void parse_osc(ofxOscMessage m);
+    void decrement_value();
+    void increment_value();
+    float get_value();
+    float cooked_value;
     
+    string interact_name;
+    string interact_osc_path;
     
     
     

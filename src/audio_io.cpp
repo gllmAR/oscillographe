@@ -58,6 +58,7 @@ void Audio_io::setup_gui()
     gui_device.add(reset_audio_b.set("reset_audio",0));
     gui_device.add(buffer_size.set("buffer_size",512,64,4096));
     gui_device.add(sample_rate.set("sample_rate",44100,8000,192000));
+    gui_device.add(master_vol.set("master_vol",1,0,2));
     
     // io
     gui_device_io.setup();
@@ -186,6 +187,7 @@ void Audio_io::setup_player(int file_index)
 
 void Audio_io::setup_gui_listener()
 {
+    master_vol.addListener(this, &Audio_io::set_master_vol_change);
     reset_audio_b.addListener(this, &Audio_io::reset_audio);
     io_select.addListener(this, &Audio_io::io_select_change);
     io_enable.addListener(this, &Audio_io::io_enable_change);
@@ -297,9 +299,10 @@ void Audio_io::audioOut(ofSoundBuffer& output)
 //            float ch2 = ofClamp((input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume  * pan_2*2*!output_mute, -1, 1);
             float ch1 = ofClamp((input_buffer_1[i] +  player_buffer[i*2  ]) * output_volume * pan_1*2*!output_mute, -1, 1);
             float ch2 = ofClamp((input_buffer_2[i] +  player_buffer[i*2+1]) * output_volume  * pan_2*2*!output_mute, -1, 1);
-            output_buffer_1[i] = output[i*2  ] = ch1;
-            output_buffer_2[i] = output[i*2+1] = ch2;
-            
+            output_buffer_1[i] = ch1;
+            output_buffer_2[i] = ch2;
+            output[i*2  ] = ch1 * master_vol_ammount;
+            output[i*2+1] = ch2 * master_vol_ammount;
             //traiter l'output
             //output_buffer_1[i] = output[i*2  ] =(input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1*2*!output_mute;
             
@@ -540,6 +543,16 @@ void Audio_io::player_file_index_change(int &i)
     setup_player(i);
 }
 
+void Audio_io::set_master_vol(float _master_vol)
+{
+    master_vol_ammount = _master_vol;
+}
+
+
+void Audio_io::set_master_vol_change(float &f)
+{
+    master_vol_ammount = f;
+}
 
 
 

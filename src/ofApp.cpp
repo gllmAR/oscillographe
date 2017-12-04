@@ -8,7 +8,8 @@ void ofApp::setup(){
     
     ofSetFrameRate(60);
     
-    interact.setup();
+    interact_speed.setup("speed", "/gpio/1");
+    interact_volume.setup("volume", "/gpio/2");
     
     // gui setup
     camera_gui.setup("camera");
@@ -56,7 +57,8 @@ void ofApp::setup(){
     gui.add(&graphe_gui);
     gui.add(&feedback_gui);
 
-    gui.add(&interact.gui);
+    gui.add(&interact_speed.gui);
+    gui.add(&interact_volume.gui);
     
     
     
@@ -70,10 +72,15 @@ void ofApp::setup(){
     gui.loadFromFile("settings.xml");
     cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
 
+    osc_receiver.setup(INTERACT_PORT);
+    
     sync.setup((ofParameterGroup&)gui.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
     
 feedback_plane.rotateDeg(180, 1, 0, 0);
    
+    
+//    gui.add(osc_input_port.set("osc_input_port",8001,8000, 8010));
+
 }
 
 
@@ -88,13 +95,38 @@ void ofApp::update(){
 
     // pas clair play quoi faire pour que ce soit clean...
     
-    if (interact.interact_enable)
+    while(osc_receiver.hasWaitingMessages())
     {
-        interact.update();
-        audio_io.player_set_speed(interact.get_speed());
+        ofxOscMessage m;
+        osc_receiver.getNextMessage(m);
+        //cout<<m.getAddress()<<endl;
+        interact_speed.parse_osc(m);
+        interact_volume.parse_osc(m);
+        // mettre ici les deux parse osc de classe
+    }
+    
+    if (interact_speed.interact_enable)
+    {
+        interact_speed.update();
+        audio_io.player_set_speed(interact_speed.get_value());
     } else {
         audio_io.player_set_speed(audio_io.player_speed);
     }
+    
+    if (interact_volume.interact_enable)
+    {
+        interact_volume.update();
+        audio_io.set_master_vol(interact_volume.get_value());
+        // devrait etre changé pour get value
+    } else {
+        audio_io.set_master_vol(audio_io.master_vol);
+        //audio_io.player_set_speed(audio_io.player_speed);
+    }
+   
+    //    if (interact_enable)
+    //    {
+
+    
     sync.update();
     
     
@@ -137,7 +169,8 @@ void ofApp::draw(){
     
     cam.end();
     
-    interact.draw();
+    interact_speed.draw();
+    interact_volume.draw();
     ofEnableBlendMode( OF_BLENDMODE_ADD );
     
     if(feedback_enable)

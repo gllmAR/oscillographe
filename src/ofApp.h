@@ -6,10 +6,14 @@
 #include "audio_io.hpp"
 #include "graphe.hpp"
 #include "interact.hpp"
+#include "ofxOsc.h"
 
 #define HOST "localhost"
 #define SYNC_INPORT 9000
 #define SYNC_OUTPORT 9001
+#define INTERACT_PORT 8001
+
+
 
 class ofApp : public ofBaseApp{
 
@@ -37,7 +41,10 @@ class ofApp : public ofBaseApp{
     Graphe graphe_input;
     Graphe graphe_output;
     Graphe graphe_player;
-    Interact interact;
+    
+    
+    Interact interact_speed;
+    Interact interact_volume;
     
     ofEasyCam cam;
     // workaround pour faire fonctionner le fullscreen sur le raspberry pi
@@ -48,8 +55,12 @@ class ofApp : public ofBaseApp{
     int 	drawCounter;
     int     buffer_size_old=0;
     
+    ofxOscReceiver osc_receiver;
     ofxOscParameterSync sync;
+
+
     ofxPanel gui;
+    
     
     ofxGuiGroup camera_gui;
     ofxGuiGroup graphe_gui;
@@ -78,6 +89,6 @@ class ofApp : public ofBaseApp{
     void cam_set_distance_change(float &f);
     bool cam_workaroud_to_update = 1;
     
-
+    
 
 };
