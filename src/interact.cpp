@@ -4,7 +4,9 @@
 //
 //  Created by Guillaume Arseneault on 17-12-01.
 //  classe servant à faire fluctuer une valeur asservie à un capteur
-//
+//  s'initialise avec un nom et une path osc,
+//  s'update (pour décrémenter)
+//  lui passer un message osc pour incrémenter
 
 #include "interact.hpp"
 
@@ -18,40 +20,39 @@ void Interact::setup(string name, string _interact_osc_path)
     gui.add(stop_time_threshold.set("stop_time_threshold",500,1,1000));
     gui.add(value_trim.set("value_trim",1,0,2));
     interact_osc_path = _interact_osc_path;
-
 }
 
 void Interact::update()
 {
     if(interact_enable)
     {
-    now_time = ofGetElapsedTimeMillis();
-    decrement_value();
-    } 
+        now_time = ofGetElapsedTimeMillis();
+        decrement_value();
+    }
 }
 
 void Interact::draw()
 {
-  if (interact_enable && draw_value)
-  {
-      ofPushMatrix();
-      ofSetColor(255,255,255,255);
-      ofDrawRectangle(0,15*ofGetHeight()/16,ofGetWidth()/2*cooked_value,ofGetHeight()/16);
-      ofPopMatrix();
-  }
+    if (interact_enable && draw_value)
+    {
+        ofPushMatrix();
+        ofSetColor(255,255,255,255);
+        ofDrawRectangle(0,15*ofGetHeight()/16,ofGetWidth()/2*cooked_value,ofGetHeight()/16);
+        ofPopMatrix();
+    }
 }
 
 void Interact::parse_osc(ofxOscMessage m)
 {
-        if (m.getAddress() == interact_osc_path)
-            {
-                increment_value();
-            }
+    if (m.getAddress() == interact_osc_path)
+    {
+        increment_value();
+    }
 }
 
 void Interact::increment_value()
 {
- 
+    
     if(value_stop_flag)
     {
         value_stop_flag=0;
@@ -67,22 +68,18 @@ void Interact::decrement_value()
 {
     if (interact_value > 0 )
     {
-            if(now_time-last_increment_time>stop_time_threshold)
-            {
-                interact_value=0.01;
-                value_stop_flag = 1;
-                if(debug){cout<<"stoped!!"<<endl;}
-            }else{
-                interact_value -= now_time-last_decrement_time;
-                if (interact_value < 0){interact_value = 0;}
-                if(debug){cout<<"dec "<< interact_value << endl;}
-            }
-                
-    
+        if(now_time-last_increment_time>stop_time_threshold)
+        {
+            interact_value=0.01;
+            value_stop_flag = 1;
+            if(debug){cout<<"stoped!!"<<endl;}
+        }else{
+            interact_value -= now_time-last_decrement_time;
+            if (interact_value < 0){interact_value = 0;}
+            if(debug){cout<<"dec "<< interact_value << endl;}
+        }
     }
     last_decrement_time = now_time;
-    
-
 }
 
 float Interact::get_value()
