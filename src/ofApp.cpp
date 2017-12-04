@@ -8,7 +8,9 @@ void ofApp::setup(){
     
     ofSetFrameRate(60);
 
-    // gui setup
+    audio_io.setup();
+    
+    // camera
     camera_gui.setup("camera");
     camera_gui.add(fps_label.setup("FPS"," "));
     camera_gui.add(cam_set_ortho.set("cam_set_ortho", 1));
@@ -16,7 +18,7 @@ void ofApp::setup(){
     camera_gui.add(cam_set_distance.set("cam_set_distance", 0, 0, 1000));
     camera_gui.add(set_fullscreen.set("fullscreen", 0));
 
-    audio_io.setup();
+
     
     graphe_input.setup();
     graphe_input.gui.setName("input");
@@ -75,20 +77,15 @@ void ofApp::setup(){
     gui.loadFromFile("settings.xml");
     cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
 
-    osc_receiver.setup(INTERACT_PORT);
+    osc_receiver.setup(INTERACT_PORT); //pour input de senseur
     
     sync.setup((ofParameterGroup&)gui.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
     
-feedback_plane.rotateDeg(180, 1, 0, 0);
+    feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse
    
-    
-//    gui.add(osc_input_port.set("osc_input_port",8001,8000, 8010));
-
 }
 
 
-// faut passer le buffer minimu, a la classe sinon ca crash quand on va chercher plus bas sur
-// faut clamp avec le minimum buffer que la carte lie
 //--------------------------------------------------------------
 void ofApp::update(){
     
@@ -119,23 +116,18 @@ void ofApp::update(){
     if (interact_volume.interact_enable)
     {
         interact_volume.update();
-        audio_io.set_master_vol(interact_volume.get_value());
+        audio_io.set_output_vol(interact_volume.get_value());
         // devrait etre changé pour get value
     } else {
-        audio_io.set_master_vol(audio_io.master_vol);
+        audio_io.set_output_vol(audio_io.output_volume.get());
         //audio_io.player_set_speed(audio_io.player_speed);
     }
    
-    //    if (interact_enable)
-    //    {
-
-    
     sync.update();
-    
     
     if(gui_draw){fps_label= ofToString(ofGetFrameRate());}
     
-   ofEnableAlphaBlending();
+    ofEnableAlphaBlending();
    
     
 }
@@ -178,16 +170,10 @@ void ofApp::draw(){
     
     if(feedback_enable)
     {
-        
         screen_texture.loadScreenData(0,0,app_size_w,app_size_h);
-    
     }
-    
 
-    
     ofDisableDepthTest();
-
-
     
    ofEnableBlendMode(OF_BLENDMODE_DISABLED);
     
@@ -198,11 +184,6 @@ void ofApp::draw(){
         screen_workaround_to_update = 0;
     }
 }
-//--------------------------------------------------------------
-
-
-
-
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -267,7 +248,6 @@ void ofApp::windowResized(int w, int h){
     
     screen_texture.allocate(w,h,GL_RGBA);
     feedback_plane.resizeToTexture(screen_texture);
-
     
 }
 
@@ -286,11 +266,14 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 void ofApp::exit(){
     audio_io.exit();
 }
+//--------------------------------------------------------------
+
 
 void ofApp::cam_set_distance_change(float &f)
 {
     cam.setDistance( cam_set_distance);
     cout<<cam.getDistance()<<endl;
 }
+//--------------------------------------------------------------
 
 

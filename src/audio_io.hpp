@@ -6,7 +6,6 @@
 //
 //
 // sert a configurer le soundstream et sauvegarder
-// logique de parser le system (une config par system)
 
 
 
@@ -32,7 +31,9 @@ public:
     void reset_audio(bool &b);
     void set_master_vol(float _master_vol);
     void set_master_vol_change(float &f);
-
+    void set_output_vol(float _output_vol);
+    void set_output_vol_change(float &f);
+    
     vector <ofSoundDevice> audio_devices;
     
     //meta stuff
@@ -44,16 +45,16 @@ public:
     
     ofParameter <float> master_vol;
     float master_vol_ammount;
-   
- 
+    float output_vol_ammount;
+    
     // input output stuff
-     ofxGuiGroup gui_device_io;
+    ofxGuiGroup gui_device_io;
     
     
     ofSoundStreamSettings io_settings;
     ofSoundStream io_stream;
-
-
+    
+    
     ofParameter <int> io_select;
     ofParameter <bool> io_enable;
     ofParameter <bool> io_input_enable;
@@ -63,9 +64,9 @@ public:
     ofParameter <float> io_input_pan;
     ofParameter <float> io_output_volume;
     ofParameter <float> io_output_pan;
-
-
-
+    
+    
+    
     
     
     void io_init(int i);
@@ -99,7 +100,7 @@ public:
     ofxGuiGroup gui_output;
     ofSoundStream output_stream;
     ofSoundStreamSettings output_settings;
-     ofParameter <bool> output_mute;
+    ofParameter <bool> output_mute;
     ofParameter <float> output_volume;
     ofParameter <float> output_pan;
     ofParameter <int> output_select;
@@ -112,7 +113,7 @@ public:
     void output_select_change(int &output_select);
     void output_enable_change(bool &output_enable);
     
-   
+    
     // player stuff
     ofxGuiGroup gui_player;
     ofxBasicSoundPlayer player;
