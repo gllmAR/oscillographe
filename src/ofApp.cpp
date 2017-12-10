@@ -52,6 +52,7 @@ void ofApp::setup_gui()
     graphe_gui.add(&graphe_input.gui);
     graphe_gui.add(&graphe_player.gui);
     graphe_gui.add(&graphe_output.gui);
+    graphe_gui.minimizeAll();
     
     // feedback
     feedback_gui.setup();
@@ -69,7 +70,17 @@ void ofApp::setup_gui()
     interact_gui.setName("interact");
     interact_gui.add(&interact_speed.gui);
     interact_gui.add(&interact_volume.gui);
+    interact_gui.minimizeAll();
 
+    
+    // preset load and save pannel
+    preset_gui.setup();
+    preset_gui.setName("presets");
+    preset_gui.add(preset_index.set("index",0,0,10));
+    preset_gui.add(preset_load_b.set("load",0));
+    preset_gui.add(preset_save_b.set("save",0));
+    preset_gui.minimizeAll();
+    
     
     
     // compose the preset pannel
@@ -88,18 +99,21 @@ void ofApp::setup_gui()
     preset_panel.minimizeAll();
     audio_io.gui.minimizeAll();
     audio_io.gui_device.minimizeAll();
-    graphe_gui.minimizeAll();
-    interact_gui.minimizeAll();
+
+
     preset_panel.loadFromFile("oscillo.xml");
     
     
     
     //setup panel
     setup_panel.setup("settings", "settings.xml", 220, 10);
+    setup_panel.add(&preset_gui);
+    
     setup_panel.add(&audio_io.gui_device);
     setup_panel.minimizeAll();
     setup_panel.loadFromFile("settings.xml");
-    
+    preset_save_b.addListener(this, &ofApp::preset_save);
+    preset_load_b.addListener(this, &ofApp::preset_load);
 }
 
 //--------------------------------------------------------------
@@ -293,6 +307,30 @@ void ofApp::cam_set_distance_change(float &f)
     cam.setDistance( cam_set_distance);
     cout<<cam.getDistance()<<endl;
 }
+//--------------------------------------------------------------
+
+void ofApp::preset_save(bool &b)
+{
+    std::string str = "oscillo_";
+    str += ofToString(preset_index);
+    preset_panel.setName(str);
+    preset_panel.saveToFile("oscillo.xml");
+    preset_save_b =0;
+}
+
+
+//--------------------------------------------------------------
+
+void ofApp::preset_load(bool &b)
+{
+    std::string str = "oscillo_";
+    str += ofToString(preset_index);
+    preset_panel.setName(str);
+    preset_panel.loadFromFile("oscillo.xml");
+    preset_load_b =0;
+}
+
+
 //--------------------------------------------------------------
 
 

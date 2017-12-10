@@ -23,8 +23,6 @@ class ofApp : public ofBaseApp{
 		void draw();
     
         void setup_gui();
-        //void save_preset(int index);
-        //void load_preset(int index);
     
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -97,5 +95,12 @@ class ofApp : public ofBaseApp{
     bool cam_workaroud_to_update = 1;
     
     
-
+    
+    // save et load preset
+    void preset_save(bool &b);
+    void preset_load(bool &b);
+    ofxGuiGroup preset_gui;
+    ofParameter<int> preset_index;
+    ofParameter<bool> preset_save_b;
+    ofParameter<bool> preset_load_b;
 };
