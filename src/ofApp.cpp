@@ -9,7 +9,27 @@ void ofApp::setup(){
     ofSetFrameRate(60);
 
     audio_io.setup();
+
+    setup_gui();
     
+    interact_speed.setup("speed", "/gpio/1");
+    interact_volume.setup("volume", "/gpio/2");
+    
+    cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
+
+    osc_receiver.setup(INTERACT_PORT); //pour input de senseur
+    
+    sync.setup((ofParameterGroup&)preset_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
+    
+    feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse
+   
+}
+
+//
+
+void ofApp::setup_gui()
+{
+
     // camera
     camera_gui.setup("camera");
     camera_gui.add(fps_label.setup("FPS"," "));
@@ -17,9 +37,9 @@ void ofApp::setup(){
     camera_gui.add(cam_set_reset.set("cam_set_reset", 1));
     camera_gui.add(cam_set_distance.set("cam_set_distance", 0, 0, 1000));
     camera_gui.add(set_fullscreen.set("fullscreen", 0));
-
-
     
+    
+    // graphe
     graphe_input.setup();
     graphe_input.gui.setName("input");
     graphe_player.setup();
@@ -27,21 +47,13 @@ void ofApp::setup(){
     graphe_output.setup();
     graphe_output.gui.setName("output");
     
-
-    gui.setup();
-    gui.setName("oscillo");
-    
-    gui.add(&camera_gui);
-    
-    
     graphe_gui.setup();
     graphe_gui.setName("graphe");
-
-    
     graphe_gui.add(&graphe_input.gui);
     graphe_gui.add(&graphe_player.gui);
     graphe_gui.add(&graphe_output.gui);
     
+    // feedback
     feedback_gui.setup();
     feedback_gui.setName("feedback");
     feedback_gui.add(feedback_enable.set("enable",0));
@@ -50,44 +62,49 @@ void ofApp::setup(){
     feedback_gui.add(feedback_pos_y.set("y", 1, 0, 2 ));
     feedback_gui.add(feedback_scale.set("scale", 1, 0 ,2));
     
+    // interact
     
     
-    gui.add(&audio_io.gui);
-    gui.add(&graphe_gui);
-    gui.add(&feedback_gui);
-
     interact_gui.setup();
     interact_gui.setName("interact");
-    interact_speed.setup("speed", "/gpio/1");
-    interact_volume.setup("volume", "/gpio/2");
-    
-    
     interact_gui.add(&interact_speed.gui);
     interact_gui.add(&interact_volume.gui);
+
     
-    gui.add(&interact_gui);
     
-    gui.minimizeAll();
+    // compose the preset pannel
+    
+    preset_panel.setup("oscillo_0", "oscillo.xml", 10, 10);
+    
+    //preset_panel.setName("oscillo");
+    
+    
+    preset_panel.add(&camera_gui);
+    preset_panel.add(&audio_io.gui);
+    preset_panel.add(&graphe_gui);
+    preset_panel.add(&feedback_gui);
+    preset_panel.add(&interact_gui);
+
+    preset_panel.minimizeAll();
     audio_io.gui.minimizeAll();
     audio_io.gui_device.minimizeAll();
     graphe_gui.minimizeAll();
+    interact_gui.minimizeAll();
+    preset_panel.loadFromFile("oscillo.xml");
     
     
     
-    gui.loadFromFile("settings.xml");
-    cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
-
-    osc_receiver.setup(INTERACT_PORT); //pour input de senseur
+    //setup panel
+    setup_panel.setup("settings", "settings.xml", 220, 10);
+    setup_panel.add(&audio_io.gui_device);
+    setup_panel.minimizeAll();
+    setup_panel.loadFromFile("settings.xml");
     
-    sync.setup((ofParameterGroup&)gui.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
-    
-    feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse
-   
 }
 
-
 //--------------------------------------------------------------
-void ofApp::update(){
+void ofApp::update()
+{
     
     graphe_input.update(audio_io.buffer_size, audio_io.input_buffer_1, audio_io.input_buffer_2);
     graphe_player.update(audio_io.buffer_size, audio_io.player_buffer_1_wo, audio_io.player_buffer_2_wo);
@@ -128,13 +145,12 @@ void ofApp::update(){
     if(gui_draw){fps_label= ofToString(ofGetFrameRate());}
     
     ofEnableAlphaBlending();
-   
     
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
-
+void ofApp::draw()
+{
     if (set_fullscreen_old != set_fullscreen)
     {
         ofSetFullscreen(set_fullscreen);
@@ -177,16 +193,20 @@ void ofApp::draw(){
     
    ofEnableBlendMode(OF_BLENDMODE_DISABLED);
     
-    if (gui_draw){gui.draw();}
+    if (gui_draw)
+    {
+        preset_panel.draw();
+        setup_panel.draw();
+    }
     if (screen_workaround_to_update)
     {
         windowResized(ofGetWidth(), ofGetHeight());
         screen_workaround_to_update = 0;
     }
 }
-
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
+void ofApp::keyPressed(int key)
+{
     if( key == 'g' ){gui_draw=!gui_draw;}
     
     if (key == 'f'){set_fullscreen=!set_fullscreen;}
@@ -197,47 +217,49 @@ void ofApp::keyPressed(int key){
     }
 
 }
-
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
+void ofApp::keyReleased(int key)
+{
+    
+}
+//--------------------------------------------------------------
+void ofApp::mouseMoved(int x, int y )
+{
 
 }
-
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
+void ofApp::mouseDragged(int x, int y, int button)
+{
 
 }
-
 //--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
+void ofApp::mousePressed(int x, int y, int button)
+{
      if( button == 2 ){gui_draw=!gui_draw;}
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseReleased(int x, int y, int button)
+{
+
+}
+
+//--------------------------------------------------------------
+void ofApp::mouseEntered(int x, int y)
+{
 
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
+void ofApp::mouseExited(int x, int y)
+{
 
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
+void ofApp::windowResized(int w, int h)
+{
     app_size_w = w;
     app_size_h = h;
     cout << "app size = " << w << " by " << h <<endl;
@@ -250,24 +272,21 @@ void ofApp::windowResized(int w, int h){
     feedback_plane.resizeToTexture(screen_texture);
     
 }
-
 //--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
+void ofApp::gotMessage(ofMessage msg)
+{
 
 }
-
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void ofApp::dragEvent(ofDragInfo dragInfo)
+{
+    
 }
-
 //--------------------------------------------------------------
-
 void ofApp::exit(){
     audio_io.exit();
 }
 //--------------------------------------------------------------
-
 
 void ofApp::cam_set_distance_change(float &f)
 {

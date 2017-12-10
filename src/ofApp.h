@@ -21,7 +21,11 @@ class ofApp : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
-
+    
+        void setup_gui();
+        //void save_preset(int index);
+        //void load_preset(int index);
+    
 		void keyPressed(int key);
 		void keyReleased(int key);
 		void mouseMoved(int x, int y );
@@ -59,7 +63,8 @@ class ofApp : public ofBaseApp{
     ofxOscParameterSync sync;
 
 
-    ofxPanel gui;
+    ofxPanel preset_panel;
+    ofxPanel setup_panel;
     
     
     ofxGuiGroup camera_gui;
@@ -85,6 +90,8 @@ class ofApp : public ofBaseApp{
     bool gui_draw = 0;
     int app_size_w=100;
     int app_size_h=100;
+    
+    
     
     void cam_set_distance_change(float &f);
     bool cam_workaroud_to_update = 1;

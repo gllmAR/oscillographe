@@ -1,49 +1,24 @@
 <?xml version="1.0"?>
-<oscillo>
-	<camera>
-		<cam_set_ortho>0</cam_set_ortho>
-		<cam_set_reset>0</cam_set_reset>
-		<cam_set_distance>1</cam_set_distance>
-		<fullscreen>1</fullscreen>
-	</camera>
-	<sound_setup>
-		<audio_select>3</audio_select>
-		<buffer_size>64</buffer_size>
+<settings>
+	<device>
+		<reset_audio>0</reset_audio>
+		<buffer_size>512</buffer_size>
 		<sample_rate>44100</sample_rate>
-	</sound_setup>
-	<oscillo>
-		<buffer_history>2048</buffer_history>
-		<shapeScale>0.85</shapeScale>
-		<line_width>1</line_width>
-		<color>255, 249, 0, 255</color>
-		<mesh_width_z>-0.285714</mesh_width_z>
-	</oscillo>
-	<graphe>
-		<buffer_history>2048</buffer_history>
-		<shapeScale>0.85</shapeScale>
-		<line_width>1</line_width>
-		<color>255, 245, 16, 255</color>
-		<mesh_width_z>-0.714286</mesh_width_z>
-	</graphe>
-	<audio_in>
-		<audio_select>3</audio_select>
-		<buffer_size>64</buffer_size>
-		<sample_rate>44100</sample_rate>
-	</audio_in>
-	<audio_io>
-		<input_select>3</input_select>
-		<input_volume>1</input_volume>
-		<input_pan>0</input_pan>
-		<buffer_size>64</buffer_size>
-		<sample_rate>44100</sample_rate>
-		<input_active>0</input_active>
-		<output_active>1</output_active>
-		<output_select>3</output_select>
-		<output_volume>0.663265</output_volume>
-		<output_pan>0</output_pan>
-		<player_active>1</player_active>
-		<player_speed>1</player_speed>
-		<player_volume>1</player_volume>
-		<player_pan>0</player_pan>
-	</audio_io>
-</oscillo>
+		<input_trim>1</input_trim>
+		<master_vol>1</master_vol>
+		<set_io>
+			<io_enable>0</io_enable>
+			<select>0</select>
+			<in_enable>0</in_enable>
+			<out_enable>0</out_enable>
+		</set_io>
+		<set_input>
+			<enable>1</enable>
+			<select>0</select>
+		</set_input>
+		<set_output>
+			<enable>1</enable>
+			<select>1</select>
+		</set_output>
+	</device>
+</settings>

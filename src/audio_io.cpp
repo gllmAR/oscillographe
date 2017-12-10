@@ -57,6 +57,7 @@ void Audio_io::setup_gui()
     gui_device.add(reset_audio_b.set("reset_audio",0));
     gui_device.add(buffer_size.set("buffer_size",512,64,4096));
     gui_device.add(sample_rate.set("sample_rate",44100,8000,192000));
+    gui_device.add(input_trim.set("input_trim", 1, 0, 100));
     gui_device.add(master_vol.set("master_vol",1,0,2));
     
     // io
@@ -85,7 +86,7 @@ void Audio_io::setup_gui()
     gui_input.setup();
     gui_input.setName("input");
     gui_input.add(input_mute.set("mute", 0));
-    gui_input.add(input_trim.set("trim", 1, 0, 100));
+
     gui_input.add(input_volume.set("volume",1,0,2));
     gui_input.add(input_pan.set("pan",0,-1,1));
     
@@ -107,13 +108,10 @@ void Audio_io::setup_gui()
     gui_output.add(output_volume.set("volume",1,0,2));
     gui_output.add(output_pan.set("pan",0,-1,1));
     
-    
-    
-    
     gui_device.add(&gui_device_io);
     gui_device.add(&gui_device_input);
     gui_device.add(&gui_device_output);
-    gui.add(&gui_device);
+    //gui.add(&gui_device);
     gui.add(&gui_input);
     gui.add(&gui_player);
     gui.add(&gui_output);
@@ -213,7 +211,6 @@ void Audio_io::setup_gui_listener()
 
 void Audio_io::exit()
 {
-    
     input_buffer_1.assign(buffer_size, 0.0);
     input_buffer_2.assign(buffer_size, 0.0);
     
@@ -252,11 +249,9 @@ void Audio_io::audioIn(ofSoundBuffer & input)
             {
                 input_buffer_1[i] = ofClamp(input_buffer[i*2  ] * input_volume * pan_1 *input_trim, -1, 1) ;
                 input_buffer_2[i] = ofClamp(input_buffer[i*2+1] * input_volume * pan_2 *input_trim, -1, 1);
-            } // pourquoi 20? test avec du signal et ca sort comme ca
+            }
         }
     }
-    
-    
 }
 
 void Audio_io::audioOut(ofSoundBuffer& output)
@@ -303,10 +298,6 @@ void Audio_io::audioOut(ofSoundBuffer& output)
     }
 }
 
-
-
-
-
 void Audio_io::io_init(int i)
 {
     io_stream.stop();
@@ -333,7 +324,6 @@ void Audio_io::io_init(int i)
         } else {
             io_stream.stop();
         }
-        
     }
 }
 
@@ -355,8 +345,6 @@ void Audio_io::io_enable_change(bool &b)
         io_stream.close();
     }
 }
-
-
 
 
 void Audio_io::input_init(int selection)
@@ -391,7 +379,6 @@ void Audio_io::input_init(int selection)
     }
 }
 
-
 void Audio_io::input_select_change(int &input_select)
 {
     input_init(input_select);
@@ -413,11 +400,6 @@ void Audio_io::input_enable_change(bool &input_enable)
         input_buffer_2.assign(buffer_size, 0.0);
     }
 }
-
-
-
-
-
 
 void Audio_io::output_init(int selection)
 {
@@ -452,9 +434,6 @@ void Audio_io::output_init(int selection)
         output_buffer_2.assign(buffer_size, 0.0);
         player_buffer_1_wo.assign(buffer_size, 0.0);
         player_buffer_2_wo.assign(buffer_size, 0.0);
-        
-        
-        
     }
 }
 
@@ -473,7 +452,6 @@ void Audio_io::set_master_vol_change(float &f)
     master_vol_ammount = f;
 }
 
-
 void Audio_io::set_output_vol(float _output_vol)
 {
     output_vol_ammount = _output_vol;
@@ -483,8 +461,6 @@ void Audio_io::set_output_vol_change(float &f)
 {
     output_vol_ammount = f;
 }
-
-
 
 void Audio_io::output_enable_change(bool &output_enable)
 {

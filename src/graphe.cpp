@@ -31,47 +31,38 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
     if (graphe_active) {
         if (buffer_size_old != input_buffer_size)
         {
-                        buffer_history.setMin(input_buffer_size+1);
-                        buffer_size_old = input_buffer_size;
-                        cout<<input_buffer_size<<endl;
+            buffer_history.setMin(input_buffer_size+1);
+            buffer_size_old = input_buffer_size;
+            cout<<input_buffer_size<<endl;
         }
         
-    // ici, application devrait passer soundSettingGui.buffer_size vers une classe pour dessiner Graphe
-    
-    
-    // timestamp=ofGetElapsedTimeMillis();
-    
-    vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
-    vbo_mesh.enableColors();
-    
-    
-    int vertex_buffer = vbo_mesh.getNumVertices();
-    
-    for (unsigned int i = 0; i < (input_buffer_size); i++)
-    {
-        ofVec3f coord (input_buffer_x[i]*app_size_w/2*shape_scale*50,
-                       input_buffer_y[i]*app_size_h/2*shape_scale*50,
-                       buffer_history-i);
+        // ici, application devrait passer soundSettingGui.buffer_size vers une classe pour dessiner Graphe
+        vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
+        vbo_mesh.enableColors();
+        int vertex_buffer = vbo_mesh.getNumVertices();
         
-        if (vertex_buffer > buffer_history)
+        for (unsigned int i = 0; i < (input_buffer_size); i++)
         {
-            vbo_mesh.removeVertex(i);
-            vbo_mesh.setVertex(buffer_history-i, coord);
-        } else {
-            vbo_mesh.addVertex(coord);
+            ofVec3f coord (input_buffer_x[i]*app_size_w/2*shape_scale*50,
+                           input_buffer_y[i]*app_size_h/2*shape_scale*50,
+                           buffer_history-i);
+            
+            if (vertex_buffer > buffer_history)
+            {
+                vbo_mesh.removeVertex(i);
+                vbo_mesh.setVertex(buffer_history-i, coord);
+            } else {
+                vbo_mesh.addVertex(coord);
+            }
         }
-    }
-    
-
-    
-    for (unsigned int i =0; i< vbo_mesh.getNumVertices(); i++)
-    {
-        ofVec3f coord = vbo_mesh.getVertex(i);
-        coord[2] = mesh_width_z*i;
-        vbo_mesh.setVertex(i, coord);
         
-    }
-        
+        for (unsigned int i =0; i< vbo_mesh.getNumVertices(); i++)
+        {
+            ofVec3f coord = vbo_mesh.getVertex(i);
+            coord[2] = mesh_width_z*i;
+            vbo_mesh.setVertex(i, coord);
+            
+        }
     }
 }
 
@@ -79,20 +70,15 @@ void Graphe::draw()
 {
     if (graphe_active)
     {
-        
-    // draw the OSCILO channel:
-    ofPushStyle();
-    ofPushMatrix();
-    
-    ofNoFill();
-    
-    ofSetLineWidth(line_width);
-    ofSetColor(line_color);
-    
-    vbo_mesh.draw();
-    
-    ofPopMatrix();
-    ofPopStyle();
+        // draw the OSCILO channel:
+        ofPushStyle();
+        ofPushMatrix();
+            ofNoFill();
+            ofSetLineWidth(line_width);
+            ofSetColor(line_color);
+            vbo_mesh.draw();
+        ofPopMatrix();
+        ofPopStyle();
     }
 }
 
@@ -100,7 +86,6 @@ void Graphe::set_size(int w, int h)
 {
     app_size_w = w;
     app_size_h = h;
-    
 }
 
 void Graphe::set_saturation(float &f)

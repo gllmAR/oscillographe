@@ -15,7 +15,6 @@
 
 
 class Graphe
-// rajouter un param de hue de saturation d opacite
 
 {
 public:
