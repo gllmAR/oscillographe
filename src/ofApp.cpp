@@ -31,12 +31,14 @@ void ofApp::setup_gui()
 {
 
     // camera
-    camera_gui.setup("camera");
-    camera_gui.add(fps_label.setup("FPS"," "));
-    camera_gui.add(cam_set_ortho.set("cam_set_ortho", 1));
-    camera_gui.add(cam_set_reset.set("cam_set_reset", 1));
-    camera_gui.add(cam_set_distance.set("cam_set_distance", 0, 0, 1000));
-    camera_gui.add(set_fullscreen.set("fullscreen", 0));
+    camera_preset_gui.setup("camera");
+    camera_preset_gui.add(cam_set_ortho.set("cam_set_ortho", 1));
+    camera_preset_gui.add(cam_set_distance.set("cam_set_distance", 0, 0, 1000));
+    
+    camera_settings_gui.setup("camera");
+    camera_settings_gui.add(fps_label.setup("FPS"," "));
+    camera_settings_gui.add(cam_set_reset.set("cam_set_reset", 1));
+    camera_settings_gui.add(set_fullscreen.set("fullscreen", 0));
     
     
     // graphe
@@ -90,7 +92,7 @@ void ofApp::setup_gui()
     //preset_panel.setName("oscillo");
     
     
-    preset_panel.add(&camera_gui);
+    preset_panel.add(&camera_preset_gui);
     preset_panel.add(&audio_io.gui);
     preset_panel.add(&graphe_gui);
     preset_panel.add(&feedback_gui);
@@ -107,6 +109,7 @@ void ofApp::setup_gui()
     
     //setup panel
     setup_panel.setup("settings", "settings.xml", 220, 10);
+    setup_panel.add(&camera_settings_gui);
     setup_panel.add(&preset_gui);
     
     setup_panel.add(&audio_io.gui_device);

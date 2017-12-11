@@ -65,7 +65,8 @@ class ofApp : public ofBaseApp{
     ofxPanel setup_panel;
     
     
-    ofxGuiGroup camera_gui;
+    ofxGuiGroup camera_preset_gui;
+    ofxGuiGroup camera_settings_gui;
     ofxGuiGroup graphe_gui;
     
     
