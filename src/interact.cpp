@@ -14,7 +14,7 @@ void Interact::setup(string name, string _interact_osc_path)
 {
     gui.setup();
     gui.setName(name);
-    gui.add(interact_enable.set("interact_enable",1));
+    gui.add(interact_enable.set("interact_enable",0));
     gui.add(draw_value.set("draw_value",0));
     gui.add(debug.set("debug",0));
     gui.add(stop_time_threshold.set("stop_time_threshold",500,1,1000));

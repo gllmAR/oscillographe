@@ -21,7 +21,7 @@ public:
     
     ofxGuiGroup gui;
     
-    ofParameter<bool> interact_enable = 1;
+    ofParameter<bool> interact_enable = 0;
     ofParameter<bool> debug = 1;
     ofParameter<bool> draw_value = 0;
     ofParameter<int> stop_time_threshold = 500;

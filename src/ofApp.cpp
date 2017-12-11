@@ -10,10 +10,12 @@ void ofApp::setup(){
 
     audio_io.setup();
 
-    setup_gui();
-    
+
     interact_speed.setup("speed", "/gpio/1");
     interact_volume.setup("volume", "/gpio/2");
+
+    setup_gui();
+
     
     cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
 
