@@ -17,7 +17,9 @@ void ofApp::setup(){
     setup_gui();
 
     
-    cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
+    cam_get_param_b.addListener(this, &ofApp::cam_get_param);
+    cam_set_param_b.addListener(this, &ofApp::cam_set_param);
+    //cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
 
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
     
@@ -35,13 +37,25 @@ void ofApp::setup_gui()
     // camera
     camera_preset_gui.setup("camera");
     camera_preset_gui.add(cam_set_ortho.set("cam_set_ortho", 1));
-    camera_preset_gui.add(cam_set_distance.set("cam_set_distance", 0, 0, 1000));
+    //camera_preset_gui.add(cam_set_distance.set("cam_set_distance", 0, 0, 1000));
+    camera_preset_gui.add(cam_view_position.set("position",
+                                                glm::vec3(0),
+                                                glm::vec3(-1000),
+                                                glm::vec3(1000)));
+    camera_preset_gui.add(cam_view_orientation_quat_string.set("orientation"," "));
+    //camera_preset_gui.add(cam_view_orientation_quat.set("orientation",
+//                                                        glm::vec4(0),
+//                                                        glm::vec4(-1),
+//                                                        glm::vec4(1));
+    //camera_preset_gui.add(cam_view_position.set("position"));
+    
     
     camera_settings_gui.setup("camera");
     camera_settings_gui.add(fps_label.setup("FPS"," "));
     camera_settings_gui.add(cam_set_reset.set("cam_set_reset", 1));
     camera_settings_gui.add(set_fullscreen.set("fullscreen", 0));
-    
+    camera_settings_gui.add(cam_get_param_b.set("cam_get_param",0));
+    camera_settings_gui.add(cam_set_param_b.set("cam_set_param",0));
     
     // graphe
     graphe_input.setup();
@@ -307,15 +321,10 @@ void ofApp::exit(){
 }
 //--------------------------------------------------------------
 
-void ofApp::cam_set_distance_change(float &f)
-{
-    cam.setDistance( cam_set_distance);
-    cout<<cam.getDistance()<<endl;
-}
-//--------------------------------------------------------------
 
 void ofApp::preset_save(bool &b)
 {
+    cam_get_param(b);
     std::string str = "oscillo_";
     str += ofToString(preset_index);
     preset_panel.setName(str);
@@ -333,9 +342,35 @@ void ofApp::preset_load(bool &b)
     preset_panel.setName(str);
     preset_panel.loadFromFile("oscillo.xml");
     preset_load_b =0;
+    cam_set_param(b);
 }
 
 
 //--------------------------------------------------------------
 
+void ofApp::cam_get_param(bool &b)
+{
+    cam_view_position=cam.getPosition();
+    glm::quat cam_view_orientation_quat=cam.getOrientationQuat();
+    //workaround pour sauvegarder un quat en string dans un ofParameter
+    cam_view_orientation_quat_string =ofToString(cam_view_orientation_quat);
+    cam_get_param_b = 0;
+}
+//--------------------------------------------------------------
+
+void ofApp::cam_set_param(bool &b)
+{
+    // workaround pour restaurer un quat a partir d une string
+    glm::quat temp_orientation;
+    vector <string> orientation_quat_vec = ofSplitString(cam_view_orientation_quat_string, " ");
+    // comprendre pourquoi l'index est offset de 1 ici...?
+    temp_orientation[0]=ofToFloat(orientation_quat_vec[1]);
+    temp_orientation[1]=ofToFloat(orientation_quat_vec[2]);
+    temp_orientation[2]=ofToFloat(orientation_quat_vec[3]);
+    temp_orientation[3]=ofToFloat(orientation_quat_vec[0]);
+    cout<<ofToString(temp_orientation)<<endl;
+    cam.setOrientation(temp_orientation);
+    cam.setPosition(cam_view_position);
+    cam_set_param_b = 0;
+}
 

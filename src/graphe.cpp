@@ -16,7 +16,7 @@ void Graphe::setup()
     gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
     gui.add(shape_scale.set("shape_scale",0.10,0,1));
     gui.add(line_width.set("line_width",1, 0.1,1000));
-    gui.add(mesh_width_z.set("mesh_width_z", 1, -2, 2));
+    gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
     gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
     gui.add(graphe_saturation.set("saturation", 255, 0, 255));
     gui.add(graphe_hue.set("hue", 255, 0, 255));

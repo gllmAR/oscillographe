@@ -26,6 +26,7 @@ public:
     ofParameter<bool> draw_value = 0;
     ofParameter<int> stop_time_threshold = 500;
     ofParameter<float> value_trim = 1;
+    ofxLabel interact_osc_path_label;
     int interact_value =0;
     
     uint64_t interval_time = 0;

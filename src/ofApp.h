@@ -74,6 +74,14 @@ class ofApp : public ofBaseApp{
     ofParameter<bool> cam_set_ortho = 0;
     ofParameter<bool> cam_set_reset = 0;
     ofParameter<float> cam_set_distance = 0;
+    
+    ofParameter<bool> cam_get_param_b = 0;
+    void cam_get_param(bool &b);
+    
+    ofParameter<bool> cam_set_param_b = 0;
+    void cam_set_param(bool &b);
+    
+    
     ofParameter<bool> set_fullscreen = 0;
     ofxLabel fps_label;
     
@@ -91,8 +99,10 @@ class ofApp : public ofBaseApp{
     int app_size_h=100;
     
     
+    ofParameter<glm::vec3> cam_view_position;
+
+    ofParameter<string>cam_view_orientation_quat_string;
     
-    void cam_set_distance_change(float &f);
     bool cam_workaroud_to_update = 1;
     
     

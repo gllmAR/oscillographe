@@ -40,8 +40,6 @@ void Audio_io::reset_audio(bool &b)
         
         bool _output_enable = output_enable;
         output_enable_change(_output_enable);
-        
-        
         reset_audio_b=0;
     }
 }
@@ -154,30 +152,7 @@ void Audio_io::setup_player(int file_index)
         player_buffer_1_wo.assign(buffer_size, 0.0);
         player_buffer_2_wo.assign(buffer_size, 0.0);
         
-        /* workaround (double asservissement des lecteurs audio si audiobuffer non patché )
-         // https://github.com/openframeworks/openFrameworks/pull/5815/files -> fix
-         // https://github.com/roymacdonald/ofxSoundObjects/issues/21 -> report
-         
-         player_buffer_1.allocate(buffer_size, 2);
-         player_buffer_2.allocate(buffer_size, 2);
-         
-         
-         
-         std::ostringstream path_1;
-         std::ostringstream path_2;
-         path_1 << "sounds/" << file_index << "_1.wav";
-         path_2 << "sounds/" << file_index << "_2.wav";
-         
-         cout<<"loading sounds --> " <<path_1.str()<<" "<<path_2.str()<<endl;
-         
-         player_1.load(path_1.str());
-         player_2.load(path_2.str());
-         
-         player_1.setLoop(1);
-         player_2.setLoop(1);
-         player_1.setPan(-1);
-         player_2.setPan(1);
-         */
+
         bool _player_enable = player_enable;
         player_enable_change(_player_enable);
         player_file_index_old = player_file_index;
@@ -289,11 +264,6 @@ void Audio_io::audioOut(ofSoundBuffer& output)
             output_buffer_2[i] = ch2;
             output[i*2  ] = ch1 * master_vol_ammount;
             output[i*2+1] = ch2 * master_vol_ammount;
-            //traiter l'output
-            //output_buffer_1[i] = output[i*2  ] =(input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1*2*!output_mute;
-            
-            //output_buffer_2[i] = output[i*2+1] =
-            //(input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume  * pan_2*2*!output_mute;
         }
     }
 }
@@ -481,35 +451,30 @@ void Audio_io::player_enable_change(bool &player_enable)
     if(player_enable)
     {
         player.play();
-        //        player_1.play();
-        //        player_2.play();
+
     } else {
         player.stop();
-        //        player_1.stop();
-        //        player_2.stop();
+
     }
 }
 
 void Audio_io::player_set_speed(float f)
 {
     player.setSpeed(f);
-    //    player_1.setSpeed(f);
-    //    player_2.setSpeed(f);
+
 }
 
 
 void Audio_io::player_speed_change(float &f)
 {
     player.setSpeed(f);
-    //    player_1.setSpeed(player_speed);
-    //    player_2.setSpeed(player_speed);
+
 }
 
 void Audio_io::player_pan_change(float &f)
 {
     player.setPan(f);
-    //    player_1.setPan(player_pan);
-    //    player_2.setPan(player_pan);
+
 }
 
 
