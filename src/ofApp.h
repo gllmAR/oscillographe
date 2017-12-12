@@ -7,6 +7,7 @@
 #include "graphe.hpp"
 #include "interact.hpp"
 #include "ofxOsc.h"
+#include "camera_ctl.hpp"
 
 #define HOST "localhost"
 #define SYNC_INPORT 9000
@@ -48,9 +49,11 @@ class ofApp : public ofBaseApp{
     Interact interact_speed;
     Interact interact_volume;
     
-    ofEasyCam cam;
+    //ofEasyCam cam;
+    
+    Camera_ctl cam;
+    
     // workaround pour faire fonctionner le fullscreen sur le raspberry pi
-    bool set_fullscreen_old = 0;
     bool screen_workaround_to_update = 1;
     
     int 	bufferCounter;
@@ -64,25 +67,10 @@ class ofApp : public ofBaseApp{
     ofxPanel preset_panel;
     ofxPanel setup_panel;
     
-    
-    ofxGuiGroup camera_preset_gui;
-    ofxGuiGroup camera_settings_gui;
     ofxGuiGroup graphe_gui;
     
     
-    
-    ofParameter<bool> cam_set_ortho = 0;
-    ofParameter<bool> cam_set_reset = 0;
-    ofParameter<float> cam_set_distance = 0;
-    
-    ofParameter<bool> cam_get_param_b = 0;
-    void cam_get_param(bool &b);
-    
-    ofParameter<bool> cam_set_param_b = 0;
-    void cam_set_param(bool &b);
-    
-    
-    ofParameter<bool> set_fullscreen = 0;
+
     ofxLabel fps_label;
     
     ofTexture screen_texture;
@@ -99,11 +87,9 @@ class ofApp : public ofBaseApp{
     int app_size_h=100;
     
     
-    ofParameter<glm::vec3> cam_view_position;
 
-    ofParameter<string>cam_view_orientation_quat_string;
     
-    bool cam_workaroud_to_update = 1;
+
     
     
     

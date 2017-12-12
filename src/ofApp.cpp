@@ -13,13 +13,9 @@ void ofApp::setup(){
 
     interact_speed.setup("speed", "/gpio/1");
     interact_volume.setup("volume", "/gpio/2");
-
-    setup_gui();
-
     
-    cam_get_param_b.addListener(this, &ofApp::cam_get_param);
-    cam_set_param_b.addListener(this, &ofApp::cam_set_param);
-    //cam_set_distance.addListener(this, &ofApp::cam_set_distance_change);
+    cam.setup();
+    setup_gui();
 
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
     
@@ -29,34 +25,11 @@ void ofApp::setup(){
    
 }
 
-//
+//--------------------------------------------------------------
 
 void ofApp::setup_gui()
 {
 
-    // camera
-    camera_preset_gui.setup("camera");
-    camera_preset_gui.add(cam_set_ortho.set("cam_set_ortho", 1));
-    //camera_preset_gui.add(cam_set_distance.set("cam_set_distance", 0, 0, 1000));
-    camera_preset_gui.add(cam_view_position.set("position",
-                                                glm::vec3(0),
-                                                glm::vec3(-1000),
-                                                glm::vec3(1000)));
-    camera_preset_gui.add(cam_view_orientation_quat_string.set("orientation"," "));
-    //camera_preset_gui.add(cam_view_orientation_quat.set("orientation",
-//                                                        glm::vec4(0),
-//                                                        glm::vec4(-1),
-//                                                        glm::vec4(1));
-    //camera_preset_gui.add(cam_view_position.set("position"));
-    
-    
-    camera_settings_gui.setup("camera");
-    camera_settings_gui.add(fps_label.setup("FPS"," "));
-    camera_settings_gui.add(cam_set_reset.set("cam_set_reset", 1));
-    camera_settings_gui.add(set_fullscreen.set("fullscreen", 0));
-    camera_settings_gui.add(cam_get_param_b.set("cam_get_param",0));
-    camera_settings_gui.add(cam_set_param_b.set("cam_set_param",0));
-    
     // graphe
     graphe_input.setup();
     graphe_input.gui.setName("input");
@@ -108,7 +81,9 @@ void ofApp::setup_gui()
     //preset_panel.setName("oscillo");
     
     
-    preset_panel.add(&camera_preset_gui);
+//    preset_panel.add(&camera_preset_gui);
+    preset_panel.add(&cam.camera_preset_gui);
+
     preset_panel.add(&audio_io.gui);
     preset_panel.add(&graphe_gui);
     preset_panel.add(&feedback_gui);
@@ -125,7 +100,11 @@ void ofApp::setup_gui()
     
     //setup panel
     setup_panel.setup("settings", "settings.xml", 220, 10);
-    setup_panel.add(&camera_settings_gui);
+//    setup_panel.add(&camera_settings_gui);
+    setup_panel.add(fps_label.setup("FPS"," "));
+
+    setup_panel.add(&cam.camera_settings_gui);
+
     setup_panel.add(&preset_gui);
     
     setup_panel.add(&audio_io.gui_device);
@@ -143,16 +122,13 @@ void ofApp::update()
     graphe_player.update(audio_io.buffer_size, audio_io.player_buffer_1_wo, audio_io.player_buffer_2_wo);
     graphe_output.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
 
-    // pas clair play quoi faire pour que ce soit clean...
     
     while(osc_receiver.hasWaitingMessages())
     {
         ofxOscMessage m;
         osc_receiver.getNextMessage(m);
-        //cout<<m.getAddress()<<endl;
         interact_speed.parse_osc(m);
         interact_volume.parse_osc(m);
-        // mettre ici les deux parse osc de classe
     }
     
     if (interact_speed.interact_enable)
@@ -167,12 +143,10 @@ void ofApp::update()
     {
         interact_volume.update();
         audio_io.set_output_vol(interact_volume.get_value());
-        // devrait etre changé pour get value
     } else {
         audio_io.set_output_vol(audio_io.output_volume.get());
-        //audio_io.player_set_speed(audio_io.player_speed);
     }
-   
+    cam.update();
     sync.update();
     
     if(gui_draw){fps_label= ofToString(ofGetFrameRate());}
@@ -184,11 +158,7 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
-    if (set_fullscreen_old != set_fullscreen)
-    {
-        ofSetFullscreen(set_fullscreen);
-        set_fullscreen_old = set_fullscreen;
-    };
+
     if(feedback_enable)
     {
         ofSetColor(255, 255, 255, feedback_ammount*255);
@@ -201,17 +171,14 @@ void ofApp::draw()
         screen_texture.unbind();
     }
     ofEnableDepthTest();
-    if (cam_set_ortho){cam.enableOrtho();}else{cam.disableOrtho();};
-    if (cam_set_reset){cam.reset(); cam_set_reset=0;};
-    
-    
-    cam.begin();
+
+    cam.cam.begin();
     ofSetColor(255);
     graphe_input.draw();
     graphe_player.draw();
     graphe_output.draw();
     
-    cam.end();
+    cam.cam.end();
     
     interact_speed.draw();
     interact_volume.draw();
@@ -242,7 +209,7 @@ void ofApp::keyPressed(int key)
 {
     if( key == 'g' ){gui_draw=!gui_draw;}
     
-    if (key == 'f'){set_fullscreen=!set_fullscreen;}
+    if (key == 'f'){cam.set_fullscreen=!cam.set_fullscreen;}
     
     if (key >=48  && key <= 57)
     {
@@ -324,7 +291,7 @@ void ofApp::exit(){
 
 void ofApp::preset_save(bool &b)
 {
-    cam_get_param(b);
+    cam.cam_get_param(b);
     std::string str = "oscillo_";
     str += ofToString(preset_index);
     preset_panel.setName(str);
@@ -342,35 +309,10 @@ void ofApp::preset_load(bool &b)
     preset_panel.setName(str);
     preset_panel.loadFromFile("oscillo.xml");
     preset_load_b =0;
-    cam_set_param(b);
+    cam.cam_set_param(b);
 }
 
 
 //--------------------------------------------------------------
 
-void ofApp::cam_get_param(bool &b)
-{
-    cam_view_position=cam.getPosition();
-    glm::quat cam_view_orientation_quat=cam.getOrientationQuat();
-    //workaround pour sauvegarder un quat en string dans un ofParameter
-    cam_view_orientation_quat_string =ofToString(cam_view_orientation_quat);
-    cam_get_param_b = 0;
-}
-//--------------------------------------------------------------
-
-void ofApp::cam_set_param(bool &b)
-{
-    // workaround pour restaurer un quat a partir d une string
-    glm::quat temp_orientation;
-    vector <string> orientation_quat_vec = ofSplitString(cam_view_orientation_quat_string, " ");
-    // comprendre pourquoi l'index est offset de 1 ici...?
-    temp_orientation[0]=ofToFloat(orientation_quat_vec[1]);
-    temp_orientation[1]=ofToFloat(orientation_quat_vec[2]);
-    temp_orientation[2]=ofToFloat(orientation_quat_vec[3]);
-    temp_orientation[3]=ofToFloat(orientation_quat_vec[0]);
-    cout<<ofToString(temp_orientation)<<endl;
-    cam.setOrientation(temp_orientation);
-    cam.setPosition(cam_view_position);
-    cam_set_param_b = 0;
-}
 
