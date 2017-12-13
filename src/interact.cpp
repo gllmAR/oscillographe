@@ -17,18 +17,27 @@ void Interact::setup(string name, string _interact_osc_path)
     gui.setName(name);
     gui.add(interact_osc_path_label.setup("osc", interact_osc_path));
     gui.add(interact_enable.set("interact_enable",0));
-    gui.add(draw_value.set("draw_value",0));
-    gui.add(debug.set("debug",0));
     gui.add(stop_time_threshold.set("stop_time_threshold",500,1,1000));
     gui.add(value_trim.set("value_trim",1,0,2));
+    gui.add(metronome_enable.set("metronome_enable",0));
+    gui.add(metronome_interval_ms.set("metronome_interval_ms",100, 1,2000));
+    gui.add(draw_value.set("draw_value",0));
+    gui.add(debug.set("debug",0));
+
 
 }
 
 void Interact::update()
 {
+    now_time = ofGetElapsedTimeMillis();
+    
+    if(metronome_enable && now_time-last_metronome_time>metronome_interval_ms)
+    {
+        increment_value();
+        last_metronome_time = now_time;
+    }
     if(interact_enable)
     {
-        now_time = ofGetElapsedTimeMillis();
         decrement_value();
     }
 }

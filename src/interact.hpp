@@ -22,6 +22,7 @@ public:
     ofxGuiGroup gui;
     
     ofParameter<bool> interact_enable = 0;
+
     ofParameter<bool> debug = 1;
     ofParameter<bool> draw_value = 0;
     ofParameter<int> stop_time_threshold = 500;
@@ -47,6 +48,12 @@ public:
     
     string interact_name;
     string interact_osc_path;
+    
+    
+    //metro
+    ofParameter<bool> metronome_enable =0;
+    ofParameter<int> metronome_interval_ms=0;
+    uint64_t last_metronome_time = 0;
     
 };
 #endif /* interact_hpp */

@@ -180,8 +180,7 @@ void ofApp::draw()
     
     cam.cam.end();
     
-    interact_speed.draw();
-    interact_volume.draw();
+
     ofEnableBlendMode( OF_BLENDMODE_ADD );
     
     if(feedback_enable)
@@ -192,6 +191,9 @@ void ofApp::draw()
     ofDisableDepthTest();
     
    ofEnableBlendMode(OF_BLENDMODE_DISABLED);
+   
+    interact_speed.draw();
+    interact_volume.draw();
     
     if (gui_draw)
     {

@@ -48,8 +48,7 @@ class ofApp : public ofBaseApp{
     ofxGuiGroup interact_gui;
     Interact interact_speed;
     Interact interact_volume;
-    
-    //ofEasyCam cam;
+
     
     Camera_ctl cam;
     
@@ -85,12 +84,6 @@ class ofApp : public ofBaseApp{
     bool gui_draw = 0;
     int app_size_w=100;
     int app_size_h=100;
-    
-    
-
-    
-
-    
     
     
     // save et load preset

@@ -70,7 +70,7 @@ void Camera_ctl::cam_set_param(bool &b)
     temp_orientation[1]=ofToFloat(orientation_quat_vec[2]);
     temp_orientation[2]=ofToFloat(orientation_quat_vec[3]);
     temp_orientation[3]=ofToFloat(orientation_quat_vec[0]);
-    cout<<ofToString(temp_orientation)<<endl;
+   // cout<<ofToString(temp_orientation)<<endl;
     cam.setOrientation(temp_orientation);
     cam.setPosition(cam_view_position);
     cam_set_param_b = 0;
