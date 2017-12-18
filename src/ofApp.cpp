@@ -102,7 +102,7 @@ void ofApp::setup_gui()
     setup_panel.setup("settings", "settings.xml", 220, 10);
 //    setup_panel.add(&camera_settings_gui);
     setup_panel.add(fps_label.setup("FPS"," "));
-
+    
     setup_panel.add(&cam.camera_settings_gui);
 
     setup_panel.add(&preset_gui);
@@ -112,6 +112,7 @@ void ofApp::setup_gui()
     setup_panel.loadFromFile("settings.xml");
     preset_save_b.addListener(this, &ofApp::preset_save);
     preset_load_b.addListener(this, &ofApp::preset_load);
+    
 }
 
 //--------------------------------------------------------------
@@ -314,22 +315,5 @@ void ofApp::preset_load(bool &b)
     cam.cam_set_param(b);
 }
 
-
-//--------------------------------------------------------------
-
-void ofApp::setup_settings_screen()
-{
-    
-    
-}
-
-//--------------------------------------------------------------
-
-
-void ofApp::draw_settings_screen(ofEventArgs & args)
-{
-    
-    
-}
 
 //--------------------------------------------------------------
