@@ -93,4 +93,8 @@ class ofApp : public ofBaseApp{
     ofParameter<int> preset_index;
     ofParameter<bool> preset_save_b;
     ofParameter<bool> preset_load_b;
+    
+    //ecran settings
+    void setup_settings_screen();
+    void draw_settings_screen(ofEventArgs & args);
 };
