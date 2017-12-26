@@ -18,7 +18,7 @@ void Interact::setup(string name, string _interact_osc_path)
     gui.add(interact_osc_path_label.setup("osc", interact_osc_path));
     gui.add(interact_enable.set("interact_enable",0));
     gui.add(stop_time_threshold.set("stop_time_threshold",500,1,1000));
-    gui.add(value_trim.set("value_trim",1,0,2));
+    gui.add(value_trim.set("value_trim",1,0,5));
     gui.add(metronome_enable.set("metronome_enable",0));
     gui.add(metronome_interval_ms.set("metronome_interval_ms",100, 1,2000));
     gui.add(draw_value.set("draw_value",0));

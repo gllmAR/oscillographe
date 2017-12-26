@@ -76,7 +76,7 @@ void ofApp::setup_gui()
     
     // compose the preset pannel
     
-    preset_panel.setup("oscillo_0", "oscillo.xml", 10, 10);
+    preset_panel.setup("oscillo_0", "oscillo.xml", 220, 10);
     
     //preset_panel.setName("oscillo");
     
@@ -87,7 +87,7 @@ void ofApp::setup_gui()
     preset_panel.add(&audio_io.gui);
     preset_panel.add(&graphe_gui);
     preset_panel.add(&feedback_gui);
-    preset_panel.add(&interact_gui);
+
 
     preset_panel.minimizeAll();
     audio_io.gui.minimizeAll();
@@ -99,17 +99,17 @@ void ofApp::setup_gui()
     
     
     //setup panel
-    setup_panel.setup("settings", "settings.xml", 220, 10);
-//    setup_panel.add(&camera_settings_gui);
+    setup_panel.setup("settings", "settings.xml", 10, 10);
     setup_panel.add(fps_label.setup("FPS"," "));
-    
-    setup_panel.add(&cam.camera_settings_gui);
-
     setup_panel.add(&preset_gui);
-    
+    setup_panel.add(&cam.camera_settings_gui);
     setup_panel.add(&audio_io.gui_device);
+    setup_panel.add(&interact_gui);
     setup_panel.minimizeAll();
+    
     setup_panel.loadFromFile("settings.xml");
+    
+    
     preset_save_b.addListener(this, &ofApp::preset_save);
     preset_load_b.addListener(this, &ofApp::preset_load);
     
