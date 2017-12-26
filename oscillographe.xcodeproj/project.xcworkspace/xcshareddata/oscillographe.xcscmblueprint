@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "E01674EB25EAF48BB87F3BD985F3777595B8C8EE",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E01674EB25EAF48BB87F3BD985F3777595B8C8EE" : 9223372036854775807,
+    "271E89DF56B4A05C6E13244EF7B9151CB5A40814" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3BC74B62-4245-4E60-8F3D-6057B9DC42B5",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E01674EB25EAF48BB87F3BD985F3777595B8C8EE" : "oscillographe\/",
+    "271E89DF56B4A05C6E13244EF7B9151CB5A40814" : "..\/..\/..\/Documents\/_gllm\/of_git\/of_v20170714_osx_release\/addons\/ofxBasicSoundPlayer"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "oscillographe",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "oscillographe.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/gllmAR\/ofxBasicSoundPlayer",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "271E89DF56B4A05C6E13244EF7B9151CB5A40814"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:gllmAR\/oscillographe.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E01674EB25EAF48BB87F3BD985F3777595B8C8EE"
+    }
+  ]
+}
