@@ -55,8 +55,7 @@ void ofApp::setup_gui()
     feedback_gui.add(feedback_scale.set("scale", 1, 0 ,2));
     
     // interact
-    
-    
+
     interact_gui.setup();
     interact_gui.setName("interact");
     interact_gui.add(&interact_speed.gui);
@@ -78,12 +77,7 @@ void ofApp::setup_gui()
     
     preset_panel.setup("oscillo_0", "oscillo.xml", 220, 10);
     
-    //preset_panel.setName("oscillo");
-    
-    
-//    preset_panel.add(&camera_preset_gui);
     preset_panel.add(&cam.camera_preset_gui);
-
     preset_panel.add(&audio_io.gui);
     preset_panel.add(&graphe_gui);
     preset_panel.add(&feedback_gui);

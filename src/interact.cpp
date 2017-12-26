@@ -15,7 +15,7 @@ void Interact::setup(string name, string _interact_osc_path)
     interact_osc_path = _interact_osc_path;
     gui.setup();
     gui.setName(name);
-    gui.add(interact_osc_path_label.setup("osc", interact_osc_path));
+    gui.add(interact_osc_path.set("osc", _interact_osc_path));
     gui.add(interact_enable.set("interact_enable",0));
     gui.add(stop_time_threshold.set("stop_time_threshold",500,1,1000));
     gui.add(value_trim.set("value_trim",1,0,5));
@@ -58,7 +58,7 @@ void Interact::draw()
 
 void Interact::parse_osc(ofxOscMessage m)
 {
-    if (m.getAddress() == interact_osc_path)
+    if (m.getAddress() == interact_osc_path.get())
     {
         increment_value();
     }

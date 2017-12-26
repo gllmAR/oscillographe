@@ -27,7 +27,7 @@ public:
     ofParameter<bool> draw_value = 0;
     ofParameter<int> stop_time_threshold = 500;
     ofParameter<float> value_trim = 1;
-    ofxLabel interact_osc_path_label;
+    ofParameter<string> interact_osc_path;
     int interact_value =0;
     
     uint64_t interval_time = 0;
@@ -47,7 +47,7 @@ public:
     float cooked_value;
     
     string interact_name;
-    string interact_osc_path;
+    //string interact_osc_path;
     
     //smoothing
     ofParameter <bool> smooth_enable=0;
