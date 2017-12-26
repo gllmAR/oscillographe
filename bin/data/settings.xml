@@ -1,5 +1,16 @@
 <?xml version="1.0"?>
 <settings>
+	<camera>
+		<cam_set_reset>0</cam_set_reset>
+		<fullscreen>1</fullscreen>
+		<cam_get_param>0</cam_get_param>
+		<cam_set_param>0</cam_set_param>
+	</camera>
+	<presets>
+		<index>0</index>
+		<load>0</load>
+		<save>0</save>
+	</presets>
 	<device>
 		<reset_audio>0</reset_audio>
 		<buffer_size>512</buffer_size>
