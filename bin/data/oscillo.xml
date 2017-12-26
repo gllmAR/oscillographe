@@ -3,8 +3,8 @@
 	<camera>
 		<cam_set_ortho>0</cam_set_ortho>
 		<cam_set_distance>0</cam_set_distance>
-		<position>6.41055, -25.0581, 195.988</position>
-		<orientation>0.908408, 0.183955, 0.299141, -0.226861</orientation>
+		<position>0, 0, 0</position>
+		<orientation>1, 0, 0, 0</orientation>
 	</camera>
 	<audio_io>
 		<input>
@@ -70,13 +70,14 @@
 	</feedback>
 	<interact>
 		<speed>
-			<interact_enable>0</interact_enable>
-			<draw_value>0</draw_value>
-			<debug>0</debug>
+			<interact_enable>1</interact_enable>
+			<draw_value>1</draw_value>
+			<debug>1</debug>
 			<stop_time_threshold>500</stop_time_threshold>
 			<value_trim>1</value_trim>
-			<metronome_enable>0</metronome_enable>
-			<metronome_interval_ms>100</metronome_interval_ms>
+			<metronome_enable>1</metronome_enable>
+			<metronome_interval_ms>397</metronome_interval_ms>
+			<smooth_enable>1</smooth_enable>
 		</speed>
 		<volume>
 			<interact_enable>0</interact_enable>
@@ -86,6 +87,7 @@
 			<value_trim>1</value_trim>
 			<metronome_enable>0</metronome_enable>
 			<metronome_interval_ms>100</metronome_interval_ms>
+			<smooth_enable>0</smooth_enable>
 		</volume>
 	</interact>
 </oscillo_0>
@@ -354,7 +356,7 @@
 	<camera>
 		<cam_set_ortho>1</cam_set_ortho>
 		<position>0, 0, 622.672</position>
-		<orientation>1, 0, 0, 0</orientation>
+		<orientation>0.954153, 0, 0, 0.299295</orientation>
 	</camera>
 	<audio_io>
 		<input>
@@ -363,10 +365,10 @@
 			<pan>0</pan>
 		</input>
 		<player>
-			<enable>0</enable>
+			<enable>1</enable>
 			<volume>1</volume>
 			<pan>0</pan>
-			<file_index>0</file_index>
+			<file_index>2</file_index>
 			<speed>1</speed>
 			<position>0</position>
 		</player>
@@ -383,7 +385,7 @@
 			<shape_scale>0.776135</shape_scale>
 			<line_width>1</line_width>
 			<mesh_width_z>0</mesh_width_z>
-			<color>13, 13, 0, 255</color>
+			<color>13, 12, 0, 255</color>
 			<saturation>255</saturation>
 			<hue>41.2609</hue>
 			<brightness>13.3819</brightness>
@@ -412,7 +414,7 @@
 		</output>
 	</graphe>
 	<feedback>
-		<enable>1</enable>
+		<enable>0</enable>
 		<ammount>1</ammount>
 		<x>1</x>
 		<y>1</y>
@@ -420,21 +422,21 @@
 	</feedback>
 	<interact>
 		<speed>
-			<interact_enable>0</interact_enable>
-			<draw_value>0</draw_value>
+			<interact_enable>1</interact_enable>
+			<draw_value>1</draw_value>
 			<debug>0</debug>
-			<stop_time_threshold>500</stop_time_threshold>
+			<stop_time_threshold>1000</stop_time_threshold>
 			<value_trim>1</value_trim>
-			<metronome_enable>0</metronome_enable>
-			<metronome_interval_ms>100</metronome_interval_ms>
+			<metronome_enable>1</metronome_enable>
+			<metronome_interval_ms>459</metronome_interval_ms>
 		</speed>
 		<volume>
 			<interact_enable>0</interact_enable>
 			<draw_value>0</draw_value>
 			<debug>0</debug>
-			<stop_time_threshold>500</stop_time_threshold>
-			<value_trim>1</value_trim>
-			<metronome_enable>0</metronome_enable>
+			<stop_time_threshold>797</stop_time_threshold>
+			<value_trim>1.37526</value_trim>
+			<metronome_enable>1</metronome_enable>
 			<metronome_interval_ms>100</metronome_interval_ms>
 		</volume>
 	</interact>

@@ -22,6 +22,8 @@ void Interact::setup(string name, string _interact_osc_path)
     gui.add(metronome_enable.set("metronome_enable",0));
     gui.add(metronome_interval_ms.set("metronome_interval_ms",100, 1,2000));
     gui.add(draw_value.set("draw_value",0));
+    gui.add(smooth_enable.set("smooth_enable",0));
+    gui.add(smooth_amount.set("smooth_ammount",5,1,30));
     gui.add(debug.set("debug",0));
 
 
@@ -39,6 +41,7 @@ void Interact::update()
     if(interact_enable)
     {
         decrement_value();
+        if(smooth_enable){do_smooth();}
     }
 }
 
@@ -71,6 +74,11 @@ void Interact::increment_value()
         int delta_time=now_time-last_increment_time;
         interact_value = ofMap(delta_time,stop_time_threshold,0,0,1000);
         if(debug){cout<<"inc "<< interact_value << endl;}
+        
+        //smooth stuff
+        if (smooth_index>=smooth_amount){smooth_index=0;}
+        smooth_array[smooth_index]=interact_value;
+        smooth_index++;
     }
     last_increment_time=now_time;
 }
@@ -88,6 +96,10 @@ void Interact::decrement_value()
             interact_value -= now_time-last_decrement_time;
             if (interact_value < 0){interact_value = 0;}
             if(debug){cout<<"dec "<< interact_value << endl;}
+            //smooth stuff
+            if (smooth_index>=smooth_amount){smooth_index=0;}
+            smooth_array[smooth_index]=interact_value;
+            smooth_index++;
         }
     }
     last_decrement_time = now_time;
@@ -97,6 +109,17 @@ float Interact::get_value()
 {
     cooked_value = ofClamp(interact_value*0.001*value_trim, 0, 3);
     return cooked_value;
+}
+
+void Interact::do_smooth()
+{
+    int total = 0;
+    for(int i=0; i < smooth_amount; i++)
+    {
+        total+=smooth_array[i];
+    }
+    interact_value=total/smooth_amount;
+    cout << "smooth " << interact_value <<endl;
 }
 
 

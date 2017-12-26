@@ -49,6 +49,12 @@ public:
     string interact_name;
     string interact_osc_path;
     
+    //smoothing
+    ofParameter <bool> smooth_enable=0;
+    int smooth_index = 0;
+    ofParameter <int> smooth_amount = 1;
+    int smooth_array[255];
+    void do_smooth();
     
     //metro
     ofParameter<bool> metronome_enable =0;
