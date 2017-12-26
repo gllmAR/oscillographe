@@ -5,7 +5,10 @@
 //  Created by Guillaume Arseneault on 17-08-07.
 //
 //
-// sert a configurer le soundstream et sauvegarder
+// sert a configurer le soundstream (input et output)
+// sert a jouer du son
+// sert a extraire les valeur de sons en array de buffersize
+
 
 
 
@@ -22,7 +25,6 @@ class Audio_io
 {
 public:
     void setup();
-    
     void exit();
     void setup_gui();
     void setup_gui_listener();
@@ -43,11 +45,11 @@ public:
     ofParameter <int> buffer_size;
     ofParameter <int> sample_rate;
     
-    ofParameter <float> master_vol;
+    ofParameter <float> master_vol; //permet de controller le volume out
     float master_vol_ammount;
     float output_vol_ammount;
     
-    // input output stuff
+    // audio_io stuff
     ofxGuiGroup gui_device_io;
     
     

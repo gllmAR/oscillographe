@@ -17,12 +17,13 @@ void Audio_io::setup()
     setup_gui_listener();
 }
 
-void Audio_io::reset_audio(bool &b)
+void Audio_io::reset_audio(bool &b) // pour reset audio en cas de coup dur
 {
     if(reset_audio_b)
     {
-        exit();
-        setup_audio();
+        exit();  // simuler la fin du audio
+        setup_audio(); //reset audio
+        
         int _io_select = io_select;
         io_select_change(_io_select);
         
@@ -47,18 +48,22 @@ void Audio_io::reset_audio(bool &b)
 
 void Audio_io::setup_gui()
 {
+    //gui est dans le preset , device est dans le setting
+    
+    // gui meta
     gui.setup();
     gui.setName("audio_io");
     gui_device.setup("");
     gui_device.setName("device");
-    // a mettre dans un gui group
+    
+    // device
     gui_device.add(reset_audio_b.set("reset_audio",0));
     gui_device.add(buffer_size.set("buffer_size",512,64,4096));
     gui_device.add(sample_rate.set("sample_rate",44100,8000,192000));
     gui_device.add(input_trim.set("input_trim", 1, 0, 100));
     gui_device.add(master_vol.set("master_vol",1,0,2));
     
-    // io
+    // device_io
     gui_device_io.setup();
     gui_device_io.setName("set_io");
     gui_device_io.add(io_enable.set("io_enable", 0));
@@ -67,12 +72,14 @@ void Audio_io::setup_gui()
     gui_device_io.add(io_input_enable.set("in_enable", 0));
     gui_device_io.add(io_output_enable.set("out_enable", 0));
     
+    // device_input
     gui_device_input.setup();
     gui_device_input.setName("set_input");
     gui_device_input.add(input_enable.set("enable", 0));
     gui_device_input.add(input_select.set("select",0,0,1));
     gui_device_input.add(input_label.setup("", ""));
     
+    // device_output
     gui_device_output.setup();
     gui_device_output.setName("set_output");
     gui_device_output.add(output_enable.set("enable", 0));
@@ -106,10 +113,12 @@ void Audio_io::setup_gui()
     gui_output.add(output_volume.set("volume",1,0,2));
     gui_output.add(output_pan.set("pan",0,-1,1));
     
+    // compose device
     gui_device.add(&gui_device_io);
     gui_device.add(&gui_device_input);
     gui_device.add(&gui_device_output);
-    //gui.add(&gui_device);
+
+    // compose gui
     gui.add(&gui_input);
     gui.add(&gui_player);
     gui.add(&gui_output);
@@ -141,7 +150,7 @@ void Audio_io::setup_audio()
 }
 
 void Audio_io::setup_player(int file_index)
-{
+{   // si different d'avant, charger un nouveau son
     if (player_file_index_old != player_file_index)
     {
         player_buffer.allocate(buffer_size, 2);
@@ -238,16 +247,20 @@ void Audio_io::audioOut(ofSoundBuffer& output)
         float pan_1 = 1-(output_pan*0.5 +0.5);
         float pan_2 = output_pan*0.5 +0.5;
 
+        // workaround! : ici, on envois "temporairement"
+        // l'output du player audio dans l'output audio
+        // que l'on récupère dans un player_buffer
+        // ceci permet d'éviter d'avoir des artefact sonore
+        // qui emmergent lié à l'interpolation du player audio
+        // et ce même quand player audio non-actif (auto zero out clean)
+        
         player.audioOut(output);
         player_buffer = output;
-        
-        //player_buffer = player.getCurrentBuffer();
+ 
         
         for (int i = 0; i < output.getNumFrames(); i++)
         {
-            // traiter le player si actif
-            
-            if(player_enable)
+            if(player_enable) // traiter le player si actif
             {
                 
                 player_buffer_1_wo[i] = player_buffer[i*2  ];
@@ -256,8 +269,7 @@ void Audio_io::audioOut(ofSoundBuffer& output)
                 player_buffer_1_wo[i] = 0;
                 player_buffer_2_wo[i] = 0;
             }
-            //            float ch1 = ofClamp((input_buffer_1[i] +  player_buffer_1[i*2  ]) * output_volume * pan_1*2*!output_mute, -1, 1);
-            //            float ch2 = ofClamp((input_buffer_2[i] +  player_buffer_2[i*2+1]) * output_volume  * pan_2*2*!output_mute, -1, 1);
+
             float ch1 = ofClamp((input_buffer_1[i] +  player_buffer[i*2  ]) * output_vol_ammount * pan_1*2*!output_mute, -1, 1);
             float ch2 = ofClamp((input_buffer_2[i] +  player_buffer[i*2+1]) * output_vol_ammount  * pan_2*2*!output_mute, -1, 1);
             output_buffer_1[i] = ch1;
@@ -439,7 +451,7 @@ void Audio_io::output_enable_change(bool &output_enable)
         io_enable.set(0);
         output_init(output_select);
         output_stream.start();
-    }else{
+    }else{ //zero le buffer actuelle sinon preserve le son précedant
         output_stream.stop();
         output_buffer_1.assign(buffer_size, 0.0);
         output_buffer_2.assign(buffer_size, 0.0);
@@ -451,7 +463,7 @@ void Audio_io::player_enable_change(bool &player_enable)
     if(player_enable)
     {
         player.play();
-
+        
     } else {
         player.stop();
 
@@ -459,40 +471,35 @@ void Audio_io::player_enable_change(bool &player_enable)
 }
 
 void Audio_io::player_set_speed(float f)
-{
+{   //est appele par la classe interact dans ofApp
     player.setSpeed(f);
-
 }
 
 
 void Audio_io::player_speed_change(float &f)
-{
+{   //est appele par le gui/preset de audio_io
     player.setSpeed(f);
-
 }
 
 void Audio_io::player_pan_change(float &f)
-{
+{   //est appele par le gui/preset de audio_io
     player.setPan(f);
-
 }
 
 
 void Audio_io::player_volume_change(float &f)
-{
+{   //est appele par le gui/preset de audio_io
     player.setVolume(f);
-    
 }
 
 
 void Audio_io::player_position_change(float &f)
-{
+{   //est appele par le gui/preset de audio_io
     player.setPosition(f);
-    
 }
 
 void Audio_io::player_file_index_change(int &i)
-{
+{   //est appele par le gui/preset de audio_io
     setup_player(i);
 }
 

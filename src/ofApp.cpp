@@ -216,7 +216,8 @@ void ofApp::keyPressed(int key)
     
     if (key >=48  && key <= 57)
     {
-        audio_io.player_file_index = key-48;
+        preset_index=key-48;
+        preset_load_b =1;
     }
 
 }
