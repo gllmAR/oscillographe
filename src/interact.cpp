@@ -119,7 +119,12 @@ void Interact::do_smooth()
         total+=smooth_array[i];
     }
     interact_value=total/smooth_amount;
-    cout << "smooth " << interact_value <<endl;
+
+    if (interact_value < 0)
+    {
+        interact_value=0;
+    }
+    
 }
 
 
