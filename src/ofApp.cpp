@@ -22,7 +22,6 @@ void ofApp::setup(){
     
     sync.setup((ofParameterGroup&)preset_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
     
-    //feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse
    
 }
 
@@ -46,14 +45,7 @@ void ofApp::setup_gui()
     graphe_gui.add(&graphe_output.gui);
     graphe_gui.minimizeAll();
     
-    /* feedback */
-//    feedback_gui.setup();
-//    feedback_gui.setName("feedback");
-//    feedback_gui.add(feedback_enable.set("enable",0));
-//    feedback_gui.add(feedback_ammount.set("ammount", 0, 0, 1));
-//    feedback_gui.add(feedback_pos_x.set("x", 1, 0, 2 ));
-//    feedback_gui.add(feedback_pos_y.set("y", 1, 0, 2 ));
-//    feedback_gui.add(feedback_scale.set("scale", 1, 0 ,2));
+
     
     /* interact */
 
@@ -155,17 +147,7 @@ void ofApp::update()
 void ofApp::draw()
 {
 
-//    if(feedback_enable)
-//    {
-//        ofSetColor(255, 255, 255, feedback_ammount*255);
-//        feedback_plane.setPosition(app_size_w/2, app_size_h/2, 0);
-//        screen_texture.bind();
-//        feedback_plane.setScale(feedback_scale);
-//        feedback_plane.setPosition(feedback_pos_x*app_size_w/2, feedback_pos_y*app_size_h/2, 0);
-//        
-//        feedback_plane.draw();
-//        screen_texture.unbind();
-//    }
+
     feedback.begin();
     ofEnableDepthTest();
 
@@ -180,10 +162,6 @@ void ofApp::draw()
 
     ofEnableBlendMode( OF_BLENDMODE_ADD );
     feedback.end();
-//    if(feedback_enable)
-//    {
-//        screen_texture.loadScreenData(0,0,app_size_w,app_size_h);
-//    }
 
     ofDisableDepthTest();
     
@@ -269,9 +247,7 @@ void ofApp::windowResized(int w, int h)
     graphe_output.set_size(w,h);
     
     feedback.allocate(w,h);
-//    screen_texture.allocate(w,h,GL_RGBA);
-//    feedback_plane.resizeToTexture(screen_texture);
-    
+
 }
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg)
