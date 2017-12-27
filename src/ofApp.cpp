@@ -15,13 +15,14 @@ void ofApp::setup(){
     interact_volume.setup("volume", "/gpio/2");
     
     cam.setup();
+    feedback.setup();
     setup_gui();
 
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
     
     sync.setup((ofParameterGroup&)preset_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
     
-    feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse
+    //feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse
    
 }
 
@@ -30,7 +31,7 @@ void ofApp::setup(){
 void ofApp::setup_gui()
 {
 
-    // graphe
+    /* graphe */
     graphe_input.setup();
     graphe_input.gui.setName("input");
     graphe_player.setup();
@@ -45,16 +46,16 @@ void ofApp::setup_gui()
     graphe_gui.add(&graphe_output.gui);
     graphe_gui.minimizeAll();
     
-    // feedback
-    feedback_gui.setup();
-    feedback_gui.setName("feedback");
-    feedback_gui.add(feedback_enable.set("enable",0));
-    feedback_gui.add(feedback_ammount.set("ammount", 0, 0, 1));
-    feedback_gui.add(feedback_pos_x.set("x", 1, 0, 2 ));
-    feedback_gui.add(feedback_pos_y.set("y", 1, 0, 2 ));
-    feedback_gui.add(feedback_scale.set("scale", 1, 0 ,2));
+    /* feedback */
+//    feedback_gui.setup();
+//    feedback_gui.setName("feedback");
+//    feedback_gui.add(feedback_enable.set("enable",0));
+//    feedback_gui.add(feedback_ammount.set("ammount", 0, 0, 1));
+//    feedback_gui.add(feedback_pos_x.set("x", 1, 0, 2 ));
+//    feedback_gui.add(feedback_pos_y.set("y", 1, 0, 2 ));
+//    feedback_gui.add(feedback_scale.set("scale", 1, 0 ,2));
     
-    // interact
+    /* interact */
 
     interact_gui.setup();
     interact_gui.setName("interact");
@@ -63,7 +64,7 @@ void ofApp::setup_gui()
     interact_gui.minimizeAll();
 
     
-    // preset load and save pannel
+    /* preset load and save pannel */
     preset_gui.setup();
     preset_gui.setName("presets");
     preset_gui.add(preset_index.set("index",0,0,10));
@@ -73,14 +74,14 @@ void ofApp::setup_gui()
     
     
     
-    // compose the preset pannel
+    /* compose the preset pannel */
     
     preset_panel.setup("oscillo_0", "oscillo.xml", 220, 10);
     
     preset_panel.add(&cam.camera_preset_gui);
     preset_panel.add(&audio_io.gui);
     preset_panel.add(&graphe_gui);
-    preset_panel.add(&feedback_gui);
+    preset_panel.add(&feedback.feedback_gui);
 
 
     preset_panel.minimizeAll();
@@ -92,7 +93,7 @@ void ofApp::setup_gui()
     
     
     
-    //setup panel
+    /* setup panel */
     setup_panel.setup("settings", "settings.xml", 10, 10);
     setup_panel.add(fps_label.setup("FPS"," "));
     setup_panel.add(&preset_gui);
@@ -154,17 +155,18 @@ void ofApp::update()
 void ofApp::draw()
 {
 
-    if(feedback_enable)
-    {
-        ofSetColor(255, 255, 255, feedback_ammount*255);
-        feedback_plane.setPosition(app_size_w/2, app_size_h/2, 0);
-        screen_texture.bind();
-        feedback_plane.setScale(feedback_scale);
-        feedback_plane.setPosition(feedback_pos_x*app_size_w/2, feedback_pos_y*app_size_h/2, 0);
-        
-        feedback_plane.draw();
-        screen_texture.unbind();
-    }
+//    if(feedback_enable)
+//    {
+//        ofSetColor(255, 255, 255, feedback_ammount*255);
+//        feedback_plane.setPosition(app_size_w/2, app_size_h/2, 0);
+//        screen_texture.bind();
+//        feedback_plane.setScale(feedback_scale);
+//        feedback_plane.setPosition(feedback_pos_x*app_size_w/2, feedback_pos_y*app_size_h/2, 0);
+//        
+//        feedback_plane.draw();
+//        screen_texture.unbind();
+//    }
+    feedback.begin();
     ofEnableDepthTest();
 
     cam.cam.begin();
@@ -177,11 +179,11 @@ void ofApp::draw()
     
 
     ofEnableBlendMode( OF_BLENDMODE_ADD );
-    
-    if(feedback_enable)
-    {
-        screen_texture.loadScreenData(0,0,app_size_w,app_size_h);
-    }
+    feedback.end();
+//    if(feedback_enable)
+//    {
+//        screen_texture.loadScreenData(0,0,app_size_w,app_size_h);
+//    }
 
     ofDisableDepthTest();
     
@@ -266,8 +268,9 @@ void ofApp::windowResized(int w, int h)
     graphe_player.set_size(w,h);
     graphe_output.set_size(w,h);
     
-    screen_texture.allocate(w,h,GL_RGBA);
-    feedback_plane.resizeToTexture(screen_texture);
+    feedback.allocate(w,h);
+//    screen_texture.allocate(w,h,GL_RGBA);
+//    feedback_plane.resizeToTexture(screen_texture);
     
 }
 //--------------------------------------------------------------

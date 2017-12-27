@@ -8,6 +8,7 @@
 #include "interact.hpp"
 #include "ofxOsc.h"
 #include "camera_ctl.hpp"
+#include "feedback.hpp"
 
 #define HOST "localhost"
 #define SYNC_INPORT 9000
@@ -71,6 +72,8 @@ class ofApp : public ofBaseApp{
     
 
     ofxLabel fps_label;
+    
+    Feedback feedback;
     
     ofTexture screen_texture;
     ofPlanePrimitive feedback_plane;
