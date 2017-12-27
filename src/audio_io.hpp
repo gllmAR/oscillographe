@@ -130,6 +130,12 @@ public:
     ofParameter <float> player_pan;
     ofParameter <float> player_position;
     ofParameter <bool> player_loop;
+    ofParameter <bool> player_loop_selection;
+    void player_loop_selection_changed(bool &b);
+    ofParameter <float> player_loop_in;
+    void player_loop_in_changed(float &f);
+    ofParameter <float> player_loop_out;
+    void player_loop_out_changed(float &f);
     ofParameter <int> player_file_index;
     int player_file_index_old = -1;
     vector <float> player_buffer_1_wo;

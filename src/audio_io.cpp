@@ -105,6 +105,10 @@ void Audio_io::setup_gui()
     gui_player.add(player_file_index.set("file_index",0,0,9));
     gui_player.add(player_speed.set("speed",1,-2,2));
     gui_player.add(player_position.set("position",0,0,1));
+    gui_player.add(player_loop_selection.set("player_loop_selection",1));
+    gui_player.add(player_loop_in.set("player_loop_in",0,0,1));
+    gui_player.add(player_loop_out.set("player_loop_out",1,0,1));
+    
     
     //output
     gui_output.setup();
@@ -191,6 +195,9 @@ void Audio_io::setup_gui_listener()
     player_pan.addListener(this, &Audio_io::player_pan_change);
     player_position.addListener(this, &Audio_io::player_position_change);
     player_file_index.addListener(this, &Audio_io::player_file_index_change);
+    player_loop_selection.addListener(this, &Audio_io::player_loop_selection_changed);
+    player_loop_in.addListener(this, &Audio_io::player_loop_in_changed);
+    player_loop_out.addListener(this, &Audio_io::player_loop_out_changed);
 }
 
 void Audio_io::exit()
@@ -503,6 +510,25 @@ void Audio_io::player_file_index_change(int &i)
     setup_player(i);
 }
 
+void Audio_io::player_loop_selection_changed(bool &b)
+{   // fonction sur mesure
+    player.set_loop_selection(b);
+}
 
+void Audio_io::player_loop_in_changed(float &f)
+{   // fonction sur mesure
+    if (f>player_loop_out)
+    {
+        f = player_loop_in = player_loop_out;
+    }
+    player.set_loop_in(f);
+}
 
-
+void Audio_io::player_loop_out_changed(float &f)
+{   // fonction sur mesure
+    if (f<player_loop_in)
+    {
+        f = player_loop_out = player_loop_in;
+    }
+    player.set_loop_out(f);
+}
