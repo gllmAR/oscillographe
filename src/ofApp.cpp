@@ -11,8 +11,9 @@ void ofApp::setup(){
     audio_io.setup();
 
 
-    interact_speed.setup("speed", "/gpio/1");
+    interact_speed.setup("speed", "/gpio/2");
     interact_volume.setup("volume", "/gpio/2");
+    interact_preset.setup("preset","/gpio/1");
     
     cam.setup();
     feedback.setup();
@@ -20,10 +21,8 @@ void ofApp::setup(){
     setup_gui();
 
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
-    
     sync.setup((ofParameterGroup&)preset_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
     
-   
 }
 
 //--------------------------------------------------------------
@@ -54,6 +53,7 @@ void ofApp::setup_gui()
     interact_gui.setName("interact");
     interact_gui.add(&interact_speed.gui);
     interact_gui.add(&interact_volume.gui);
+    interact_gui.add(&interact_preset.gui);
     interact_gui.minimizeAll();
 
     
@@ -112,6 +112,7 @@ void ofApp::update()
     graphe_player.update(audio_io.buffer_size, audio_io.player_buffer_1_wo, audio_io.player_buffer_2_wo);
     graphe_output.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
 
+    interact_preset.update();
     
     while(osc_receiver.hasWaitingMessages())
     {
@@ -119,13 +120,29 @@ void ofApp::update()
         osc_receiver.getNextMessage(m);
         interact_speed.parse_osc(m);
         interact_volume.parse_osc(m);
+        //interact_preset.parse_osc(m);
+        interact_preset.parse_osc(m);
+        
+
+    }
+    
+    if (interact_preset.return_flag)
+    {
+        if(preset_index>=preset_index.getMax())
+        {
+            preset_index=0;
+        }else{
+            preset_index++;
+        }
+        interact_preset.return_flag=0;
+        preset_load_b=1;
     }
     
     if (interact_speed.interact_enable)
     {
         interact_speed.update();
         audio_io.player_set_speed(interact_speed.get_value());
-    } else {
+    } else { //pas top efficace car update toujours...
         audio_io.player_set_speed(audio_io.player_speed);
     }
     
@@ -133,7 +150,7 @@ void ofApp::update()
     {
         interact_volume.update();
         audio_io.set_output_vol(interact_volume.get_value());
-    } else {
+    } else { //pas top efficace
         audio_io.set_output_vol(audio_io.output_volume.get());
     }
     cam.update();

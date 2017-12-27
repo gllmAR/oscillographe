@@ -14,7 +14,7 @@
 #include "ofxOsc.h"
 
 
-class Interact
+class Interact_struggle
 {
 public:
     // ofxOscReceiver osc_receiver;
@@ -61,5 +61,28 @@ public:
     ofParameter<int> metronome_interval_ms=0;
     uint64_t last_metronome_time = 0;
     
+};
+
+class Interact_tic
+{
+public:
+    // min max compteur à chaque nouvelle interact
+    //
+    void setup(string name, string _interact_osc_path);
+    void update();
+    
+    bool return_flag =0;
+    void parse_osc(ofxOscMessage m);
+    uint64_t now_time = 0;
+
+    ofxGuiGroup gui;
+    
+    ofParameter<string> interact_osc_path;
+    ofParameter<bool> interact_enable = 0;
+    ofParameter<bool> metronome_enable =0;
+    ofParameter<int> metronome_interval_ms=0;
+    uint64_t interval_time = 0;
+    uint64_t last_metronome_time = 0;
+
 };
 #endif /* interact_hpp */

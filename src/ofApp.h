@@ -47,8 +47,9 @@ class ofApp : public ofBaseApp{
     Graphe graphe_player;
     
     ofxGuiGroup interact_gui;
-    Interact interact_speed;
-    Interact interact_volume;
+    Interact_struggle interact_speed;
+    Interact_struggle interact_volume;
+    Interact_tic interact_preset;
 
     
     Camera_ctl cam;
@@ -76,14 +77,7 @@ class ofApp : public ofBaseApp{
     Screen_feedback feedback;
     Fbo_feedback fbo_feedback;
     
-//    ofTexture screen_texture;
-//    ofPlanePrimitive feedback_plane;
-//    ofxGuiGroup feedback_gui;
-//    ofParameter<bool> feedback_enable=0;
-//    ofParameter<float> feedback_ammount = 0 ;
-//    ofParameter<float> feedback_pos_x = 0;
-//    ofParameter<float> feedback_pos_y = 0;
-//    ofParameter<float> feedback_scale = 0;
+
     
     bool gui_draw = 0;
     int app_size_w=100;

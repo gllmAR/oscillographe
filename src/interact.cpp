@@ -10,7 +10,7 @@
 
 #include "interact.hpp"
 
-void Interact::setup(string name, string _interact_osc_path)
+void Interact_struggle::setup(string name, string _interact_osc_path)
 {
     interact_osc_path = _interact_osc_path;
     gui.setup();
@@ -29,7 +29,7 @@ void Interact::setup(string name, string _interact_osc_path)
 
 }
 
-void Interact::update()
+void Interact_struggle::update()
 {
     now_time = ofGetElapsedTimeMillis();
     
@@ -45,7 +45,7 @@ void Interact::update()
     }
 }
 
-void Interact::draw()
+void Interact_struggle::draw()
 {
     if (interact_enable && draw_value)
     {
@@ -56,7 +56,7 @@ void Interact::draw()
     }
 }
 
-void Interact::parse_osc(ofxOscMessage m)
+void Interact_struggle::parse_osc(ofxOscMessage m)
 {
     if (m.getAddress() == interact_osc_path.get())
     {
@@ -64,7 +64,7 @@ void Interact::parse_osc(ofxOscMessage m)
     }
 }
 
-void Interact::increment_value()
+void Interact_struggle::increment_value()
 {
     
     if(value_stop_flag)
@@ -83,7 +83,7 @@ void Interact::increment_value()
     last_increment_time=now_time;
 }
 
-void Interact::decrement_value()
+void Interact_struggle::decrement_value()
 {
     if (interact_value > 0 )
     {
@@ -105,13 +105,13 @@ void Interact::decrement_value()
     last_decrement_time = now_time;
 }
 
-float Interact::get_value()
+float Interact_struggle::get_value()
 {
     cooked_value = ofClamp(interact_value*0.001*value_trim, 0, 3);
     return cooked_value;
 }
 
-void Interact::do_smooth()
+void Interact_struggle::do_smooth()
 {
     int total = 0;
     for(int i=0; i < smooth_amount; i++)
@@ -127,4 +127,38 @@ void Interact::do_smooth()
     
 }
 
+/*--------------------------------------------------- */
+
+void Interact_tic::setup(string name, string _interact_osc_path)
+{
+    interact_osc_path = _interact_osc_path;
+    gui.setup();
+    gui.setName(name);
+    gui.add(interact_osc_path.set("osc", _interact_osc_path));
+    gui.add(interact_enable.set("interact_enable",0));
+    gui.add(metronome_enable.set("metronome_enable",0));
+    gui.add(metronome_interval_ms.set("metronome_interval_ms",100, 1,2000));
+}
+
+void Interact_tic::update()
+{
+    if(metronome_enable)
+    {
+        now_time = ofGetElapsedTimeMillis();
+        if (now_time-last_metronome_time > metronome_interval_ms)
+        {
+            return_flag=1;
+            last_metronome_time = now_time;
+        }
+    }
+    
+}
+
+void Interact_tic::parse_osc(ofxOscMessage m)
+{
+    if (m.getAddress() == interact_osc_path.get() || return_flag==1)
+    {
+        return_flag = 1;
+    }
+}
 
