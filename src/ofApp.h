@@ -73,16 +73,17 @@ class ofApp : public ofBaseApp{
 
     ofxLabel fps_label;
     
-    Feedback feedback;
+    Screen_feedback feedback;
+    Fbo_feedback fbo_feedback;
     
-    ofTexture screen_texture;
-    ofPlanePrimitive feedback_plane;
-    ofxGuiGroup feedback_gui;
-    ofParameter<bool> feedback_enable=0;
-    ofParameter<float> feedback_ammount = 0 ;
-    ofParameter<float> feedback_pos_x = 0;
-    ofParameter<float> feedback_pos_y = 0;
-    ofParameter<float> feedback_scale = 0;
+//    ofTexture screen_texture;
+//    ofPlanePrimitive feedback_plane;
+//    ofxGuiGroup feedback_gui;
+//    ofParameter<bool> feedback_enable=0;
+//    ofParameter<float> feedback_ammount = 0 ;
+//    ofParameter<float> feedback_pos_x = 0;
+//    ofParameter<float> feedback_pos_y = 0;
+//    ofParameter<float> feedback_scale = 0;
     
     bool gui_draw = 0;
     int app_size_w=100;

@@ -16,6 +16,7 @@ void ofApp::setup(){
     
     cam.setup();
     feedback.setup();
+    fbo_feedback.setup();
     setup_gui();
 
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
@@ -74,6 +75,7 @@ void ofApp::setup_gui()
     preset_panel.add(&audio_io.gui);
     preset_panel.add(&graphe_gui);
     preset_panel.add(&feedback.feedback_gui);
+    preset_panel.add(&fbo_feedback.feedback_gui);
 
 
     preset_panel.minimizeAll();
@@ -149,6 +151,7 @@ void ofApp::draw()
 
 
     feedback.begin();
+    fbo_feedback.begin();
     ofEnableDepthTest();
 
     cam.cam.begin();
@@ -161,6 +164,7 @@ void ofApp::draw()
     
 
     ofEnableBlendMode( OF_BLENDMODE_ADD );
+    fbo_feedback.end();
     feedback.end();
 
     ofDisableDepthTest();
@@ -247,6 +251,7 @@ void ofApp::windowResized(int w, int h)
     graphe_output.set_size(w,h);
     
     feedback.allocate(w,h);
+    fbo_feedback.allocate(w,h);
 
 }
 //--------------------------------------------------------------
