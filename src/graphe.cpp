@@ -8,10 +8,10 @@
 
 #include "graphe.hpp"
 
-void Graphe::setup()
+void Graphe::setup(string name)
 {
     gui.setup();
-    gui.setName("graphe");
+    gui.setName(name);
     gui.add(graphe_active.set("active",1));
     gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
     gui.add(shape_scale.set("shape_scale",0.10,0,1));

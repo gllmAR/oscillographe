@@ -31,12 +31,9 @@ void ofApp::setup_gui()
 {
 
     /* graphe */
-    graphe_input.setup();
-    graphe_input.gui.setName("input");
-    graphe_player.setup();
-    graphe_player.gui.setName("player");
-    graphe_output.setup();
-    graphe_output.gui.setName("output");
+    graphe_input.setup("input");
+    graphe_player.setup("player");
+    graphe_output.setup("output");
     
     graphe_gui.setup();
     graphe_gui.setName("graphe");

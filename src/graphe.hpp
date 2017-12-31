@@ -34,7 +34,7 @@ public:
     
     ofVboMesh vbo_mesh;
     
-    void setup();
+    void setup(string name);
     void update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y);
     void draw();
     void set_size(int w, int h);
