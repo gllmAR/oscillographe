@@ -120,12 +120,9 @@ public:
     ofxGuiGroup gui_player;
     ofxBasicSoundPlayer player;
     ofSoundBuffer player_buffer;
-    ofxBasicSoundPlayer player_1;
-    ofxBasicSoundPlayer player_2;
-    ofSoundBuffer player_buffer_1;
-    ofSoundBuffer player_buffer_2;
     ofParameter <bool> player_enable;
     ofParameter <float> player_volume;
+    ofxGuiGroup gui_sampler;
     ofParameter <float> player_speed;
     ofParameter <float> player_pan;
     ofParameter <float> player_position;
@@ -151,6 +148,8 @@ public:
     void player_file_index_change(int &i);
     
     void player_set_speed(float f);
+    
+    string player_get_filename();
     
 };
 

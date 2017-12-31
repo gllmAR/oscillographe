@@ -103,11 +103,14 @@ void Audio_io::setup_gui()
     gui_player.add(player_volume.set("volume",1,0,2));
     gui_player.add(player_pan.set("pan",0,-1,1));
     gui_player.add(player_file_index.set("file_index",0,0,9));
-    gui_player.add(player_speed.set("speed",1,-2,2));
-    gui_player.add(player_position.set("position",0,0,1));
-    gui_player.add(player_loop_selection.set("player_loop_selection",1));
-    gui_player.add(player_loop_in.set("player_loop_in",0,0,1));
-    gui_player.add(player_loop_out.set("player_loop_out",1,0,1));
+    
+    gui_sampler.setup();
+    gui_sampler.setName("sampler");
+    gui_sampler.add(player_speed.set("speed",1,-2,2));
+    gui_sampler.add(player_position.set("position",0,0,1));
+    gui_sampler.add(player_loop_selection.set("player_loop_selection",1));
+    gui_sampler.add(player_loop_in.set("player_loop_in",0,0,1));
+    gui_sampler.add(player_loop_out.set("player_loop_out",1,0,1));
     
     
     //output
@@ -153,13 +156,14 @@ void Audio_io::setup_audio()
     
 }
 
-void Audio_io::setup_player(int file_index)
+void Audio_io::setup_player(int file_index_)
 {   // si different d'avant, charger un nouveau son
+    player_file_index = file_index_;
     if (player_file_index_old != player_file_index)
     {
         player_buffer.allocate(buffer_size, 2);
         std::ostringstream path;
-        path << "sounds/audio_" << file_index << ".wav";
+        path << "sounds/audio_" << file_index_ << ".wav";
         player.load(path.str());
         player.setLoop(1);
         player_buffer_1_wo.assign(buffer_size, 0.0);
@@ -531,4 +535,11 @@ void Audio_io::player_loop_out_changed(float &f)
         f = player_loop_out = player_loop_in;
     }
     player.set_loop_out(f);
+}
+
+string Audio_io::player_get_filename()
+{
+    std::ostringstream filename;
+    filename <<"sounds/"<<"audio_" << player_file_index;
+    return filename.str();
 }

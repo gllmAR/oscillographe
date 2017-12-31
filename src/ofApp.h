@@ -65,7 +65,7 @@ class ofApp : public ofBaseApp{
     ofxOscParameterSync sync;
 
 
-    ofxPanel preset_panel;
+   
     ofxPanel setup_panel;
     
     ofxGuiGroup graphe_gui;
@@ -84,12 +84,25 @@ class ofApp : public ofBaseApp{
     int app_size_h=100;
     
     
-    // save et load preset
-    void preset_save(bool &b);
-    void preset_load(bool &b);
-    ofxGuiGroup preset_gui;
-    ofParameter<int> preset_index;
-    ofParameter<bool> preset_save_b;
-    ofParameter<bool> preset_load_b;
+    // save et load preset visual
+    ofxPanel viz_preset_recal_panel;
+    ofxPanel viz_preset_panel;
+    void viz_preset_save(bool &b);
+    void viz_preset_load(bool &b);
+    ofxGuiGroup viz_preset_gui;
+    ofParameter<int> viz_preset_index;
+    ofParameter<bool> viz_preset_save_b;
+    ofParameter<bool> viz_preset_load_b;
+    
+    
+    // save et load preset sampler
+    ofxPanel sampler_preset_recal_panel;
+    ofxPanel sampler_preset_panel;
+    void sampler_preset_save(bool &b);
+    void sampler_preset_load(bool &b);
+    ofxGuiGroup sampler_preset_gui;
+    ofParameter<int> sampler_preset_index;
+    ofParameter<bool> sampler_preset_save_b;
+    ofParameter<bool> sampler_preset_load_b;
     
 };

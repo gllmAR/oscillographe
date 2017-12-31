@@ -21,7 +21,7 @@ void ofApp::setup(){
     setup_gui();
 
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
-    sync.setup((ofParameterGroup&)preset_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
+    sync.setup((ofParameterGroup&)viz_preset_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
     
 }
 
@@ -54,40 +54,59 @@ void ofApp::setup_gui()
     interact_gui.minimizeAll();
 
     
-    /* preset load and save pannel */
-    preset_gui.setup();
-    preset_gui.setName("presets");
-    preset_gui.add(preset_index.set("index",0,0,10));
-    preset_gui.add(preset_load_b.set("load",0));
-    preset_gui.add(preset_save_b.set("save",0));
-    preset_gui.minimizeAll();
+    /* preset load and save viz pannel */
+    viz_preset_gui.setup();
+    viz_preset_gui.setName("presets");
+    viz_preset_gui.add(viz_preset_index.set("index",0,0,10));
+    viz_preset_gui.add(viz_preset_load_b.set("load",0));
+    viz_preset_gui.add(viz_preset_save_b.set("save",0));
+    viz_preset_gui.minimizeAll();
     
     
     
-    /* compose the preset pannel */
+    /* compose the viz preset pannel */
+    viz_preset_recal_panel.setup("viz_preset", "viz.xml", 220,10);
+    viz_preset_recal_panel.add(&viz_preset_gui);
     
-    preset_panel.setup("oscillo_0", "oscillo.xml", 220, 10);
-    
-    preset_panel.add(&cam.camera_preset_gui);
-    preset_panel.add(&audio_io.gui);
-    preset_panel.add(&graphe_gui);
-    preset_panel.add(&feedback.feedback_gui);
-    preset_panel.add(&fbo_feedback.feedback_gui);
+    viz_preset_panel.setup("oscillo_0", "oscillo.xml", 220, 120);
+    viz_preset_panel.add(&cam.camera_preset_gui);
+    viz_preset_panel.add(&audio_io.gui);
+    viz_preset_panel.add(&graphe_gui);
+    viz_preset_panel.add(&feedback.feedback_gui);
+    viz_preset_panel.add(&fbo_feedback.feedback_gui);
 
 
-    preset_panel.minimizeAll();
+    viz_preset_panel.minimizeAll();
     audio_io.gui.minimizeAll();
     audio_io.gui_device.minimizeAll();
 
 
-    preset_panel.loadFromFile("oscillo.xml");
+    viz_preset_panel.loadFromFile("oscillo.xml");
     
+    /* preset load and save sampler pannel */
+
+    
+    /* preset load and save viz pannel */
+    sampler_preset_gui.setup();
+    sampler_preset_gui.setName("presets");
+    sampler_preset_gui.add(sampler_preset_index.set("index",0,0,10));
+    sampler_preset_gui.add(sampler_preset_load_b.set("load",0));
+    sampler_preset_gui.add(sampler_preset_save_b.set("save",0));
+    
+ 
+    
+    
+    sampler_preset_recal_panel.setup("sampler_save_recall", "sampler.xml",  430,10);
+    sampler_preset_recal_panel.add(&sampler_preset_gui);
+    
+    sampler_preset_panel.setup("sampler", "sampler.xml", 430, 120);
+    sampler_preset_panel.add(&audio_io.gui_sampler);
     
     
     /* setup panel */
     setup_panel.setup("settings", "settings.xml", 10, 10);
     setup_panel.add(fps_label.setup("FPS"," "));
-    setup_panel.add(&preset_gui);
+//    setup_panel.add(&viz_preset_gui);
     setup_panel.add(&cam.camera_settings_gui);
     setup_panel.add(&audio_io.gui_device);
     setup_panel.add(&interact_gui);
@@ -96,10 +115,15 @@ void ofApp::setup_gui()
     setup_panel.loadFromFile("settings.xml");
     
     
-    preset_save_b.addListener(this, &ofApp::preset_save);
-    preset_load_b.addListener(this, &ofApp::preset_load);
-    preset_index=0;
-    preset_load_b=1;
+    viz_preset_save_b.addListener(this, &ofApp::viz_preset_save);
+    viz_preset_load_b.addListener(this, &ofApp::viz_preset_load);
+    viz_preset_index=0;
+    viz_preset_load_b=1;
+    
+    sampler_preset_save_b.addListener(this, &ofApp::sampler_preset_save);
+    sampler_preset_load_b.addListener(this, &ofApp::sampler_preset_load);
+    sampler_preset_index=0;
+    sampler_preset_load_b=1;
     
 }
 
@@ -127,14 +151,14 @@ void ofApp::update()
     
     if (interact_preset.return_flag)
     {
-        if(preset_index>=preset_index.getMax())
+        if(viz_preset_index>=viz_preset_index.getMax())
         {
-            preset_index=0;
+            viz_preset_index=0;
         }else{
-            preset_index++;
+            viz_preset_index++;
         }
         interact_preset.return_flag=0;
-        preset_load_b=1;
+        viz_preset_load_b=1;
     }
     
     if (interact_speed.interact_enable)
@@ -192,7 +216,10 @@ void ofApp::draw()
     
     if (gui_draw)
     {
-        preset_panel.draw();
+        sampler_preset_recal_panel.draw();
+        viz_preset_recal_panel.draw();
+        sampler_preset_panel.draw();
+        viz_preset_panel.draw();
         setup_panel.draw();
     }
     if (screen_workaround_to_update)
@@ -210,8 +237,8 @@ void ofApp::keyPressed(int key)
     
     if (key >=48  && key <= 57)
     {
-        preset_index=key-48;
-        preset_load_b =1;
+        viz_preset_index=key-48;
+        viz_preset_load_b =1;
     }
 
 }
@@ -287,29 +314,71 @@ void ofApp::exit(){
 //--------------------------------------------------------------
 
 
-void ofApp::preset_save(bool &b)
+void ofApp::viz_preset_save(bool &b)
 {
     cam.cam_get_param(b);
     std::string str = "oscillo_";
-    str += ofToString(preset_index);
-    preset_panel.setName(str);
-    preset_panel.saveToFile("oscillo.xml");
-    preset_panel.setName("oscillo");
-    preset_save_b =0;
+    str += ofToString(viz_preset_index);
+    viz_preset_panel.setName(str);
+    viz_preset_panel.saveToFile("oscillo.xml");
+    viz_preset_panel.setName("oscillo");
+    viz_preset_save_b =0;
 }
 
 
 //--------------------------------------------------------------
 
-void ofApp::preset_load(bool &b)
+void ofApp::viz_preset_load(bool &b)
 {
     std::string str = "oscillo_";
-    str += ofToString(preset_index);
-    preset_panel.setName(str);
-    preset_panel.loadFromFile("oscillo.xml");
-    preset_load_b =0;
+    str += ofToString(viz_preset_index);
+    viz_preset_panel.setName(str);
+    viz_preset_panel.loadFromFile("oscillo.xml");
+    viz_preset_load_b =0;
     cam.cam_set_param(b);
-    preset_panel.setName("oscillo");
+    viz_preset_panel.setName("oscillo");
+}
+
+
+//--------------------------------------------------------------
+
+
+void ofApp::sampler_preset_save(bool &b)
+{
+  //  cam.cam_get_param(b);
+    cout<<"here"<<endl;
+    std::string str = "loop_";
+    str += ofToString(sampler_preset_index);
+    sampler_preset_panel.setName(str);
+    std::ostringstream preset_path;
+    preset_path<<audio_io.player_get_filename()<<".xml";
+   
+    sampler_preset_panel.saveToFile(preset_path.str());
+    sampler_preset_save_b =0;
+    sampler_preset_panel.setName("sampler_recall");
+}
+
+
+//--------------------------------------------------------------
+
+void ofApp::sampler_preset_load(bool &b)
+{
+    
+    
+    cout<<"there"<<endl;
+    std::string str = "loop_";
+    str += ofToString(sampler_preset_index);
+    sampler_preset_panel.setName(str);
+    
+    
+    std::ostringstream preset_path;
+    preset_path<<audio_io.player_get_filename()<<".xml";
+
+    
+    sampler_preset_panel.loadFromFile(preset_path.str());
+    sampler_preset_load_b =0;
+    
+    sampler_preset_panel.setName("sampler_recall");
 }
 
 
