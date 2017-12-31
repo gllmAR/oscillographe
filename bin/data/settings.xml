@@ -7,7 +7,7 @@
 		<cam_set_param>0</cam_set_param>
 	</camera>
 	<presets>
-		<index>0</index>
+		<index>2</index>
 		<load>0</load>
 		<save>0</save>
 	</presets>
@@ -32,4 +32,36 @@
 			<select>1</select>
 		</set_output>
 	</device>
+	<interact>
+		<speed>
+			<osc>/gpio/1</osc>
+			<interact_enable>0</interact_enable>
+			<stop_time_threshold>500</stop_time_threshold>
+			<value_trim>1</value_trim>
+			<metronome_enable>0</metronome_enable>
+			<metronome_interval_ms>100</metronome_interval_ms>
+			<draw_value>0</draw_value>
+			<smooth_enable>1</smooth_enable>
+			<smooth_ammount>4</smooth_ammount>
+			<debug>0</debug>
+		</speed>
+		<volume>
+			<osc>/gpio/2</osc>
+			<interact_enable>0</interact_enable>
+			<stop_time_threshold>500</stop_time_threshold>
+			<value_trim>1</value_trim>
+			<metronome_enable>0</metronome_enable>
+			<metronome_interval_ms>100</metronome_interval_ms>
+			<draw_value>0</draw_value>
+			<smooth_enable>0</smooth_enable>
+			<smooth_ammount>5</smooth_ammount>
+			<debug>0</debug>
+		</volume>
+		<preset>
+			<osc>/gpio/1</osc>
+			<interact_enable>1</interact_enable>
+			<metronome_enable>0</metronome_enable>
+			<metronome_interval_ms>100</metronome_interval_ms>
+		</preset>
+	</interact>
 </settings>

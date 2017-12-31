@@ -3,7 +3,7 @@
 	<camera>
 		<cam_set_ortho>0</cam_set_ortho>
 		<cam_set_distance>0</cam_set_distance>
-		<position>0, 0, 0</position>
+		<position>0, 0, 665.107</position>
 		<orientation>1, 0, 0, 0</orientation>
 	</camera>
 	<audio_io>
@@ -13,12 +13,15 @@
 			<pan>0</pan>
 		</input>
 		<player>
-			<enable>0</enable>
+			<enable>1</enable>
 			<volume>1</volume>
 			<pan>0</pan>
 			<file_index>0</file_index>
 			<speed>1</speed>
 			<position>0</position>
+			<player_loop_selection>1</player_loop_selection>
+			<player_loop_in>0</player_loop_in>
+			<player_loop_out>1</player_loop_out>
 		</player>
 		<output>
 			<mute>0</mute>
@@ -62,7 +65,7 @@
 		</output>
 	</graphe>
 	<feedback>
-		<enable>1</enable>
+		<enable>0</enable>
 		<ammount>0.996173</ammount>
 		<x>1</x>
 		<y>1</y>
@@ -90,6 +93,13 @@
 			<smooth_enable>0</smooth_enable>
 		</volume>
 	</interact>
+	<fbo_feedback>
+		<enable>0</enable>
+		<ammount>255</ammount>
+		<x>1</x>
+		<y>1</y>
+		<scale>1</scale>
+	</fbo_feedback>
 </oscillo_0>
 <oscillo_1>
 	<camera>
@@ -196,7 +206,10 @@
 			<pan>0</pan>
 			<file_index>3</file_index>
 			<speed>1</speed>
-			<position>0</position>
+			<position>0.0680966</position>
+			<player_loop_selection>1</player_loop_selection>
+			<player_loop_in>0.349229</player_loop_in>
+			<player_loop_out>0.370054</player_loop_out>
 		</player>
 		<output>
 			<mute>0</mute>
@@ -240,7 +253,7 @@
 		</output>
 	</graphe>
 	<feedback>
-		<enable>1</enable>
+		<enable>0</enable>
 		<ammount>0.998</ammount>
 		<x>1</x>
 		<y>1</y>
@@ -262,12 +275,19 @@
 			<value_trim>1</value_trim>
 		</volume>
 	</interact>
+	<fbo_feedback>
+		<enable>0</enable>
+		<ammount>255</ammount>
+		<x>1</x>
+		<y>1</y>
+		<scale>1</scale>
+	</fbo_feedback>
 </oscillo_2>
 <oscillo_3>
 	<camera>
 		<cam_set_ortho>0</cam_set_ortho>
-		<position>-473.546, 328.558, 347.058</position>
-		<orientation>0.758289, -0.362882, -0.535535, -0.0806908</orientation>
+		<position>0, 0, 665.107</position>
+		<orientation>1, 0, 0, 0</orientation>
 	</camera>
 	<audio_io>
 		<input>
@@ -281,7 +301,10 @@
 			<pan>0</pan>
 			<file_index>3</file_index>
 			<speed>1</speed>
-			<position>0</position>
+			<position>0.0680966</position>
+			<player_loop_selection>1</player_loop_selection>
+			<player_loop_in>0.474177</player_loop_in>
+			<player_loop_out>0.505414</player_loop_out>
 		</player>
 		<output>
 			<mute>0</mute>
@@ -325,7 +348,7 @@
 		</output>
 	</graphe>
 	<feedback>
-		<enable>1</enable>
+		<enable>0</enable>
 		<ammount>0.998</ammount>
 		<x>1</x>
 		<y>1</y>
@@ -351,6 +374,13 @@
 			<metronome_interval_ms>241</metronome_interval_ms>
 		</volume>
 	</interact>
+	<fbo_feedback>
+		<enable>0</enable>
+		<ammount>255</ammount>
+		<x>1</x>
+		<y>1</y>
+		<scale>1</scale>
+	</fbo_feedback>
 </oscillo_3>
 <oscillo_4>
 	<camera>

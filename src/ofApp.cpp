@@ -101,6 +101,8 @@ void ofApp::setup_gui()
     
     preset_save_b.addListener(this, &ofApp::preset_save);
     preset_load_b.addListener(this, &ofApp::preset_load);
+    preset_index=0;
+    preset_load_b=1;
     
 }
 
@@ -295,6 +297,7 @@ void ofApp::preset_save(bool &b)
     str += ofToString(preset_index);
     preset_panel.setName(str);
     preset_panel.saveToFile("oscillo.xml");
+    preset_panel.setName("oscillo");
     preset_save_b =0;
 }
 
@@ -309,6 +312,7 @@ void ofApp::preset_load(bool &b)
     preset_panel.loadFromFile("oscillo.xml");
     preset_load_b =0;
     cam.cam_set_param(b);
+    preset_panel.setName("oscillo");
 }
 
 
