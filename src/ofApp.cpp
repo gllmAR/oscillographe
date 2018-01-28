@@ -87,7 +87,18 @@ void ofApp::setup_gui()
 
     viz_preset_panel.loadFromFile("oscillo.xml");
     
-    /* preset load and save sampler pannel */
+    
+    
+    /*--->  devrait devenir contenir
+        audio_io.audio_sampler_A.settings_gui
+        audio_io.audio_sampler_A.recalled_gui
+        audio_io.audio_sampler_B.settings_gui
+        audio_io.audio_sampler_B.recalled_gui
+    */
+    
+
+    
+     /* preset load and save sampler pannel */
 
     sampler_preset_gui.setup();
     sampler_preset_gui.setName("Sampler presets");
@@ -110,6 +121,7 @@ void ofApp::setup_gui()
     sampler_preset_panel.setup("sampler", "sampler.xml", 430, 280);
       sampler_preset_panel.add(&audio_io.gui_sampler);
   
+    //<---
     
     
     /* setup panel */
@@ -227,6 +239,8 @@ void ofApp::draw()
     
     if (gui_draw)
     {
+        audio_io.audio_sampler_A.settings_panel.draw();
+        audio_io.audio_sampler_A.recalled_panel.draw();
         sampler_preset_recal_panel.draw();
         viz_preset_recal_panel.draw();
         sampler_preset_panel.draw();
@@ -353,7 +367,7 @@ void ofApp::viz_preset_load(bool &b)
 
 //--------------------------------------------------------------
 
-
+//--->
 void ofApp::sampler_preset_save(bool &b)
 {
     std::string str = "loop_";
@@ -391,3 +405,5 @@ void ofApp::sampler_preset_load(bool &b)
 
 
 //--------------------------------------------------------------
+
+//<---

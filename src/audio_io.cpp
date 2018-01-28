@@ -9,11 +9,15 @@
 
 #include "audio_io.hpp"
 
+
 void Audio_io::setup()
 {
     setup_gui();
     setup_audio();
+    audio_sampler_A.setup(0,buffer_size, 630, "sampler_A");
+    //--->
     setup_player(0);
+    //<---
     setup_gui_listener();
 }
 
@@ -95,6 +99,8 @@ void Audio_io::setup_gui()
     gui_input.add(input_volume.set("volume",1,0,2));
     gui_input.add(input_pan.set("pan",0,-1,1));
     
+    
+    //--->
     //player
     gui_player.setup();
     gui_player.setName("player");
@@ -118,7 +124,7 @@ void Audio_io::setup_gui()
     gui_recorder.setup();
     gui_recorder.setName("recorder");
     gui_recorder.add(recorder_enable.set("enable",0));
-    
+    //<---
     
     //output
     gui_output.setup();
@@ -159,13 +165,13 @@ void Audio_io::setup_audio()
     output_select.setMax(output_devices.size());
     output_buffer_1.assign(buffer_size, 0.0);
     output_buffer_2.assign(buffer_size, 0.0);
-    
+//-->
     
     recorder_buffer.setNumChannels(2);
-    
+//<--
     
 }
-
+//--->
 void Audio_io::setup_player(int file_index_)
 {   // si different d'avant, charger un nouveau son
     player_file_index = file_index_;
@@ -185,6 +191,7 @@ void Audio_io::setup_player(int file_index_)
         player_file_index_old = player_file_index;
     }
 }
+//<---
 
 
 void Audio_io::setup_gui_listener()
@@ -202,7 +209,7 @@ void Audio_io::setup_gui_listener()
     output_select.addListener(this, &Audio_io::output_select_change);
     output_enable.addListener(this, &Audio_io::output_enable_change);
     output_volume.addListener(this, &Audio_io::set_output_vol_change);
-    
+    //--->
     player_enable.addListener(this, &Audio_io::player_enable_change);
     player_speed.addListener(this, &Audio_io::player_speed_change);
     player_volume.addListener(this, &Audio_io::player_volume_change);
@@ -214,6 +221,7 @@ void Audio_io::setup_gui_listener()
     player_loop_out.addListener(this, &Audio_io::player_loop_out_changed);
     
     recorder_enable.addListener(this, &Audio_io::recorder_enable_changed);
+    //<---
 }
 
 void Audio_io::exit()
@@ -281,6 +289,9 @@ void Audio_io::audioOut(ofSoundBuffer& output)
         // ceci permet d'éviter d'avoir des artefact sonore
         // qui emmergent lié à l'interpolation du player audio
         // et ce même quand player audio non-actif (auto zero out clean)
+            // devrait fonctionner à l'intérieur de la classe..?
+            // on devrait peut etre faire
+        audio_sampler_A.audio_process(output);
         
         player.audioOut(output);
         player_buffer = output;
@@ -298,8 +309,14 @@ void Audio_io::audioOut(ofSoundBuffer& output)
                 player_buffer_2_wo[i] = 0;
             }
 
-            float ch1 = ofClamp((input_buffer_1[i] +  player_buffer[i*2  ]) * output_vol_ammount * pan_1*2*!output_mute, -1, 1);
-            float ch2 = ofClamp((input_buffer_2[i] +  player_buffer[i*2+1]) * output_vol_ammount  * pan_2*2*!output_mute, -1, 1);
+            float ch1 = ofClamp((input_buffer_1[i]
+                                 + player_buffer[i*2  ]
+                                 + audio_sampler_A.player_buffer[i*2 ]
+                                 ) * output_vol_ammount * pan_1*2*!output_mute, -1, 1);
+            float ch2 = ofClamp((input_buffer_2[i]
+                                 +  player_buffer[i*2+1]
+                                 + audio_sampler_A.player_buffer[i*2+1]
+                                 ) * output_vol_ammount  * pan_2*2*!output_mute, -1, 1);
             output_buffer_1[i] = ch1;
             output_buffer_2[i] = ch2;
             output[i*2  ] = ch1 * master_vol_ammount;
@@ -486,6 +503,7 @@ void Audio_io::output_enable_change(bool &output_enable)
     }
 }
 
+//--->
 void Audio_io::player_enable_change(bool &player_enable)
 {
     if(player_enable)
@@ -569,3 +587,4 @@ void Audio_io::recorder_enable_changed(bool &b)
     }
 }
 
+//<--

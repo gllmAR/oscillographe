@@ -97,6 +97,13 @@ class ofApp : public ofBaseApp{
     ofParameter<bool> viz_preset_load_b;
     
     
+//    ofxPanel audio_sampler_A_settings_panel;
+//    ofxPanel audio_sampler_A_recalled_panel;
+//    ofxPanel audio_sampler_B_settings_panel;
+//    ofxPanel audio_sampler_B_recalled_panel;
+    //--->
+
+    
     // save et load preset sampler
     ofxPanel sampler_preset_recal_panel;
     ofxPanel sampler_preset_panel;
@@ -106,5 +113,6 @@ class ofApp : public ofBaseApp{
     ofParameter<int> sampler_preset_index;
     ofParameter<bool> sampler_preset_save_b;
     ofParameter<bool> sampler_preset_load_b;
+    //<---
     
 };

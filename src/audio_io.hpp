@@ -6,7 +6,7 @@
 //
 //
 // sert a configurer le soundstream (input et output)
-// sert a jouer du son
+// sert a jouer des sons
 // sert a extraire les valeur de sons en array de buffersize
 
 
@@ -19,6 +19,7 @@
 #include "ofxGui.h"
 #include "ofxBasicSoundPlayer.h"
 #include "ofxSoundFile.h"
+#include "audio_sampler.hpp"
 
 
 
@@ -30,7 +31,9 @@ public:
     void setup_gui();
     void setup_gui_listener();
     void setup_audio();
+    //--->
     void setup_player(int file_index);
+    //<---
     void reset_audio(bool &b);
     void set_master_vol(float _master_vol);
     void set_master_vol_change(float &f);
@@ -116,7 +119,7 @@ public:
     void output_select_change(int &output_select);
     void output_enable_change(bool &output_enable);
     
-    
+    // --->
     // sampler
     ofxGuiGroup gui_sampler;
 
@@ -163,6 +166,10 @@ public:
     ofxSoundFile recorder_sound_file;
     void recorder_enable_changed(bool &b);
     void recorder_save_file();
+
+    // <---
+    
+    Audio_sampler audio_sampler_A;
     
 };
 
