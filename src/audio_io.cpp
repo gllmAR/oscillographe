@@ -131,11 +131,11 @@ void Audio_io::setup_gui()
     gui_device.add(&gui_device_io);
     gui_device.add(&gui_device_input);
     gui_device.add(&gui_device_output);
-    gui_device.add(&gui_recorder);
+    //gui_device.add(&gui_recorder);
 
     // compose gui
     gui.add(&gui_input);
-    gui.add(&gui_player);
+    //gui.add(&gui_player);
     gui.add(&gui_output);
 }
 

@@ -25,12 +25,15 @@
 		</set_io>
 		<set_input>
 			<enable>1</enable>
-			<select>0</select>
+			<select>3</select>
 		</set_input>
 		<set_output>
 			<enable>1</enable>
 			<select>1</select>
 		</set_output>
+		<recorder>
+			<enable>0</enable>
+		</recorder>
 	</device>
 	<interact>
 		<speed>

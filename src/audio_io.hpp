@@ -117,13 +117,17 @@ public:
     void output_enable_change(bool &output_enable);
     
     
+    // sampler
+    ofxGuiGroup gui_sampler;
+
+    
     // player stuff
     ofxGuiGroup gui_player;
     ofxBasicSoundPlayer player;
     ofSoundBuffer player_buffer;
     ofParameter <bool> player_enable;
     ofParameter <float> player_volume;
-    ofxGuiGroup gui_sampler;
+    
     ofParameter <float> player_speed;
     ofParameter <float> player_pan;
     ofParameter <float> player_position;

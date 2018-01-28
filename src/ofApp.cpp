@@ -74,7 +74,7 @@ void ofApp::setup_gui()
     
     viz_preset_panel.setup("oscillo_0", "oscillo.xml", 220, 120);
     viz_preset_panel.add(&cam.camera_preset_gui);
-    viz_preset_panel.add(&audio_io.gui);
+
     viz_preset_panel.add(&graphe_gui);
     viz_preset_panel.add(&feedback.feedback_gui);
     viz_preset_panel.add(&fbo_feedback.feedback_gui);
@@ -89,22 +89,27 @@ void ofApp::setup_gui()
     
     /* preset load and save sampler pannel */
 
-    
-    /* preset load and save viz pannel */
     sampler_preset_gui.setup();
-    sampler_preset_gui.setName("presets");
+    sampler_preset_gui.setName("Sampler presets");
     sampler_preset_gui.add(sampler_preset_index.set("index",0,0,10));
     sampler_preset_gui.add(sampler_preset_load_b.set("load",0));
     sampler_preset_gui.add(sampler_preset_save_b.set("save",0));
+
     
  
     
     
-    sampler_preset_recal_panel.setup("sampler_preset", "sampler.xml",  430,10);
-    sampler_preset_recal_panel.add(&sampler_preset_gui);
+    sampler_preset_recal_panel.setup("Player_A", "sampler.xml",  430,10);
+    sampler_preset_recal_panel.add(&audio_io.gui_player);
+    sampler_preset_recal_panel.add(&audio_io.gui_recorder);
     
-    sampler_preset_panel.setup("sampler", "sampler.xml", 430, 120);
-    sampler_preset_panel.add(&audio_io.gui_sampler);
+    sampler_preset_recal_panel.add(&sampler_preset_gui);
+  
+
+    
+    sampler_preset_panel.setup("sampler", "sampler.xml", 430, 280);
+      sampler_preset_panel.add(&audio_io.gui_sampler);
+  
     
     
     /* setup panel */
@@ -113,6 +118,7 @@ void ofApp::setup_gui()
 //    setup_panel.add(&viz_preset_gui);
     setup_panel.add(&cam.camera_settings_gui);
     setup_panel.add(&audio_io.gui_device);
+    setup_panel.add(&audio_io.gui);
     setup_panel.add(&interact_gui);
     setup_panel.minimizeAll();
     

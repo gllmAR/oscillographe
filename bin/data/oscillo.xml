@@ -43,10 +43,10 @@
 		</input>
 		<player>
 			<active>1</active>
-			<buffer_history>512</buffer_history>
+			<buffer_history>4096</buffer_history>
 			<shape_scale>0.1</shape_scale>
 			<line_width>1</line_width>
-			<mesh_width_z>1</mesh_width_z>
+			<mesh_width_z>0.00669003</mesh_width_z>
 			<color>255, 0, 0, 255</color>
 			<saturation>255</saturation>
 			<hue>255</hue>
@@ -56,8 +56,8 @@
 			<active>1</active>
 			<buffer_history>512</buffer_history>
 			<shape_scale>0.1</shape_scale>
-			<line_width>1</line_width>
-			<mesh_width_z>0.417326</mesh_width_z>
+			<line_width>2.18226</line_width>
+			<mesh_width_z>0.444008</mesh_width_z>
 			<color>255, 191, 0, 255</color>
 			<saturation>255</saturation>
 			<hue>31.9679</hue>
@@ -105,8 +105,8 @@
 	<camera>
 		<cam_set_ortho>0</cam_set_ortho>
 		<cam_set_distance>0</cam_set_distance>
-		<position>-14.2701, 145.034, 79.8457</position>
-		<orientation>0.817512, -0.457151, -0.117714, -0.329895</orientation>
+		<position>0, 0, 665.107</position>
+		<orientation>1, 0, 0, 0</orientation>
 	</camera>
 	<audio_io>
 		<input>
@@ -115,7 +115,7 @@
 			<pan>0</pan>
 		</input>
 		<player>
-			<enable>0</enable>
+			<enable>1</enable>
 			<volume>1</volume>
 			<pan>0</pan>
 			<file_index>0</file_index>
@@ -142,10 +142,10 @@
 		</input>
 		<player>
 			<active>1</active>
-			<buffer_history>512</buffer_history>
+			<buffer_history>4096</buffer_history>
 			<shape_scale>0.1</shape_scale>
 			<line_width>1</line_width>
-			<mesh_width_z>1</mesh_width_z>
+			<mesh_width_z>0.00669003</mesh_width_z>
 			<color>255, 0, 0, 255</color>
 			<saturation>255</saturation>
 			<hue>255</hue>
@@ -153,18 +153,18 @@
 		</player>
 		<output>
 			<active>1</active>
-			<buffer_history>513</buffer_history>
-			<shape_scale>0.536651</shape_scale>
-			<line_width>1</line_width>
-			<mesh_width_z>0.417326</mesh_width_z>
-			<color>190, 255, 0, 255</color>
+			<buffer_history>512</buffer_history>
+			<shape_scale>0.1</shape_scale>
+			<line_width>2.18226</line_width>
+			<mesh_width_z>0.444008</mesh_width_z>
+			<color>255, 191, 0, 255</color>
 			<saturation>255</saturation>
-			<hue>53.2091</hue>
+			<hue>31.9679</hue>
 			<brightness>255</brightness>
 		</output>
 	</graphe>
 	<feedback>
-		<enable>1</enable>
+		<enable>0</enable>
 		<ammount>0.996173</ammount>
 		<x>1</x>
 		<y>1</y>
@@ -186,13 +186,20 @@
 			<value_trim>1</value_trim>
 		</volume>
 	</interact>
+	<fbo_feedback>
+		<enable>0</enable>
+		<ammount>255</ammount>
+		<x>1</x>
+		<y>1</y>
+		<scale>1</scale>
+	</fbo_feedback>
 </oscillo_1>
 <oscillo_2>
 	<camera>
 		<cam_set_ortho>0</cam_set_ortho>
 		<cam_set_distance>0</cam_set_distance>
-		<position>127.968, -6.17183, 193.768</position>
-		<orientation>0.759562, 0.00114368, 0.63393, -0.145574</orientation>
+		<position>150.579, -23.4746, 175.313</position>
+		<orientation>0.718765, 0.0276866, 0.68529, -0.113947</orientation>
 	</camera>
 	<audio_io>
 		<input>
