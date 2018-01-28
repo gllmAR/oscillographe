@@ -18,6 +18,7 @@
 #include "ofMain.h"
 #include "ofxGui.h"
 #include "ofxBasicSoundPlayer.h"
+#include "ofxSoundFile.h"
 
 
 
@@ -150,6 +151,14 @@ public:
     void player_set_speed(float f);
     
     string player_get_filename();
+    
+    // recorder stuff
+    ofxGuiGroup gui_recorder;
+    ofParameter <bool> recorder_enable;
+    ofSoundBuffer recorder_buffer;
+    ofxSoundFile recorder_sound_file;
+    void recorder_enable_changed(bool &b);
+    void recorder_save_file();
     
 };
 

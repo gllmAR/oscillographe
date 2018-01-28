@@ -113,6 +113,13 @@ void Audio_io::setup_gui()
     gui_sampler.add(player_loop_out.set("player_loop_out",1,0,1));
     
     
+    // recorder
+    
+    gui_recorder.setup();
+    gui_recorder.setName("recorder");
+    gui_recorder.add(recorder_enable.set("enable",0));
+    
+    
     //output
     gui_output.setup();
     gui_output.setName("output");
@@ -124,6 +131,7 @@ void Audio_io::setup_gui()
     gui_device.add(&gui_device_io);
     gui_device.add(&gui_device_input);
     gui_device.add(&gui_device_output);
+    gui_device.add(&gui_recorder);
 
     // compose gui
     gui.add(&gui_input);
@@ -152,6 +160,8 @@ void Audio_io::setup_audio()
     output_buffer_1.assign(buffer_size, 0.0);
     output_buffer_2.assign(buffer_size, 0.0);
     
+    
+    recorder_buffer.setNumChannels(2);
     
     
 }
@@ -202,6 +212,8 @@ void Audio_io::setup_gui_listener()
     player_loop_selection.addListener(this, &Audio_io::player_loop_selection_changed);
     player_loop_in.addListener(this, &Audio_io::player_loop_in_changed);
     player_loop_out.addListener(this, &Audio_io::player_loop_out_changed);
+    
+    recorder_enable.addListener(this, &Audio_io::recorder_enable_changed);
 }
 
 void Audio_io::exit()
@@ -234,6 +246,11 @@ void Audio_io::audioIn(ofSoundBuffer & input)
         float pan_1 = 1-(input_pan*0.5 +0.5);
         float pan_2 = input_pan*0.5 +0.5;
         input_buffer = input;
+        
+        if(recorder_enable)
+        {
+            recorder_buffer.append(input);
+        }
         
         if(input_mute)
         {
@@ -543,3 +560,12 @@ string Audio_io::player_get_filename()
     filename <<"sounds/"<<"audio_" << player_file_index;
     return filename.str();
 }
+
+void Audio_io::recorder_enable_changed(bool &b)
+{
+    if (!recorder_enable)
+    {
+        recorder_sound_file.save("loop1.wav", recorder_buffer);
+    }
+}
+
