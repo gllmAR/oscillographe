@@ -11,8 +11,8 @@
 #include "feedback.hpp"
 
 #define HOST "localhost"
-#define SYNC_INPORT 9000
-#define SYNC_OUTPORT 9001
+#define SYNC_INPORT 9001
+#define SYNC_OUTPORT 9000
 #define INTERACT_PORT 8001
 
 
@@ -62,7 +62,7 @@ class ofApp : public ofBaseApp{
     int     buffer_size_old=0;
     
     ofxOscReceiver osc_receiver;
-    ofxOscParameterSync sync;
+    
 
 
    
@@ -85,7 +85,9 @@ class ofApp : public ofBaseApp{
     
     
     // save et load preset visual
+    ofxOscParameterSync viz_preset_recall_sync;
     ofxPanel viz_preset_recal_panel;
+    ofxOscParameterSync viz_preset_sync;
     ofxPanel viz_preset_panel;
     void viz_preset_save(bool &b);
     void viz_preset_load(bool &b);

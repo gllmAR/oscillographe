@@ -21,7 +21,11 @@ void ofApp::setup(){
     setup_gui();
 
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
-    sync.setup((ofParameterGroup&)viz_preset_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
+    
+    viz_preset_recall_sync.setup((ofParameterGroup&)viz_preset_recal_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
+    viz_preset_sync.setup((ofParameterGroup&)viz_preset_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
+    
+
     
 }
 
@@ -96,7 +100,7 @@ void ofApp::setup_gui()
  
     
     
-    sampler_preset_recal_panel.setup("sampler_save_recall", "sampler.xml",  430,10);
+    sampler_preset_recal_panel.setup("sampler_preset", "sampler.xml",  430,10);
     sampler_preset_recal_panel.add(&sampler_preset_gui);
     
     sampler_preset_panel.setup("sampler", "sampler.xml", 430, 120);
@@ -177,7 +181,8 @@ void ofApp::update()
         audio_io.set_output_vol(audio_io.output_volume.get());
     }
     cam.update();
-    sync.update();
+    viz_preset_recall_sync.update();
+    viz_preset_sync.update();
     
     if(gui_draw){fps_label= ofToString(ofGetFrameRate());}
     
@@ -345,8 +350,6 @@ void ofApp::viz_preset_load(bool &b)
 
 void ofApp::sampler_preset_save(bool &b)
 {
-  //  cam.cam_get_param(b);
-    cout<<"here"<<endl;
     std::string str = "loop_";
     str += ofToString(sampler_preset_index);
     sampler_preset_panel.setName(str);
@@ -355,7 +358,7 @@ void ofApp::sampler_preset_save(bool &b)
    
     sampler_preset_panel.saveToFile(preset_path.str());
     sampler_preset_save_b =0;
-    sampler_preset_panel.setName("sampler_recall");
+    sampler_preset_panel.setName("sampler");
 }
 
 
@@ -365,7 +368,6 @@ void ofApp::sampler_preset_load(bool &b)
 {
     
     
-    cout<<"there"<<endl;
     std::string str = "loop_";
     str += ofToString(sampler_preset_index);
     sampler_preset_panel.setName(str);
@@ -378,7 +380,7 @@ void ofApp::sampler_preset_load(bool &b)
     sampler_preset_panel.loadFromFile(preset_path.str());
     sampler_preset_load_b =0;
     
-    sampler_preset_panel.setName("sampler_recall");
+    sampler_preset_panel.setName("sampler");
 }
 
 
