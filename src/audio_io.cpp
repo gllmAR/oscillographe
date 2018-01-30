@@ -14,7 +14,8 @@ void Audio_io::setup()
 {
     setup_gui();
     setup_audio();
-    audio_sampler_A.setup(0,buffer_size, 630, "sampler_A");
+    audio_sampler_A.setup(0,buffer_size);
+    // index buffer_size
     //--->
     setup_player(0);
     //<---
@@ -255,10 +256,14 @@ void Audio_io::audioIn(ofSoundBuffer & input)
         float pan_2 = input_pan*0.5 +0.5;
         input_buffer = input;
         
+        //--->
         if(recorder_enable)
         {
             recorder_buffer.append(input);
         }
+        //<---
+        
+        audio_sampler_A.audio_input(input, last_output_buffer);
         
         if(input_mute)
         {
@@ -282,7 +287,7 @@ void Audio_io::audioOut(ofSoundBuffer& output)
         // process pan
         float pan_1 = 1-(output_pan*0.5 +0.5);
         float pan_2 = output_pan*0.5 +0.5;
-
+//--->
         // workaround! : ici, on envois "temporairement"
         // l'output du player audio dans l'output audio
         // que l'on récupère dans un player_buffer
@@ -295,10 +300,11 @@ void Audio_io::audioOut(ofSoundBuffer& output)
         
         player.audioOut(output);
         player_buffer = output;
- 
+ //<---
         
         for (int i = 0; i < output.getNumFrames(); i++)
         {
+            //--->
             if(player_enable) // traiter le player si actif
             {
                 
@@ -308,7 +314,7 @@ void Audio_io::audioOut(ofSoundBuffer& output)
                 player_buffer_1_wo[i] = 0;
                 player_buffer_2_wo[i] = 0;
             }
-
+            //<---
             float ch1 = ofClamp((input_buffer_1[i]
                                  + player_buffer[i*2  ]
                                  + audio_sampler_A.player_buffer[i*2 ]
@@ -321,6 +327,7 @@ void Audio_io::audioOut(ofSoundBuffer& output)
             output_buffer_2[i] = ch2;
             output[i*2  ] = ch1 * master_vol_ammount;
             output[i*2+1] = ch2 * master_vol_ammount;
+            last_output_buffer = output;
         }
     }
 }

@@ -14,13 +14,16 @@
 #include "ofxBasicSoundPlayer.h"
 #include "ofxSoundFile.h"
 
+#define GUI_INIT_OFFSET_X 640
+#define GUI_INIT_LOOPS_OFFSET_Y 260
 class Audio_sampler
 {
 public:
     
-    void setup(int _file_index, int _buffer_size, int _gui_offset, string _name);
+    void setup(int _id, int _buffer_size);
     void setup_gui(int _gui_offset, string _name);
     
+    void audio_input(ofSoundBuffer& input, ofSoundBuffer& output);
     void audio_process(ofSoundBuffer& output);
     
     
@@ -29,9 +32,11 @@ public:
     int buffer_size = 512;
     
     // sampler
+    string sampler_name;
+    string sampler_loops_name;
+    int sampler_id;
     ofxPanel settings_panel;
-    
-    ofxPanel recalled_panel;
+    int gui_offset_x;
     
     
     // player stuff
@@ -73,6 +78,8 @@ public:
     // recorder stuff
     ofxGuiGroup recorder_gui;
     ofParameter <bool> recorder_enable;
+    ofParameter <bool> recorder_record_output;
+    ofParameter <int> recorder_file_index;
     ofSoundBuffer recorder_buffer;
     ofxSoundFile recorder_sound_file;
     void recorder_enable_changed(bool &b);
@@ -82,15 +89,16 @@ public:
     
     
     // recaller stuff
+    ofxPanel recalled_panel;
+
+    ofxGuiGroup recaller_gui;
+    void preset_save(bool &b);
+    void preset_load(bool &b);
+    //ofxGuiGroup sampler_preset_gui;
+    ofParameter<int> recaller_preset_index;
     
-    ofxPanel sampler_preset_recal_panel;
-    ofxPanel sampler_preset_panel;
-    void sampler_preset_save(bool &b);
-    void sampler_preset_load(bool &b);
-    ofxGuiGroup sampler_preset_gui;
-    ofParameter<int> sampler_preset_index;
-    ofParameter<bool> sampler_preset_save_b;
-    ofParameter<bool> sampler_preset_load_b;
+    ofParameter<bool> recaller_preset_save_b;
+    ofParameter<bool> recaller_preset_load_b;
     
     void recaller_preset_save(bool &b);
     void recaller_preset_load(bool &b);

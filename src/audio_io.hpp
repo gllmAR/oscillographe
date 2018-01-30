@@ -85,6 +85,7 @@ public:
     ofSoundStream input_stream;
     ofSoundStreamSettings input_settings;
     ofSoundBuffer input_buffer;
+    ofSoundBuffer last_output_buffer;
     ofParameter <bool> input_mute;
     ofParameter <float> input_trim;
     ofParameter <float> input_volume;
