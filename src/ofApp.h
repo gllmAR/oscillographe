@@ -103,16 +103,5 @@ class ofApp : public ofBaseApp{
 //    ofxPanel audio_sampler_B_recalled_panel;
     //--->
 
-    
-    // save et load preset sampler
-    ofxPanel sampler_preset_recal_panel;
-    ofxPanel sampler_preset_panel;
-    void sampler_preset_save(bool &b);
-    void sampler_preset_load(bool &b);
-    ofxGuiGroup sampler_preset_gui;
-    ofParameter<int> sampler_preset_index;
-    ofParameter<bool> sampler_preset_save_b;
-    ofParameter<bool> sampler_preset_load_b;
-    //<---
-    
+      
 };

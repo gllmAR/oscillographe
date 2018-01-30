@@ -31,10 +31,9 @@ public:
     void setup_gui();
     void setup_gui_listener();
     void setup_audio();
-    //--->
-    void setup_player(int file_index);
-    //<---
     void reset_audio(bool &b);
+    void draw_graph();
+    void draw_gui();
     void set_master_vol(float _master_vol);
     void set_master_vol_change(float &f);
     void set_output_vol(float _output_vol);
@@ -120,55 +119,7 @@ public:
     void output_select_change(int &output_select);
     void output_enable_change(bool &output_enable);
     
-    // --->
-    // sampler
-    ofxGuiGroup gui_sampler;
-
-    
-    // player stuff
-    ofxGuiGroup gui_player;
-    ofxBasicSoundPlayer player;
-    ofSoundBuffer player_buffer;
-    ofParameter <bool> player_enable;
-    ofParameter <float> player_volume;
-    
-    ofParameter <float> player_speed;
-    ofParameter <float> player_pan;
-    ofParameter <float> player_position;
-    ofParameter <bool> player_loop;
-    ofParameter <bool> player_loop_selection;
-    void player_loop_selection_changed(bool &b);
-    ofParameter <float> player_loop_in;
-    void player_loop_in_changed(float &f);
-    ofParameter <float> player_loop_out;
-    void player_loop_out_changed(float &f);
-    ofParameter <int> player_file_index;
-    int player_file_index_old = -1;
-    vector <float> player_buffer_1_wo;
-    vector <float> player_buffer_2_wo;
-    
-    
-    
-    void player_enable_change(bool &player_enable);
-    void player_speed_change(float &f);
-    void player_pan_change(float &f);
-    void player_volume_change(float &f);
-    void player_position_change(float &f);
-    void player_file_index_change(int &i);
-    
-    void player_set_speed(float f);
-    
-    string player_get_filename();
-    
-    // recorder stuff
-    ofxGuiGroup gui_recorder;
-    ofParameter <bool> recorder_enable;
-    ofSoundBuffer recorder_buffer;
-    ofxSoundFile recorder_sound_file;
-    void recorder_enable_changed(bool &b);
-    void recorder_save_file();
-
-    // <---
+ 
     
     Audio_sampler audio_sampler_A;
     

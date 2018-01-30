@@ -31,11 +31,16 @@ void Audio_sampler::setup(int _id, int _buffer_size )
 // setup recorder
     recorder_buffer.setNumChannels(2);
     
+
+    
     //setup gui
     gui_offset_x=GUI_INIT_OFFSET_X+210*sampler_id;
-    
-    
     setup_gui(gui_offset_x, sampler_name);
+    
+    // setup graphe
+    graphe.gui_x_offset=gui_offset_x;
+    graphe.gui_y_offset=500;
+    graphe.setup(sampler_name);
 }
 
 
@@ -115,6 +120,14 @@ void Audio_sampler::setup_gui(int _gui_offset, string _name)
     
     
     
+}
+//--------------------------------------------------------------
+
+
+void Audio_sampler::draw_gui()
+{
+    settings_panel.draw();
+    recalled_panel.draw();
 }
 
 //--------------------------------------------------------------

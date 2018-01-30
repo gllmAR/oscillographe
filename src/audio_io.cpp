@@ -15,10 +15,7 @@ void Audio_io::setup()
     setup_gui();
     setup_audio();
     audio_sampler_A.setup(0,buffer_size);
-    // index buffer_size
-    //--->
-    setup_player(0);
-    //<---
+
     setup_gui_listener();
 }
 
@@ -101,32 +98,6 @@ void Audio_io::setup_gui()
     gui_input.add(input_pan.set("pan",0,-1,1));
     
     
-    //--->
-    //player
-    gui_player.setup();
-    gui_player.setName("player");
-    
-    gui_player.add(player_enable.set("enable", 0));
-    gui_player.add(player_volume.set("volume",1,0,2));
-    gui_player.add(player_pan.set("pan",0,-1,1));
-    gui_player.add(player_file_index.set("file_index",0,0,9));
-    
-    gui_sampler.setup();
-    gui_sampler.setName("sampler");
-    gui_sampler.add(player_speed.set("speed",1,-2,2));
-    gui_sampler.add(player_position.set("position",0,0,1));
-    gui_sampler.add(player_loop_selection.set("player_loop_selection",1));
-    gui_sampler.add(player_loop_in.set("player_loop_in",0,0,1));
-    gui_sampler.add(player_loop_out.set("player_loop_out",1,0,1));
-    
-    
-    // recorder
-    
-    gui_recorder.setup();
-    gui_recorder.setName("recorder");
-    gui_recorder.add(recorder_enable.set("enable",0));
-    //<---
-    
     //output
     gui_output.setup();
     gui_output.setName("output");
@@ -166,34 +137,8 @@ void Audio_io::setup_audio()
     output_select.setMax(output_devices.size());
     output_buffer_1.assign(buffer_size, 0.0);
     output_buffer_2.assign(buffer_size, 0.0);
-//-->
-    
-    recorder_buffer.setNumChannels(2);
-//<--
-    
-}
-//--->
-void Audio_io::setup_player(int file_index_)
-{   // si different d'avant, charger un nouveau son
-    player_file_index = file_index_;
-    if (player_file_index_old != player_file_index)
-    {
-        player_buffer.allocate(buffer_size, 2);
-        std::ostringstream path;
-        path << "sounds/audio_" << file_index_ << ".wav";
-        player.load(path.str());
-        player.setLoop(1);
-        player_buffer_1_wo.assign(buffer_size, 0.0);
-        player_buffer_2_wo.assign(buffer_size, 0.0);
-        
 
-        bool _player_enable = player_enable;
-        player_enable_change(_player_enable);
-        player_file_index_old = player_file_index;
-    }
 }
-//<---
-
 
 void Audio_io::setup_gui_listener()
 {
@@ -210,20 +155,7 @@ void Audio_io::setup_gui_listener()
     output_select.addListener(this, &Audio_io::output_select_change);
     output_enable.addListener(this, &Audio_io::output_enable_change);
     output_volume.addListener(this, &Audio_io::set_output_vol_change);
-    //--->
-    player_enable.addListener(this, &Audio_io::player_enable_change);
-    player_speed.addListener(this, &Audio_io::player_speed_change);
-    player_volume.addListener(this, &Audio_io::player_volume_change);
-    player_pan.addListener(this, &Audio_io::player_pan_change);
-    player_position.addListener(this, &Audio_io::player_position_change);
-    player_file_index.addListener(this, &Audio_io::player_file_index_change);
-    player_loop_selection.addListener(this, &Audio_io::player_loop_selection_changed);
-    player_loop_in.addListener(this, &Audio_io::player_loop_in_changed);
-    player_loop_out.addListener(this, &Audio_io::player_loop_out_changed);
-    
-    recorder_enable.addListener(this, &Audio_io::recorder_enable_changed);
-    //<---
-}
+  }
 
 void Audio_io::exit()
 {
@@ -256,12 +188,6 @@ void Audio_io::audioIn(ofSoundBuffer & input)
         float pan_2 = input_pan*0.5 +0.5;
         input_buffer = input;
         
-        //--->
-        if(recorder_enable)
-        {
-            recorder_buffer.append(input);
-        }
-        //<---
         
         audio_sampler_A.audio_input(input, last_output_buffer);
         
@@ -287,41 +213,14 @@ void Audio_io::audioOut(ofSoundBuffer& output)
         // process pan
         float pan_1 = 1-(output_pan*0.5 +0.5);
         float pan_2 = output_pan*0.5 +0.5;
-//--->
-        // workaround! : ici, on envois "temporairement"
-        // l'output du player audio dans l'output audio
-        // que l'on récupère dans un player_buffer
-        // ceci permet d'éviter d'avoir des artefact sonore
-        // qui emmergent lié à l'interpolation du player audio
-        // et ce même quand player audio non-actif (auto zero out clean)
-            // devrait fonctionner à l'intérieur de la classe..?
-            // on devrait peut etre faire
         audio_sampler_A.audio_process(output);
         
-        player.audioOut(output);
-        player_buffer = output;
- //<---
-        
         for (int i = 0; i < output.getNumFrames(); i++)
-        {
-            //--->
-            if(player_enable) // traiter le player si actif
-            {
-                
-                player_buffer_1_wo[i] = player_buffer[i*2  ];
-                player_buffer_2_wo[i] = player_buffer[i*2+1];
-            } else {
-                player_buffer_1_wo[i] = 0;
-                player_buffer_2_wo[i] = 0;
-            }
-            //<---
-            float ch1 = ofClamp((input_buffer_1[i]
-                                 + player_buffer[i*2  ]
-                                 + audio_sampler_A.player_buffer[i*2 ]
+        {            float ch1 = ofClamp((input_buffer_1[i]
+                                + audio_sampler_A.player_buffer[i*2 ]
                                  ) * output_vol_ammount * pan_1*2*!output_mute, -1, 1);
             float ch2 = ofClamp((input_buffer_2[i]
-                                 +  player_buffer[i*2+1]
-                                 + audio_sampler_A.player_buffer[i*2+1]
+                                + audio_sampler_A.player_buffer[i*2+1]
                                  ) * output_vol_ammount  * pan_2*2*!output_mute, -1, 1);
             output_buffer_1[i] = ch1;
             output_buffer_2[i] = ch2;
@@ -466,8 +365,8 @@ void Audio_io::output_init(int selection)
         }
         output_buffer_1.assign(buffer_size, 0.0);
         output_buffer_2.assign(buffer_size, 0.0);
-        player_buffer_1_wo.assign(buffer_size, 0.0);
-        player_buffer_2_wo.assign(buffer_size, 0.0);
+//        player_buffer_1_wo.assign(buffer_size, 0.0);
+//        player_buffer_2_wo.assign(buffer_size, 0.0);
     }
 }
 
@@ -510,88 +409,3 @@ void Audio_io::output_enable_change(bool &output_enable)
     }
 }
 
-//--->
-void Audio_io::player_enable_change(bool &player_enable)
-{
-    if(player_enable)
-    {
-        player.play();
-        
-    } else {
-        player.stop();
-
-    }
-}
-
-void Audio_io::player_set_speed(float f)
-{   //est appele par la classe interact dans ofApp
-    player.setSpeed(f);
-}
-
-
-void Audio_io::player_speed_change(float &f)
-{   //est appele par le gui/preset de audio_io
-    player.setSpeed(f);
-}
-
-void Audio_io::player_pan_change(float &f)
-{   //est appele par le gui/preset de audio_io
-    player.setPan(f);
-}
-
-
-void Audio_io::player_volume_change(float &f)
-{   //est appele par le gui/preset de audio_io
-    player.setVolume(f);
-}
-
-
-void Audio_io::player_position_change(float &f)
-{   //est appele par le gui/preset de audio_io
-    player.setPosition(f);
-}
-
-void Audio_io::player_file_index_change(int &i)
-{   //est appele par le gui/preset de audio_io
-    setup_player(i);
-}
-
-void Audio_io::player_loop_selection_changed(bool &b)
-{   // fonction sur mesure
-    player.set_loop_selection(b);
-}
-
-void Audio_io::player_loop_in_changed(float &f)
-{   // fonction sur mesure
-    if (f>player_loop_out)
-    {
-        f = player_loop_in = player_loop_out;
-    }
-    player.set_loop_in(f);
-}
-
-void Audio_io::player_loop_out_changed(float &f)
-{   // fonction sur mesure
-    if (f<player_loop_in)
-    {
-        f = player_loop_out = player_loop_in;
-    }
-    player.set_loop_out(f);
-}
-
-string Audio_io::player_get_filename()
-{
-    std::ostringstream filename;
-    filename <<"sounds/"<<"audio_" << player_file_index;
-    return filename.str();
-}
-
-void Audio_io::recorder_enable_changed(bool &b)
-{
-    if (!recorder_enable)
-    {
-        recorder_sound_file.save("loop1.wav", recorder_buffer);
-    }
-}
-
-//<--

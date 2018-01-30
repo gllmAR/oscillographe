@@ -88,40 +88,7 @@ void ofApp::setup_gui()
     viz_preset_panel.loadFromFile("oscillo.xml");
     
     
-    
-    /*--->  devrait devenir contenir
-        audio_io.audio_sampler_A.settings_gui
-        audio_io.audio_sampler_A.recalled_gui
-        audio_io.audio_sampler_B.settings_gui
-        audio_io.audio_sampler_B.recalled_gui
-    */
-    
 
-    
-     /* preset load and save sampler pannel */
-
-    sampler_preset_gui.setup();
-    sampler_preset_gui.setName("Sampler presets");
-    sampler_preset_gui.add(sampler_preset_index.set("index",0,0,10));
-    sampler_preset_gui.add(sampler_preset_load_b.set("load",0));
-    sampler_preset_gui.add(sampler_preset_save_b.set("save",0));
-
-    
- 
-    
-    
-    sampler_preset_recal_panel.setup("Player_A", "sampler.xml",  430,10);
-    sampler_preset_recal_panel.add(&audio_io.gui_player);
-    sampler_preset_recal_panel.add(&audio_io.gui_recorder);
-    
-    sampler_preset_recal_panel.add(&sampler_preset_gui);
-  
-
-    
-    sampler_preset_panel.setup("sampler", "sampler.xml", 430, 280);
-      sampler_preset_panel.add(&audio_io.gui_sampler);
-  
-    //<---
     
     
     /* setup panel */
@@ -142,20 +109,15 @@ void ofApp::setup_gui()
     viz_preset_index=0;
     viz_preset_load_b=1;
     
-    sampler_preset_save_b.addListener(this, &ofApp::sampler_preset_save);
-    sampler_preset_load_b.addListener(this, &ofApp::sampler_preset_load);
-    sampler_preset_index=0;
-    sampler_preset_load_b=1;
     
 }
 
 //--------------------------------------------------------------
 void ofApp::update()
 {
-    
-    graphe_input.update(audio_io.buffer_size, audio_io.input_buffer_1, audio_io.input_buffer_2);
-    graphe_player.update(audio_io.buffer_size, audio_io.player_buffer_1_wo, audio_io.player_buffer_2_wo);
-    graphe_output.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
+    audio_io.audio_sampler_A.graphe.update(audio_io.audio_sampler_A.buffer_size, audio_io.audio_sampler_A.player_buffer_1_wo, audio_io.audio_sampler_A.player_buffer_2_wo );
+    //graphe_input.update(audio_io.buffer_size, audio_io.input_buffer_1, audio_io.input_buffer_2);
+    //graphe_output.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
 
     interact_preset.update();
     
@@ -186,17 +148,17 @@ void ofApp::update()
     if (interact_speed.interact_enable)
     {
         interact_speed.update();
-        audio_io.player_set_speed(interact_speed.get_value());
+       // audio_io.player_set_speed(interact_speed.get_value());
     } else { //pas top efficace car update toujours...
-        audio_io.player_set_speed(audio_io.player_speed);
+        //audio_io.player_set_speed(audio_io.player_speed);
     }
     
     if (interact_volume.interact_enable)
     {
         interact_volume.update();
-        audio_io.set_output_vol(interact_volume.get_value());
+        //audio_io.set_output_vol(interact_volume.get_value());
     } else { //pas top efficace
-        audio_io.set_output_vol(audio_io.output_volume.get());
+        //audio_io.set_output_vol(audio_io.output_volume.get());
     }
     cam.update();
     viz_preset_recall_sync.update();
@@ -219,9 +181,11 @@ void ofApp::draw()
 
     cam.cam.begin();
     ofSetColor(255);
-    graphe_input.draw();
-    graphe_player.draw();
-    graphe_output.draw();
+    
+    audio_io.audio_sampler_A.graphe.draw();
+    //graphe_input.draw();
+    //graphe_player.draw();
+    //graphe_output.draw();
     
     cam.cam.end();
     
@@ -241,9 +205,8 @@ void ofApp::draw()
     {
         audio_io.audio_sampler_A.settings_panel.draw();
         audio_io.audio_sampler_A.recalled_panel.draw();
-        sampler_preset_recal_panel.draw();
+        audio_io.audio_sampler_A.graphe.gui.draw();
         viz_preset_recal_panel.draw();
-        sampler_preset_panel.draw();
         viz_preset_panel.draw();
         setup_panel.draw();
     }
@@ -367,43 +330,3 @@ void ofApp::viz_preset_load(bool &b)
 
 //--------------------------------------------------------------
 
-//--->
-void ofApp::sampler_preset_save(bool &b)
-{
-    std::string str = "loop_";
-    str += ofToString(sampler_preset_index);
-    sampler_preset_panel.setName(str);
-    std::ostringstream preset_path;
-    preset_path<<audio_io.player_get_filename()<<".xml";
-   
-    sampler_preset_panel.saveToFile(preset_path.str());
-    sampler_preset_save_b =0;
-    sampler_preset_panel.setName("sampler");
-}
-
-
-//--------------------------------------------------------------
-
-void ofApp::sampler_preset_load(bool &b)
-{
-    
-    
-    std::string str = "loop_";
-    str += ofToString(sampler_preset_index);
-    sampler_preset_panel.setName(str);
-    
-    
-    std::ostringstream preset_path;
-    preset_path<<audio_io.player_get_filename()<<".xml";
-
-    
-    sampler_preset_panel.loadFromFile(preset_path.str());
-    sampler_preset_load_b =0;
-    
-    sampler_preset_panel.setName("sampler");
-}
-
-
-//--------------------------------------------------------------
-
-//<---

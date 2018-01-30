@@ -10,21 +10,51 @@
 
 void Graphe::setup(string name)
 {
-    gui.setup();
-    gui.setName(name);
-    gui.add(graphe_active.set("active",1));
-    gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
-    gui.add(shape_scale.set("shape_scale",0.10,0,1));
-    gui.add(line_width.set("line_width",1, 0.1,1000));
-    gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
-    gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
-    gui.add(graphe_saturation.set("saturation", 255, 0, 255));
-    gui.add(graphe_hue.set("hue", 255, 0, 255));
-    gui.add(graphe_brightness.set("brightness", 255, 0, 255));
+    std::string str = name;
+    str+="_graphe";
+    name=str;
+    graphe_name = name;
+    
+    settings_gui.setup("settings");
+    
+    
+
+    settings_gui.add(graphe_active.set("active",1));
+    settings_gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
+    settings_gui.add(shape_scale.set("shape_scale",0.10,0,1));
+    settings_gui.add(line_width.set("line_width",1, 0.1, 10));
+    settings_gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
+    settings_gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
+    settings_gui.add(graphe_saturation.set("saturation", 255, 0, 255));
+    settings_gui.add(graphe_hue.set("hue", 255, 0, 255));
+    settings_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
+    
     graphe_saturation.addListener(this, &Graphe::set_saturation);
     graphe_hue.addListener(this, &Graphe::set_hue);
     graphe_brightness.addListener(this, &Graphe::set_brightness);
+    
+    
+    preset_gui.setup("presets");
+    preset_gui.add(preset_index.set("index",0,0,9));
+    preset_gui.add(preset_load_b.set("load",0));
+    preset_gui.add(preset_save_b.set("save",0));
+    
+    preset_load_b.addListener(this, &Graphe::preset_load);
+    preset_save_b.addListener(this, &Graphe::preset_save);
+    
+    gui.setup(graphe_name, "graphe.xml",gui_x_offset,gui_y_offset);
+    gui.setName(graphe_name);
+    gui.add(&preset_gui);
+    gui.add(&settings_gui);
+
+    
+    
+    // todo update de la grosseur quand...!
+    set_size(ofGetWidth(), ofGetHeight());
+
 }
+
+//--------------------------------------------------------------
 
 void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y)
 {
@@ -36,7 +66,6 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
             cout<<input_buffer_size<<endl;
         }
         
-        // ici, application devrait passer soundSettingGui.buffer_size vers une classe pour dessiner Graphe
         vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
         vbo_mesh.enableColors();
         int vertex_buffer = vbo_mesh.getNumVertices();
@@ -66,6 +95,10 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
     }
 }
 
+
+
+//--------------------------------------------------------------
+
 void Graphe::draw()
 {
     if (graphe_active)
@@ -82,11 +115,21 @@ void Graphe::draw()
     }
 }
 
+//--------------------------------------------------------------
+
+void Graphe::draw_gui()
+{
+    gui.draw();
+}
+//--------------------------------------------------------------
+
 void Graphe::set_size(int w, int h)
 {
     app_size_w = w;
     app_size_h = h;
 }
+
+//--------------------------------------------------------------
 
 void Graphe::set_saturation(float &f)
 {
@@ -94,6 +137,9 @@ void Graphe::set_saturation(float &f)
     color.setSaturation(f);
     line_color.set(color);
 }
+
+//--------------------------------------------------------------
+
 void Graphe::set_brightness(float &f)
 {
     ofColor color = line_color.get();
@@ -101,9 +147,44 @@ void Graphe::set_brightness(float &f)
     line_color.set(color);
 }
 
+//--------------------------------------------------------------
+
 void Graphe::set_hue(float &f)
 {
     ofColor color = line_color.get();
     color.setHue(f);
     line_color.set(color);
 }
+
+
+//--------------------------------------------------------------
+
+void Graphe::preset_save(bool &b)
+{
+    preset_save_b = 0;
+    std::string str = "graphe_";
+    str += ofToString(preset_index);
+    gui.setName(str);
+    gui.saveToFile("graphe.xml");
+    gui.setName(graphe_name);
+
+}
+
+
+//--------------------------------------------------------------
+
+void Graphe::preset_load(bool &b)
+{
+    preset_load_b = 0;
+    std::string str = "graphe_";
+    str += ofToString(preset_index);
+    gui.setName(str);
+    gui.loadFromFile("graphe.xml");
+    
+    gui.setName(graphe_name);
+}
+
+
+//--------------------------------------------------------------
+
+

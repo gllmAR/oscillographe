@@ -4,7 +4,7 @@
 //
 //  Created by Guillaume Arseneault on 18-01-28.
 //
-// todo -> function pour set le buffersize qui resetup le player
+//
 
 #ifndef audio_sampler_hpp
 #define audio_sampler_hpp
@@ -13,6 +13,8 @@
 #include "ofxGui.h"
 #include "ofxBasicSoundPlayer.h"
 #include "ofxSoundFile.h"
+#include "graphe.hpp"
+
 
 #define GUI_INIT_OFFSET_X 640
 #define GUI_INIT_LOOPS_OFFSET_Y 260
@@ -27,7 +29,7 @@ public:
     void audio_process(ofSoundBuffer& output);
     
     
-    void draw();
+    void draw_gui();
     
     int buffer_size = 512;
     
@@ -102,6 +104,12 @@ public:
     
     void recaller_preset_save(bool &b);
     void recaller_preset_load(bool &b);
+    
+    // graph stuff
+    Graphe graphe;
+    void update_graph();
+    void draw_graph();
+
     
     
 };

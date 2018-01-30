@@ -18,7 +18,13 @@ class Graphe
 
 {
 public:
-    ofxGuiGroup gui;
+    string graphe_name;
+    ofxPanel gui;
+    ofxGuiGroup settings_gui;
+    
+    void draw_gui();
+    int gui_x_offset=0;
+    int gui_y_offset=0;
     
     ofParameter<bool> graphe_active = 1;
     ofParameter<ofColor> line_color;
@@ -35,6 +41,7 @@ public:
     ofVboMesh vbo_mesh;
     
     void setup(string name);
+
     void update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y);
     void draw();
     void set_size(int w, int h);
@@ -46,6 +53,17 @@ public:
     
     int app_size_w = 100000;
     int app_size_h = 100000;
+    
+    // preset
+    ofParameter <int> preset_index;
+    ofParameter <string> preset_comment;
+    ofxGuiGroup preset_gui;
+    
+    ofParameter<bool> preset_load_b;
+    ofParameter<bool> preset_save_b;
+
+    void preset_save(bool &b);
+    void preset_load(bool &b);
     
 };
 
