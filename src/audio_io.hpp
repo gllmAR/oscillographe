@@ -20,7 +20,7 @@
 #include "ofxBasicSoundPlayer.h"
 #include "ofxSoundFile.h"
 #include "audio_sampler.hpp"
-
+#include "graphe.hpp"
 
 
 class Audio_io
@@ -32,7 +32,9 @@ public:
     void setup_gui_listener();
     void setup_audio();
     void reset_audio(bool &b);
-    void draw_graph();
+    void update();
+    void set_size(int w, int h);
+    void draw_graphes();
     void draw_gui();
     void set_master_vol(float _master_vol);
     void set_master_vol_change(float &f);
@@ -119,7 +121,9 @@ public:
     void output_select_change(int &output_select);
     void output_enable_change(bool &output_enable);
     
- 
+    //
+    Graphe input_graphe;
+    Graphe output_graphe;
     
     Audio_sampler audio_sampler_A;
     

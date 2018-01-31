@@ -1,6 +1,6 @@
 //
 //  Graphe.cpp
-//  Graphegraphe
+//  oscillographe
 //
 //  Created by Guillaume Arseneault on 17-11-09.
 //

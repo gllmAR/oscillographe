@@ -35,17 +35,17 @@ void ofApp::setup_gui()
 {
 
     /* graphe */
-    graphe_input.setup("input");
-    graphe_player.setup("player");
-    graphe_output.setup("output");
-    
-    graphe_gui.setup();
-    graphe_gui.setName("graphe");
-    graphe_gui.add(&graphe_input.gui);
-    graphe_gui.add(&graphe_player.gui);
-    graphe_gui.add(&graphe_output.gui);
-    graphe_gui.minimizeAll();
-    
+//    graphe_input.setup("input");
+//    graphe_player.setup("player");
+//    graphe_output.setup("output");
+//    
+//    graphe_gui.setup();
+//    graphe_gui.setName("graphe");
+//    graphe_gui.add(&graphe_input.gui);
+//    graphe_gui.add(&graphe_player.gui);
+//    graphe_gui.add(&graphe_output.gui);
+//    graphe_gui.minimizeAll();
+//    
 
     
     /* interact */
@@ -75,7 +75,6 @@ void ofApp::setup_gui()
     viz_preset_panel.setup("oscillo_0", "oscillo.xml", 220, 120);
     viz_preset_panel.add(&cam.camera_preset_gui);
 
-    viz_preset_panel.add(&graphe_gui);
     viz_preset_panel.add(&feedback.feedback_gui);
     viz_preset_panel.add(&fbo_feedback.feedback_gui);
 
@@ -115,10 +114,7 @@ void ofApp::setup_gui()
 //--------------------------------------------------------------
 void ofApp::update()
 {
-    audio_io.audio_sampler_A.graphe.update(audio_io.audio_sampler_A.buffer_size, audio_io.audio_sampler_A.player_buffer_1_wo, audio_io.audio_sampler_A.player_buffer_2_wo );
-    //graphe_input.update(audio_io.buffer_size, audio_io.input_buffer_1, audio_io.input_buffer_2);
-    //graphe_output.update(audio_io.buffer_size, audio_io.output_buffer_1, audio_io.output_buffer_2);
-
+      audio_io.update();
     interact_preset.update();
     
     while(osc_receiver.hasWaitingMessages())
@@ -127,10 +123,7 @@ void ofApp::update()
         osc_receiver.getNextMessage(m);
         interact_speed.parse_osc(m);
         interact_volume.parse_osc(m);
-        //interact_preset.parse_osc(m);
         interact_preset.parse_osc(m);
-        
-
     }
     
     if (interact_preset.return_flag)
@@ -182,10 +175,7 @@ void ofApp::draw()
     cam.cam.begin();
     ofSetColor(255);
     
-    audio_io.audio_sampler_A.graphe.draw();
-    //graphe_input.draw();
-    //graphe_player.draw();
-    //graphe_output.draw();
+    audio_io.draw_graphes();
     
     cam.cam.end();
     
@@ -203,9 +193,10 @@ void ofApp::draw()
     
     if (gui_draw)
     {
-        audio_io.audio_sampler_A.settings_panel.draw();
-        audio_io.audio_sampler_A.recalled_panel.draw();
-        audio_io.audio_sampler_A.graphe.gui.draw();
+        audio_io.draw_gui();
+//        audio_io.audio_sampler_A.settings_panel.draw();
+//        audio_io.audio_sampler_A.recalled_panel.draw();
+//        audio_io.audio_sampler_A.graphe.gui.draw();
         viz_preset_recal_panel.draw();
         viz_preset_panel.draw();
         setup_panel.draw();
@@ -277,9 +268,11 @@ void ofApp::windowResized(int w, int h)
     app_size_h = h;
     cout << "app size = " << w << " by " << h <<endl;
     
-    graphe_input.set_size(w,h);
-    graphe_player.set_size(w,h);
-    graphe_output.set_size(w,h);
+//    graphe_input.set_size(w,h);
+//    graphe_player.set_size(w,h);
+//    graphe_output.set_size(w,h);
+    
+    audio_io.set_size(w,h);
     
     feedback.allocate(w,h);
     fbo_feedback.allocate(w,h);

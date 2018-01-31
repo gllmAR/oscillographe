@@ -42,9 +42,7 @@ class ofApp : public ofBaseApp{
     
 
     Audio_io audio_io;
-    Graphe graphe_input;
-    Graphe graphe_output;
-    Graphe graphe_player;
+
     
     ofxGuiGroup interact_gui;
     Interact_struggle interact_speed;

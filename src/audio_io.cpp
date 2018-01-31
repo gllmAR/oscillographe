@@ -14,7 +14,12 @@ void Audio_io::setup()
 {
     setup_gui();
     setup_audio();
+    
+    input_graphe.setup("input");
+    output_graphe.setup("output");
+    
     audio_sampler_A.setup(0,buffer_size);
+    
 
     setup_gui_listener();
 }
@@ -365,9 +370,37 @@ void Audio_io::output_init(int selection)
         }
         output_buffer_1.assign(buffer_size, 0.0);
         output_buffer_2.assign(buffer_size, 0.0);
-//        player_buffer_1_wo.assign(buffer_size, 0.0);
-//        player_buffer_2_wo.assign(buffer_size, 0.0);
+
     }
+}
+
+
+void Audio_io::update()
+{
+    input_graphe.update(buffer_size,input_buffer_1, input_buffer_2 );
+    audio_sampler_A.graphe.update(buffer_size,audio_sampler_A.player_buffer_1_wo, audio_sampler_A.player_buffer_2_wo);
+    output_graphe.update(buffer_size,output_buffer_1, output_buffer_2 );
+    
+}
+void Audio_io::draw_graphes()
+{
+    input_graphe.draw();
+    audio_sampler_A.graphe.draw();
+    output_graphe.draw();
+}
+
+void Audio_io::draw_gui()
+{
+    input_graphe.draw_gui();
+    audio_sampler_A.draw_gui();
+    output_graphe.draw_gui();
+}
+
+void Audio_io::set_size(int w, int h)
+{
+    input_graphe.set_size(w,h);
+    audio_sampler_A.graphe.set_size(w,h);
+    output_graphe.set_size(w,h);
 }
 
 void Audio_io::output_select_change(int &output_select)

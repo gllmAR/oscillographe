@@ -128,6 +128,7 @@ void Audio_sampler::draw_gui()
 {
     settings_panel.draw();
     recalled_panel.draw();
+    graphe.draw_gui();
 }
 
 //--------------------------------------------------------------
