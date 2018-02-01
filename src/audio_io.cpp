@@ -101,6 +101,7 @@ void Audio_io::setup_gui()
 
     gui_input.add(input_volume.set("volume",1,0,2));
     gui_input.add(input_pan.set("pan",0,-1,1));
+    gui_input.add(&input_graphe.gui);
     
     
     //output
@@ -109,17 +110,17 @@ void Audio_io::setup_gui()
     gui_output.add(output_mute.set("mute", 0));
     gui_output.add(output_volume.set("volume",1,0,2));
     gui_output.add(output_pan.set("pan",0,-1,1));
+    gui_output.add(&output_graphe.gui);
     
     // compose device
     gui_device.add(&gui_device_io);
     gui_device.add(&gui_device_input);
     gui_device.add(&gui_device_output);
-    //gui_device.add(&gui_recorder);
 
-    // compose gui
+    // compose gui (audio_io)
     gui.add(&gui_input);
-    //gui.add(&gui_player);
     gui.add(&gui_output);
+    gui.add(&audio_sampler_A.sampler_gui);
 }
 
 void Audio_io::setup_audio()
@@ -391,9 +392,9 @@ void Audio_io::draw_graphes()
 
 void Audio_io::draw_gui()
 {
-    input_graphe.draw_gui();
-    audio_sampler_A.draw_gui();
-    output_graphe.draw_gui();
+    
+    //audio_sampler_A.draw_gui();
+    
 }
 
 void Audio_io::set_size(int w, int h)

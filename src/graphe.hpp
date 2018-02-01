@@ -19,7 +19,7 @@ class Graphe
 {
 public:
     string graphe_name;
-    ofxPanel gui;
+    ofxGuiGroup gui; //--
     ofxGuiGroup settings_gui;
     
     void draw_gui();

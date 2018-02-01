@@ -37,7 +37,7 @@ public:
     string sampler_name;
     string sampler_loops_name;
     int sampler_id;
-    ofxPanel settings_panel;
+    ofxGuiGroup sampler_gui;
     int gui_offset_x;
     
     
@@ -91,7 +91,7 @@ public:
     
     
     // recaller stuff
-    ofxPanel recalled_panel;
+    ofxGuiGroup loop_recall_gui;
 
     ofxGuiGroup recaller_gui;
     void preset_save(bool &b);

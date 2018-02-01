@@ -24,7 +24,7 @@ void Graphe::setup(string name)
     settings_gui.add(shape_scale.set("shape_scale",0.10,0,1));
     settings_gui.add(line_width.set("line_width",1, 0.1, 10));
     settings_gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
-    settings_gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
+    //settings_gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
     settings_gui.add(graphe_saturation.set("saturation", 255, 0, 255));
     settings_gui.add(graphe_hue.set("hue", 255, 0, 255));
     settings_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
@@ -161,13 +161,14 @@ void Graphe::set_hue(float &f)
 
 void Graphe::preset_save(bool &b)
 {
+    
     preset_save_b = 0;
     std::string str = "graphe_";
     str += ofToString(preset_index);
-    gui.setName(str);
-    gui.saveToFile("graphe.xml");
-    gui.setName(graphe_name);
-
+    settings_gui.setName(str);
+    settings_gui.saveToFile("graphe.json");
+    settings_gui.setName( graphe_name);
+    
 }
 
 
@@ -178,10 +179,10 @@ void Graphe::preset_load(bool &b)
     preset_load_b = 0;
     std::string str = "graphe_";
     str += ofToString(preset_index);
-    gui.setName(str);
-    gui.loadFromFile("graphe.xml");
+    settings_gui.setName(str);
+    settings_gui.loadFromFile("graphe.json");
     
-    gui.setName(graphe_name);
+    settings_gui.setName( graphe_name);
 }
 
 

@@ -33,14 +33,16 @@ void Audio_sampler::setup(int _id, int _buffer_size )
     
 
     
-    //setup gui
-    gui_offset_x=GUI_INIT_OFFSET_X+210*sampler_id;
-    setup_gui(gui_offset_x, sampler_name);
     
     // setup graphe
     graphe.gui_x_offset=gui_offset_x;
     graphe.gui_y_offset=500;
     graphe.setup(sampler_name);
+    
+    
+    //setup gui
+    gui_offset_x=GUI_INIT_OFFSET_X+210*sampler_id;
+    setup_gui(gui_offset_x, sampler_name);
 }
 
 
@@ -73,11 +75,8 @@ void Audio_sampler::setup_gui(int _gui_offset, string _name)
     recaller_preset_load_b.addListener(this, &Audio_sampler::recaller_preset_load);
     
     
-    // settings panel
-    settings_panel.setup(_name, "sampler_A_settings.xml", _gui_offset,10);
-    settings_panel.add(&player_gui);
-    settings_panel.add(&recorder_gui);
-    //settings_panel.add(&recaller_gui);
+
+    //sampler_gui.add(&recaller_gui);
     
     
     // recaller
@@ -89,18 +88,23 @@ void Audio_sampler::setup_gui(int _gui_offset, string _name)
     recaller_gui.add(recaller_preset_save_b.set("save",0 ));
     
     
-    // recalled
+    // loop_recall
     
-    
-    recalled_panel.setup(sampler_loops_name, "/audio/audio_0.xml", _gui_offset,GUI_INIT_LOOPS_OFFSET_Y);
-    recalled_panel.add(&recaller_gui);
-    recalled_panel.add(player_speed.set("speed",1,-2,2));
-    recalled_panel.add(player_position.set("position",0,0,1));
-    recalled_panel.add(player_loop_selection.set("player_loop_selection",1));
-    recalled_panel.add(player_loop_in.set("player_loop_in",0,0,1));
-    recalled_panel.add(player_loop_out.set("player_loop_out",1,0,1));
+    loop_recall_gui.setup(sampler_loops_name);
+    loop_recall_gui.add(&recaller_gui);
+    loop_recall_gui.add(player_speed.set("speed",1,-2,2));
+    loop_recall_gui.add(player_position.set("position",0,0,1));
+    loop_recall_gui.add(player_loop_selection.set("player_loop_selection",1));
+    loop_recall_gui.add(player_loop_in.set("player_loop_in",0,0,1));
+    loop_recall_gui.add(player_loop_out.set("player_loop_out",1,0,1));
 
-
+    // settings panel
+    sampler_gui.setup(_name, "sampler_A_settings.xml", _gui_offset,10);
+    sampler_gui.add(&recorder_gui);
+    sampler_gui.add(&player_gui);
+    //sampler_gui.add(&recaller_gui);
+    sampler_gui.add(&loop_recall_gui);
+    sampler_gui.add(&graphe.gui);
 
 // listener
     
@@ -126,8 +130,8 @@ void Audio_sampler::setup_gui(int _gui_offset, string _name)
 
 void Audio_sampler::draw_gui()
 {
-    settings_panel.draw();
-    recalled_panel.draw();
+    sampler_gui.draw();
+    loop_recall_gui.draw();
     graphe.draw_gui();
 }
 
@@ -315,17 +319,17 @@ void Audio_sampler::recaller_preset_save(bool &b)
     recaller_preset_save_b =0;
     std::string str = "loop_";
     str += ofToString(recaller_preset_index);
-    recalled_panel.setName(str);
+    loop_recall_gui.setName(str);
     std::ostringstream preset_path;
-    preset_path<<player_get_filename()<<".xml";
+    preset_path<<player_get_filename()<<".json";
     
-    recalled_panel.saveToFile(preset_path.str());
+    loop_recall_gui.saveToFile(preset_path.str());
 
     //pertinant de garder le nom du fichier audio dans le nom du pannel
     // car les loops sont lié au fichier audio
     // probablement dans un label question de préserver la
 
-    recalled_panel.setName(sampler_loops_name);
+    loop_recall_gui.setName(sampler_loops_name);
 }
 
 
@@ -336,16 +340,16 @@ void Audio_sampler::recaller_preset_load(bool &b)
         recaller_preset_load_b =0;
     std::string str = "loop_";
     str += ofToString(recaller_preset_index);
-    recalled_panel.setName(str);
+    loop_recall_gui.setName(str);
     
     
     std::ostringstream preset_path;
-    preset_path<<player_get_filename()<<".xml";
+    preset_path<<player_get_filename()<<".json";
     
     
-    recalled_panel.loadFromFile(preset_path.str());
+    loop_recall_gui.loadFromFile(preset_path.str());
 
     
-    recalled_panel.setName(sampler_loops_name);
+    loop_recall_gui.setName(sampler_loops_name);
 }
 
