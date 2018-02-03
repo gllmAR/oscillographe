@@ -161,14 +161,15 @@ void Graphe::set_hue(float &f)
 
 void Graphe::preset_save(bool &b)
 {
-    
+    if(preset_save_b)
+    {
     preset_save_b = 0;
     std::string str = "graphe_";
     str += ofToString(preset_index);
     settings_gui.setName(str);
     settings_gui.saveToFile("graphe.json");
     settings_gui.setName( graphe_name);
-    
+    }
 }
 
 
@@ -176,6 +177,8 @@ void Graphe::preset_save(bool &b)
 
 void Graphe::preset_load(bool &b)
 {
+    if (preset_load_b)
+    {
     preset_load_b = 0;
     std::string str = "graphe_";
     str += ofToString(preset_index);
@@ -183,6 +186,7 @@ void Graphe::preset_load(bool &b)
     settings_gui.loadFromFile("graphe.json");
     
     settings_gui.setName( graphe_name);
+    }
 }
 
 

@@ -290,6 +290,7 @@ void Audio_sampler::player_loop_out_changed(float &f)
     }
     player.set_loop_out(f);
 }
+//--------------------------------------------------------------
 
 string Audio_sampler::player_get_filename()
 {
@@ -316,7 +317,10 @@ void Audio_sampler::recorder_enable_changed(bool &b)
 
 void Audio_sampler::recaller_preset_save(bool &b)
 {
+    if (recaller_preset_save_b)
+    {
     recaller_preset_save_b =0;
+    
     std::string str = "loop_";
     str += ofToString(recaller_preset_index);
     loop_recall_gui.setName(str);
@@ -330,6 +334,7 @@ void Audio_sampler::recaller_preset_save(bool &b)
     // probablement dans un label question de préserver la
 
     loop_recall_gui.setName(sampler_loops_name);
+    }
 }
 
 
@@ -337,9 +342,12 @@ void Audio_sampler::recaller_preset_save(bool &b)
 
 void Audio_sampler::recaller_preset_load(bool &b)
 {
-        recaller_preset_load_b =0;
+    if (recaller_preset_load_b)
+    {
+    recaller_preset_load_b =0;
     std::string str = "loop_";
     str += ofToString(recaller_preset_index);
+    //cout<<"[preset load]: "<<str<<endl;
     loop_recall_gui.setName(str);
     
     
@@ -351,5 +359,8 @@ void Audio_sampler::recaller_preset_load(bool &b)
 
     
     loop_recall_gui.setName(sampler_loops_name);
+
+    }
 }
+//--------------------------------------------------------------
 

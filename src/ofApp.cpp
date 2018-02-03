@@ -64,6 +64,7 @@ void ofApp::setup_gui()
     viz_preset_gui.add(viz_preset_index.set("index",0,0,10));
     viz_preset_gui.add(viz_preset_load_b.set("load",0));
     viz_preset_gui.add(viz_preset_save_b.set("save",0));
+    //viz_preset_gui.add(&cam.presets.gui);
     viz_preset_gui.minimizeAll();
     
     
@@ -73,7 +74,7 @@ void ofApp::setup_gui()
     viz_preset_recal_panel.add(&viz_preset_gui);
     
     viz_preset_panel.setup("oscillo_0", "oscillo.xml", 220, 120);
-    viz_preset_panel.add(&cam.camera_preset_gui);
+    //viz_preset_panel.add(&cam.camera_preset_gui);
 
     viz_preset_panel.add(&feedback.feedback_gui);
     viz_preset_panel.add(&fbo_feedback.feedback_gui);

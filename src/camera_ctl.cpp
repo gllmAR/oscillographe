@@ -10,28 +10,46 @@
 
 void Camera_ctl::setup()
 {
-    // camera
+    
+
+    
+
+    
+    // camera preset
+    
     camera_preset_gui.setup("camera");
     camera_preset_gui.add(cam_set_ortho.set("cam_set_ortho", 1));
-    //camera_preset_gui.add(cam_set_distance.set("cam_set_distance", 0, 0, 1000));
     camera_preset_gui.add(cam_view_position.set("position",
                                                 glm::vec3(0),
                                                 glm::vec3(-1000),
                                                 glm::vec3(1000)));
-    camera_preset_gui.add(cam_view_orientation_quat_string.set("orientation"," "));
+
+    
+    camera_preset_gui.add(cam_view_orientation.set("orientation",
+                                                       glm::vec4(0),
+                                                       glm::vec4(-1),
+                                                       glm::vec4(1)));
+
+    presets.setup("camera-test");
+    presets.recalled_gui.add(&camera_preset_gui);
     
     
-    
-    camera_settings_gui.setup("camera");
-    //camera_settings_gui.add(fps_label.setup("FPS"," "));
+    // camera settings
+    camera_settings_gui.setup("camera-setup");
     camera_settings_gui.add(cam_set_reset.set("cam_set_reset", 1));
     camera_settings_gui.add(set_fullscreen.set("fullscreen", 0));
-    camera_settings_gui.add(cam_get_param_b.set("cam_get_param",0));
-    camera_settings_gui.add(cam_set_param_b.set("cam_set_param",0));
+    camera_settings_gui.add(&presets.gui);
     
     
+
+    
+    // methode "creative" pour attacher un listener à une fonction dans une sous-classe
     cam_get_param_b.addListener(this, &Camera_ctl::cam_get_param);
     cam_set_param_b.addListener(this, &Camera_ctl::cam_set_param);
+    
+    presets.save_b.addListener(this, &Camera_ctl::cam_get_param);
+    presets.load_b.addListener(this, &Camera_ctl::cam_set_param);
+    
     
 }
 //--------------------------------------------------------------
@@ -52,26 +70,35 @@ void Camera_ctl::update()
 
 void Camera_ctl::cam_get_param(bool &b)
 {
+
+    cout<<"[DEBUG] cam_get_param"<<endl;
+    //conversion manuelle quat->vec4 car pas de ofParameter<quat>
+    //(offset de 1  (xyzw au lieu de wxyz) car sinon discrépence )
     cam_view_position=cam.getPosition();
-    glm::quat cam_view_orientation_quat=cam.getOrientationQuat();
-    //workaround pour sauvegarder un quat en string dans un ofParameter
-    cam_view_orientation_quat_string =ofToString(cam_view_orientation_quat);
-    cam_get_param_b = 0;
+    glm::quat temp_quat=cam.getOrientationQuat();
+    glm::vec4 temp_vec4( temp_quat.x,
+                         temp_quat.y,
+                         temp_quat.z,
+                         temp_quat.w );
+    
+
+    cam_view_orientation=temp_vec4;
+    // pour redéclencher la sauvegarde de preset
+    b=!b; //envoyer 1
+    presets.save(b);
+
 }
 //--------------------------------------------------------------
 
 void Camera_ctl::cam_set_param(bool &b)
 {
-    // workaround pour restaurer un quat a partir d une string
-    glm::quat temp_orientation;
-    vector <string> orientation_quat_vec = ofSplitString(cam_view_orientation_quat_string, " ");
-    // comprendre pourquoi l'index est offset de 1 ici...?
-    temp_orientation[0]=ofToFloat(orientation_quat_vec[1]);
-    temp_orientation[1]=ofToFloat(orientation_quat_vec[2]);
-    temp_orientation[2]=ofToFloat(orientation_quat_vec[3]);
-    temp_orientation[3]=ofToFloat(orientation_quat_vec[0]);
-   // cout<<ofToString(temp_orientation)<<endl;
-    cam.setOrientation(temp_orientation);
+    presets.load(b);
+        cout<<"[DEBUG] cam_set_param"<<endl;
+    //conversion manuelle vec4->quat car pas de ofParameter<quat>
+    glm::vec4 temp_vec4=cam_view_orientation;
+    
+    glm::quat temp_quat(temp_vec4.w,temp_vec4.x,temp_vec4.y,temp_vec4.z);
+    cam.setOrientation(temp_quat);
     cam.setPosition(cam_view_position);
-    cam_set_param_b = 0;
+    
 }

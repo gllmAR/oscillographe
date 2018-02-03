@@ -11,6 +11,7 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "presets.hpp"
 
 class Camera_ctl
 {
@@ -29,11 +30,10 @@ class Camera_ctl
     
     ofxGuiGroup camera_preset_gui;
     ofxGuiGroup camera_settings_gui;
-
-    
+        
     ofParameter<glm::vec3> cam_view_position;
+    ofParameter<glm::vec4> cam_view_orientation;
     
-    ofParameter<string>cam_view_orientation_quat_string;
     
     
 
@@ -47,7 +47,8 @@ class Camera_ctl
     
     ofParameter<bool> set_fullscreen = 0;
     bool set_fullscreen_old =0;
-
+    
+    Presets presets;
 
 };
 
