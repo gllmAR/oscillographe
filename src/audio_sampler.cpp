@@ -35,18 +35,19 @@ void Audio_sampler::setup(int _id, int _buffer_size )
     
     
     // setup graphe
-    graphe.gui_x_offset=gui_offset_x;
-    graphe.gui_y_offset=500;
+    //graphe.gui_x_offset=gui_offset_x;
+    //graphe.gui_y_offset=500;
     graphe.setup(sampler_name);
     
     
     //setup gui
-    gui_offset_x=GUI_INIT_OFFSET_X+210*sampler_id;
-    setup_gui(gui_offset_x, sampler_name);
+    //gui_offset_x=GUI_INIT_OFFSET_X+210*sampler_id;
+    setup_gui(sampler_name);
+
 }
 
 
-void Audio_sampler::setup_gui(int _gui_offset, string _name)
+void Audio_sampler::setup_gui(string _name)
 {
 
     //player
@@ -99,12 +100,16 @@ void Audio_sampler::setup_gui(int _gui_offset, string _name)
     loop_recall_gui.add(player_loop_out.set("player_loop_out",1,0,1));
 
     // settings panel
-    sampler_gui.setup(_name, "sampler_A_settings.xml", _gui_offset,10);
+    sampler_gui.setup(_name, "sampler_A_settings.xml");
     sampler_gui.add(&recorder_gui);
     sampler_gui.add(&player_gui);
-    //sampler_gui.add(&recaller_gui);
+    //setup presets
+
+
     sampler_gui.add(&loop_recall_gui);
     sampler_gui.add(&graphe.gui);
+    
+    sampler_gui.minimizeAll();
 
 // listener
     

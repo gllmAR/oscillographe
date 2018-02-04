@@ -30,12 +30,12 @@ void Camera_ctl::setup()
                                                        glm::vec4(-1),
                                                        glm::vec4(1)));
 
-    presets.setup("camera-test");
+    presets.setup("camera-setup");
     presets.recalled_gui.add(&camera_preset_gui);
     
     
     // camera settings
-    camera_settings_gui.setup("camera-setup");
+    camera_settings_gui.setup("render");
     camera_settings_gui.add(cam_set_reset.set("cam_set_reset", 1));
     camera_settings_gui.add(set_fullscreen.set("fullscreen", 0));
     camera_settings_gui.add(&presets.gui);

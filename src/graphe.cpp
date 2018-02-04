@@ -18,36 +18,44 @@ void Graphe::setup(string name)
     settings_gui.setup("settings");
     
     
+    
+    presets.setup("graphe");
+    //presets.recalled_gui.add(&settings_gui);
+    
 
-    settings_gui.add(graphe_active.set("active",1));
-    settings_gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
-    settings_gui.add(shape_scale.set("shape_scale",0.10,0,1));
-    settings_gui.add(line_width.set("line_width",1, 0.1, 10));
-    settings_gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
+presets.recalled_gui.add(graphe_active.set("active",1));
+presets.recalled_gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
+presets.recalled_gui.add(shape_scale.set("shape_scale",0.10,0,1));
+presets.recalled_gui.add(line_width.set("line_width",1, 0.1, 10));
+presets.recalled_gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
     //settings_gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
-    settings_gui.add(graphe_saturation.set("saturation", 255, 0, 255));
-    settings_gui.add(graphe_hue.set("hue", 255, 0, 255));
-    settings_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
+presets.recalled_gui.add(graphe_saturation.set("saturation", 255, 0, 255));
+presets.recalled_gui.add(graphe_hue.set("hue", 255, 0, 255));
+presets.recalled_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
     
     graphe_saturation.addListener(this, &Graphe::set_saturation);
     graphe_hue.addListener(this, &Graphe::set_hue);
     graphe_brightness.addListener(this, &Graphe::set_brightness);
     
     
-    preset_gui.setup("presets");
-    preset_gui.add(preset_index.set("index",0,0,9));
-    preset_gui.add(preset_load_b.set("load",0));
-    preset_gui.add(preset_save_b.set("save",0));
+//    preset_gui.setup("presets");
+//    preset_gui.add(preset_index.set("index",0,0,9));
+//    preset_gui.add(preset_load_b.set("load",0));
+//    preset_gui.add(preset_save_b.set("save",0));
+//    
+//    preset_load_b.addListener(this, &Graphe::preset_load);
+//    preset_save_b.addListener(this, &Graphe::preset_save);
     
-    preset_load_b.addListener(this, &Graphe::preset_load);
-    preset_save_b.addListener(this, &Graphe::preset_save);
-    
-    gui.setup(graphe_name, "graphe.xml",gui_x_offset,gui_y_offset);
-    gui.setName(graphe_name);
-    gui.add(&preset_gui);
-    gui.add(&settings_gui);
+    gui.setup(graphe_name);
 
+    //gui.add(&preset_gui);
+
+    //gui.add(&settings_gui);
+
+    gui.add(&presets.gui);
     
+    
+
     
     // todo update de la grosseur quand...!
     set_size(ofGetWidth(), ofGetHeight());
@@ -159,35 +167,35 @@ void Graphe::set_hue(float &f)
 
 //--------------------------------------------------------------
 
-void Graphe::preset_save(bool &b)
-{
-    if(preset_save_b)
-    {
-    preset_save_b = 0;
-    std::string str = "graphe_";
-    str += ofToString(preset_index);
-    settings_gui.setName(str);
-    settings_gui.saveToFile("graphe.json");
-    settings_gui.setName( graphe_name);
-    }
-}
-
-
-//--------------------------------------------------------------
-
-void Graphe::preset_load(bool &b)
-{
-    if (preset_load_b)
-    {
-    preset_load_b = 0;
-    std::string str = "graphe_";
-    str += ofToString(preset_index);
-    settings_gui.setName(str);
-    settings_gui.loadFromFile("graphe.json");
-    
-    settings_gui.setName( graphe_name);
-    }
-}
+//void Graphe::preset_save(bool &b)
+//{
+//    if(preset_save_b)
+//    {
+//    preset_save_b = 0;
+//    std::string str = "graphe_";
+//    str += ofToString(preset_index);
+//    settings_gui.setName(str);
+//    settings_gui.saveToFile("graphe.json");
+//    settings_gui.setName( graphe_name);
+//    }
+//}
+//
+//
+////--------------------------------------------------------------
+//
+//void Graphe::preset_load(bool &b)
+//{
+//    if (preset_load_b)
+//    {
+//    preset_load_b = 0;
+//    std::string str = "graphe_";
+//    str += ofToString(preset_index);
+//    settings_gui.setName(str);
+//    settings_gui.loadFromFile("graphe.json");
+//    
+//    settings_gui.setName( graphe_name);
+//    }
+//}
 
 
 //--------------------------------------------------------------

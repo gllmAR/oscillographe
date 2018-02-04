@@ -14,16 +14,17 @@
 #include "ofxBasicSoundPlayer.h"
 #include "ofxSoundFile.h"
 #include "graphe.hpp"
+#include "presets.hpp"
 
 
-#define GUI_INIT_OFFSET_X 640
-#define GUI_INIT_LOOPS_OFFSET_Y 260
+//#define GUI_INIT_OFFSET_X 640
+//#define GUI_INIT_LOOPS_OFFSET_Y 260
 class Audio_sampler
 {
 public:
     
     void setup(int _id, int _buffer_size);
-    void setup_gui(int _gui_offset, string _name);
+    void setup_gui(string _name);
     
     void audio_input(ofSoundBuffer& input, ofSoundBuffer& output);
     void audio_process(ofSoundBuffer& output);
@@ -87,8 +88,7 @@ public:
     void recorder_enable_changed(bool &b);
     void recorder_save_file();
 
-    
-    
+
     
     // recaller stuff
     ofxGuiGroup loop_recall_gui;

@@ -11,6 +11,7 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "presets.hpp"
 
 
 
@@ -54,17 +55,20 @@ public:
     int app_size_w = 100000;
     int app_size_h = 100000;
     
+    
     // preset
-    ofParameter <int> preset_index;
-    ofParameter <string> preset_comment;
-    ofxGuiGroup preset_gui;
-    
-    ofParameter<bool> preset_load_b;
-    ofParameter<bool> preset_save_b;
-
-    void preset_save(bool &b);
-    void preset_load(bool &b);
-    
+    Presets presets;
+//
+//    ofParameter <int> preset_index;
+//    ofParameter <string> preset_comment;
+//    ofxGuiGroup preset_gui;
+//    
+//    ofParameter<bool> preset_load_b;
+//    ofParameter<bool> preset_save_b;
+//
+//    void preset_save(bool &b);
+//    void preset_load(bool &b);
+//    
 };
 
 #endif /* graphe_hpp */

@@ -73,7 +73,6 @@ class ofApp : public ofBaseApp{
     ofxLabel fps_label;
     
     Screen_feedback feedback;
-    Fbo_feedback fbo_feedback;
     
 
     
@@ -83,16 +82,16 @@ class ofApp : public ofBaseApp{
     
     
     // save et load preset visual
-    ofxOscParameterSync viz_preset_recall_sync;
-    ofxPanel viz_preset_recal_panel;
-    ofxOscParameterSync viz_preset_sync;
-    ofxPanel viz_preset_panel;
-    void viz_preset_save(bool &b);
-    void viz_preset_load(bool &b);
-    ofxGuiGroup viz_preset_gui;
-    ofParameter<int> viz_preset_index;
-    ofParameter<bool> viz_preset_save_b;
-    ofParameter<bool> viz_preset_load_b;
+//    ofxOscParameterSync viz_preset_recall_sync;
+//    ofxPanel viz_preset_recal_panel;
+//    ofxOscParameterSync viz_preset_sync;
+//    ofxPanel viz_preset_panel;
+//    void viz_preset_save(bool &b);
+//    void viz_preset_load(bool &b);
+//    ofxGuiGroup viz_preset_gui;
+//    ofParameter<int> viz_preset_index;
+//    ofParameter<bool> viz_preset_save_b;
+//    ofParameter<bool> viz_preset_load_b;
     
     
 //    ofxPanel audio_sampler_A_settings_panel;
