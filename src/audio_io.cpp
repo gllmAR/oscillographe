@@ -103,6 +103,10 @@ void Audio_io::setup_gui()
     gui_input.add(input_pan.set("pan",0,-1,1));
     gui_input.add(&input_graphe.gui);
     
+    //feedback
+    feedback_gui.setup("feedback");
+    feedback_gui.add(feedback_volume.set("volume",0,-1.2,1.2));
+    feedback_gui.add(feedback_pan.set("pan",0,-2,2));
     
     //output
     gui_output.setup();
@@ -119,6 +123,7 @@ void Audio_io::setup_gui()
 
     // compose gui (audio_io)
     gui.add(&gui_input);
+    gui.add(&feedback_gui);
     gui.add(&gui_output);
     gui.add(&audio_sampler_A.sampler_gui);
 }
@@ -143,6 +148,8 @@ void Audio_io::setup_audio()
     output_select.setMax(output_devices.size());
     output_buffer_1.assign(buffer_size, 0.0);
     output_buffer_2.assign(buffer_size, 0.0);
+    
+    last_output_buffer.allocate(buffer_size, 2);
 
 }
 
@@ -222,18 +229,21 @@ void Audio_io::audioOut(ofSoundBuffer& output)
         audio_sampler_A.audio_process(output);
         
         for (int i = 0; i < output.getNumFrames(); i++)
-        {            float ch1 = ofClamp((input_buffer_1[i]
+        {   float ch1 = ofClamp((input_buffer_1[i]
+                                + (last_output_buffer[i*2 ]*(1-(feedback_pan*0.5 +0.5))*feedback_volume)
                                 + audio_sampler_A.player_buffer[i*2 ]
                                  ) * output_vol_ammount * pan_1*2*!output_mute, -1, 1);
             float ch2 = ofClamp((input_buffer_2[i]
+                                 + (last_output_buffer[i*2+1]*(feedback_pan*0.5 +0.5)*feedback_volume)
                                 + audio_sampler_A.player_buffer[i*2+1]
                                  ) * output_vol_ammount  * pan_2*2*!output_mute, -1, 1);
             output_buffer_1[i] = ch1;
             output_buffer_2[i] = ch2;
             output[i*2  ] = ch1 * master_vol_ammount;
             output[i*2+1] = ch2 * master_vol_ammount;
-            last_output_buffer = output;
         }
+        last_output_buffer = output;
+
     }
 }
 

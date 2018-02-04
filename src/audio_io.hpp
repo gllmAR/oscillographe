@@ -81,12 +81,12 @@ public:
     void io_enable_change(bool &b);
     
     // input stuff
+    Graphe input_graphe;
     ofxGuiGroup gui_device_input;
     ofxGuiGroup gui_input;
     ofSoundStream input_stream;
     ofSoundStreamSettings input_settings;
     ofSoundBuffer input_buffer;
-    ofSoundBuffer last_output_buffer;
     ofParameter <bool> input_mute;
     ofParameter <float> input_trim;
     ofParameter <float> input_volume;
@@ -104,6 +104,8 @@ public:
     void input_enable_change(bool &input_enable);
     
     // output stuff
+    
+    Graphe output_graphe;
     ofxGuiGroup gui_device_output;
     ofxGuiGroup gui_output;
     ofSoundStream output_stream;
@@ -122,8 +124,15 @@ public:
     void output_enable_change(bool &output_enable);
     
     //
-    Graphe input_graphe;
-    Graphe output_graphe;
+    
+    
+    ofxGuiGroup feedback_gui;
+    ofParameter <float> feedback_volume;
+    ofParameter <float> feedback_pan;
+    ofSoundBuffer last_output_buffer;
+
+    
+    
     
     Audio_sampler audio_sampler_A;
     

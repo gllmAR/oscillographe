@@ -52,6 +52,8 @@ class ofApp : public ofBaseApp{
     
     Camera_ctl cam;
     
+    ofxOscParameterSync settings_sync;
+    
     // workaround pour faire fonctionner le fullscreen sur le raspberry pi
     bool screen_workaround_to_update = 1;
     

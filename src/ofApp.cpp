@@ -20,6 +20,7 @@ void ofApp::setup(){
     setup_gui();
 
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
+    settings_sync.setup((ofParameterGroup&)setup_panel.getParameter(),SYNC_INPORT, "localhost", SYNC_OUTPORT);
     
 //    viz_preset_recall_sync.setup((ofParameterGroup&)viz_preset_recal_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
 //    viz_preset_sync.setup((ofParameterGroup&)viz_preset_panel.getParameter(),SYNC_INPORT,"localhost",SYNC_OUTPORT);
@@ -51,7 +52,7 @@ void ofApp::setup_gui()
 
     
     /* setup panel */
-    setup_panel.setup("settings", "settings.json", 10, 10);
+    setup_panel.setup("oscillographe", "oscillographe.json", 10, 10);
     setup_panel.add(fps_label.setup("FPS"," "));
 //    setup_panel.add(&viz_preset_gui);
     setup_panel.add(&cam.camera_settings_gui);
@@ -61,7 +62,7 @@ void ofApp::setup_gui()
     setup_panel.add(&interact_gui);
     setup_panel.minimizeAll();
     
-    setup_panel.loadFromFile("settings.json");
+    setup_panel.loadFromFile("oscillographe.json");
     
     
 
@@ -112,6 +113,8 @@ void ofApp::update()
         //audio_io.set_output_vol(audio_io.output_volume.get());
     }
     cam.update();
+    
+    settings_sync.update();
 //    viz_preset_recall_sync.update();
 //    viz_preset_sync.update();
     
