@@ -19,6 +19,7 @@ void Audio_io::setup()
     output_graphe.setup("output");
     
     audio_sampler_A.setup(0,buffer_size);
+    audio_sampler_B.setup(1,buffer_size);
     
 
     setup_gui_listener();
@@ -126,6 +127,7 @@ void Audio_io::setup_gui()
     gui.add(&feedback_gui);
     gui.add(&gui_output);
     gui.add(&audio_sampler_A.sampler_gui);
+    gui.add(&audio_sampler_B.sampler_gui);
 }
 
 void Audio_io::setup_audio()
@@ -203,6 +205,7 @@ void Audio_io::audioIn(ofSoundBuffer & input)
         
         
         audio_sampler_A.audio_input(input, last_output_buffer);
+        audio_sampler_B.audio_input(input, last_output_buffer);
         
         if(input_mute)
         {
@@ -227,15 +230,18 @@ void Audio_io::audioOut(ofSoundBuffer& output)
         float pan_1 = 1-(output_pan*0.5 +0.5);
         float pan_2 = output_pan*0.5 +0.5;
         audio_sampler_A.audio_process(output);
+        audio_sampler_B.audio_process(output);
         
         for (int i = 0; i < output.getNumFrames(); i++)
         {   float ch1 = ofClamp((input_buffer_1[i]
                                 + (last_output_buffer[i*2 ]*(1-(feedback_pan*0.5 +0.5))*feedback_volume)
                                 + audio_sampler_A.player_buffer[i*2 ]
+                                + audio_sampler_B.player_buffer[i*2 ]
                                  ) * output_vol_ammount * pan_1*2*!output_mute, -1, 1);
             float ch2 = ofClamp((input_buffer_2[i]
                                  + (last_output_buffer[i*2+1]*(feedback_pan*0.5 +0.5)*feedback_volume)
                                 + audio_sampler_A.player_buffer[i*2+1]
+                                 + audio_sampler_B.player_buffer[i*2+1]
                                  ) * output_vol_ammount  * pan_2*2*!output_mute, -1, 1);
             output_buffer_1[i] = ch1;
             output_buffer_2[i] = ch2;
@@ -390,6 +396,7 @@ void Audio_io::update()
 {
     input_graphe.update(buffer_size,input_buffer_1, input_buffer_2 );
     audio_sampler_A.graphe.update(buffer_size,audio_sampler_A.player_buffer_1_wo, audio_sampler_A.player_buffer_2_wo);
+        audio_sampler_B.graphe.update(buffer_size,audio_sampler_B.player_buffer_1_wo, audio_sampler_B.player_buffer_2_wo);
     output_graphe.update(buffer_size,output_buffer_1, output_buffer_2 );
     
 }
@@ -397,6 +404,7 @@ void Audio_io::draw_graphes()
 {
     input_graphe.draw();
     audio_sampler_A.graphe.draw();
+        audio_sampler_B.graphe.draw();
     output_graphe.draw();
 }
 
@@ -411,6 +419,7 @@ void Audio_io::set_size(int w, int h)
 {
     input_graphe.set_size(w,h);
     audio_sampler_A.graphe.set_size(w,h);
+        audio_sampler_B.graphe.set_size(w,h);
     output_graphe.set_size(w,h);
 }
 

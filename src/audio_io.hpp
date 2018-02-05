@@ -135,6 +135,7 @@ public:
     
     
     Audio_sampler audio_sampler_A;
+    Audio_sampler audio_sampler_B;
     
 };
 
