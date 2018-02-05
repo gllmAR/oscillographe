@@ -37,7 +37,7 @@ void Audio_sampler::setup(int _id, int _buffer_size )
     // setup graphe
     //graphe.gui_x_offset=gui_offset_x;
     //graphe.gui_y_offset=500;
-    graphe.setup(sampler_name);
+    graphe.setup("");
     
     
     //setup gui
@@ -91,7 +91,7 @@ void Audio_sampler::setup_gui(string _name)
     
     // loop_recall
     
-    loop_recall_gui.setup(sampler_loops_name);
+    loop_recall_gui.setup("looper");
     loop_recall_gui.add(&recaller_gui);
     loop_recall_gui.add(player_speed.set("speed",1,-2,2));
     loop_recall_gui.add(player_position.set("position",0,0,1));
@@ -107,7 +107,7 @@ void Audio_sampler::setup_gui(string _name)
 
 
     sampler_gui.add(&loop_recall_gui);
-    sampler_gui.add(&graphe.gui);
+    sampler_gui.add(&graphe.presets.gui);
     
     sampler_gui.minimizeAll();
 

@@ -10,15 +10,12 @@
 
 void Graphe::setup(string name)
 {
-    std::string str = name;
-    str+="_graphe";
-    name=str;
-    graphe_name = name;
-    
+//    std::string str = name;
+//    str+="_graphe";
+//    name=str;
+//    graphe_name = name;
+    graphe_name = "graphe";
     settings_gui.setup("settings");
-    
-    
-    
     presets.setup("graphe");
     //presets.recalled_gui.add(&settings_gui);
     
@@ -28,7 +25,6 @@ presets.recalled_gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,
 presets.recalled_gui.add(shape_scale.set("shape_scale",0.10,0,1));
 presets.recalled_gui.add(line_width.set("line_width",1, 0.1, 10));
 presets.recalled_gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
-    //settings_gui.add(line_color.set("color",ofColor(255),ofColor(0,0),ofColor(255)));
 presets.recalled_gui.add(graphe_saturation.set("saturation", 255, 0, 255));
 presets.recalled_gui.add(graphe_hue.set("hue", 255, 0, 255));
 presets.recalled_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
@@ -38,26 +34,14 @@ presets.recalled_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
     graphe_brightness.addListener(this, &Graphe::set_brightness);
     
     
-//    preset_gui.setup("presets");
-//    preset_gui.add(preset_index.set("index",0,0,9));
-//    preset_gui.add(preset_load_b.set("load",0));
-//    preset_gui.add(preset_save_b.set("save",0));
-//    
-//    preset_load_b.addListener(this, &Graphe::preset_load);
-//    preset_save_b.addListener(this, &Graphe::preset_save);
     
     gui.setup(graphe_name);
 
-    //gui.add(&preset_gui);
-
-    //gui.add(&settings_gui);
-
-    gui.add(&presets.gui);
+    //gui.add(&presets.gui);
     
     
 
     
-    // todo update de la grosseur quand...!
     set_size(ofGetWidth(), ofGetHeight());
 
 }

@@ -14,10 +14,10 @@ void Presets::setup(string _name)
 {
     //
     name = _name;
-    recaller_name = "rec_";
-    recaller_name += _name;
-    recalled_name = "set_";
-    recalled_name += _name;
+    recaller_name = "rec";
+    //recaller_name += _name;
+    recalled_name = "set";
+    //recalled_name += _name;
     recaller_gui.setup(recaller_name);
     recalled_gui.setup(recalled_name);
   
