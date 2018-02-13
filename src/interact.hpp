@@ -21,6 +21,7 @@ public:
     
     ofxGuiGroup gui;
     
+    
     ofParameter<bool> interact_enable = 0;
 
     ofParameter<bool> debug = 1;

@@ -395,6 +395,25 @@ void Audio_io::output_init(int selection)
 
 void Audio_io::update()
 {
+   
+    
+    if (audio_sampler_A.interact.interact_enable)
+            {
+                audio_sampler_A.interact.update();
+                audio_sampler_A.player_set_speed(audio_sampler_A.interact.get_value());
+            } else { //pas top efficace car update toujours...
+                audio_sampler_A.player_set_speed(audio_sampler_A.player_speed);
+            }
+    if (audio_sampler_B.interact.interact_enable)
+    {
+        audio_sampler_B.interact.update();
+        audio_sampler_B.player_set_speed(audio_sampler_B.interact.get_value());
+    } else { //pas top efficace car update toujours...
+        audio_sampler_B.player_set_speed(audio_sampler_B.player_speed);
+    }
+
+    
+    audio_sampler_B.interact.update();
     input_graphe.update(buffer_size,input_buffer_1, input_buffer_2 );
     audio_sampler_A.graphe.update(buffer_size,audio_sampler_A.player_buffer_1_wo, audio_sampler_A.player_buffer_2_wo);
         audio_sampler_B.graphe.update(buffer_size,audio_sampler_B.player_buffer_1_wo, audio_sampler_B.player_buffer_2_wo);
@@ -403,9 +422,11 @@ void Audio_io::update()
 }
 void Audio_io::draw_graphes()
 {
+    audio_sampler_A.interact.draw();
+    audio_sampler_B.interact.draw();
     input_graphe.draw();
     audio_sampler_A.graphe.draw();
-        audio_sampler_B.graphe.draw();
+    audio_sampler_B.graphe.draw();
     output_graphe.draw();
 }
 

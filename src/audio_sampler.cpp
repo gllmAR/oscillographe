@@ -39,10 +39,13 @@ void Audio_sampler::setup(int _id, int _buffer_size )
     //graphe.gui_y_offset=500;
     graphe.setup("");
     
-    
+    // setup interact
+    interact.setup("speed", "/gpio/1");
+
     //setup gui
     //gui_offset_x=GUI_INIT_OFFSET_X+210*sampler_id;
     setup_gui(sampler_name);
+    
 
 }
 
@@ -77,7 +80,6 @@ void Audio_sampler::setup_gui(string _name)
     
     
 
-    //sampler_gui.add(&recaller_gui);
     
     
     // recaller
@@ -109,6 +111,8 @@ void Audio_sampler::setup_gui(string _name)
     sampler_gui.add(&loop_recall_gui);
     sampler_gui.add(&graphe.presets.gui);
     
+    sampler_gui.add(&interact.gui);
+    
     sampler_gui.minimizeAll();
 
 // listener
@@ -135,6 +139,7 @@ void Audio_sampler::setup_gui(string _name)
 
 void Audio_sampler::draw_gui()
 {
+    interact.draw();
     sampler_gui.draw();
     loop_recall_gui.draw();
     graphe.draw_gui();
@@ -310,11 +315,17 @@ void Audio_sampler::recorder_enable_changed(bool &b)
 {
     if (!recorder_enable)
     {
-        std::ostringstream filename;
-        filename <<"sounds/"<<"audio_" << recorder_file_index << ".wav";
-        cout<<"writing to "<<filename.str()<<endl;
-        recorder_sound_file.save(filename.str(), recorder_buffer);
-        recorder_buffer.clear();
+        if (!record_init_b) // car enregistre une fichier vide à l'init
+        {
+            record_init_b = true;
+        } else {
+            std::ostringstream filename;
+            filename <<"sounds/"<<"audio_" << recorder_file_index << ".wav";
+            cout<<"writing to "<<filename.str()<<endl;
+            recorder_sound_file.save(filename.str(), recorder_buffer);
+            recorder_buffer.clear();
+
+        }
     }
 }
 

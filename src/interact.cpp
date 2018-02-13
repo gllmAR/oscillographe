@@ -13,6 +13,7 @@
 void Interact_struggle::setup(string name, string _interact_osc_path)
 {
     interact_osc_path = _interact_osc_path;
+
     gui.setup();
     gui.setName(name);
     gui.add(interact_osc_path.set("osc", _interact_osc_path));
@@ -26,12 +27,13 @@ void Interact_struggle::setup(string name, string _interact_osc_path)
     gui.add(smooth_amount.set("smooth_ammount",5,1,30));
     gui.add(debug.set("debug",0));
 
-
+   
 }
 
 void Interact_struggle::update()
 {
     now_time = ofGetElapsedTimeMillis();
+
     
     if(metronome_enable && now_time-last_metronome_time>metronome_interval_ms)
     {

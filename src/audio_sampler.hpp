@@ -15,6 +15,7 @@
 #include "ofxSoundFile.h"
 #include "graphe.hpp"
 #include "presets.hpp"
+#include "interact.hpp"
 
 
 //#define GUI_INIT_OFFSET_X 640
@@ -79,6 +80,7 @@ public:
     string player_get_filename();
     
     // recorder stuff
+    bool record_init_b;
     ofxGuiGroup recorder_gui;
     ofParameter <bool> recorder_enable;
     ofParameter <bool> recorder_record_output;
@@ -110,6 +112,9 @@ public:
     void update_graph();
     void draw_graph();
 
+    //interact stuff
+    Interact_struggle interact;
+    
     
     
 };

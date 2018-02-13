@@ -43,11 +43,7 @@ class ofApp : public ofBaseApp{
 
     Audio_io audio_io;
 
-    
-    ofxGuiGroup interact_gui;
-    Interact_struggle interact_speed;
-    Interact_struggle interact_volume;
-    Interact_tic interact_preset;
+
 
     
     Camera_ctl cam;
@@ -83,24 +79,7 @@ class ofApp : public ofBaseApp{
     int app_size_h=100;
     
     
-    // save et load preset visual
-//    ofxOscParameterSync viz_preset_recall_sync;
-//    ofxPanel viz_preset_recal_panel;
-//    ofxOscParameterSync viz_preset_sync;
-//    ofxPanel viz_preset_panel;
-//    void viz_preset_save(bool &b);
-//    void viz_preset_load(bool &b);
-//    ofxGuiGroup viz_preset_gui;
-//    ofParameter<int> viz_preset_index;
-//    ofParameter<bool> viz_preset_save_b;
-//    ofParameter<bool> viz_preset_load_b;
-    
-    
-//    ofxPanel audio_sampler_A_settings_panel;
-//    ofxPanel audio_sampler_A_recalled_panel;
-//    ofxPanel audio_sampler_B_settings_panel;
-//    ofxPanel audio_sampler_B_recalled_panel;
-    //--->
+
 
       
 };
