@@ -1,0 +1,10 @@
+{
+    "oscillographe": {
+        "audio_io": {
+            "feedback": {
+                "pan": "-1",
+                "volume": "0"
+            }
+        }
+    }
+}

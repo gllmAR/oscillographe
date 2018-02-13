@@ -13,6 +13,8 @@ void ofApp::setup(){
     cam.setup();
     feedback.setup();
     setup_gui();
+    recall.setup(setup_panel);
+    setup_panel.add(&recall.gui);
 
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
     settings_sync.setup((ofParameterGroup&)setup_panel.getParameter(),SYNC_INPORT, "localhost", SYNC_OUTPORT);
@@ -52,7 +54,8 @@ void ofApp::setup_gui()
 //--------------------------------------------------------------
 void ofApp::update()
 {
-      audio_io.update();
+    audio_io.update();
+    recall.update();
     
     while(osc_receiver.hasWaitingMessages())
     {

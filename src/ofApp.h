@@ -9,6 +9,7 @@
 #include "ofxOsc.h"
 #include "camera_ctl.hpp"
 #include "feedback.hpp"
+#include "recall.hpp"
 
 #define HOST "localhost"
 #define SYNC_INPORT 9001
@@ -42,6 +43,7 @@ class ofApp : public ofBaseApp{
     
 
     Audio_io audio_io;
+    Recall recall;
 
 
 
@@ -64,10 +66,8 @@ class ofApp : public ofBaseApp{
    
     ofxPanel setup_panel;
     
-    ofxGuiGroup graphe_gui;
-    
-    
 
+    
     ofxLabel fps_label;
     
     Screen_feedback feedback;
