@@ -1,0 +1,230 @@
+{
+    "oscillographe": {
+        "audio_io": {
+            "feedback": {
+                "pan": "0",
+                "volume": "-0.00960338"
+            },
+            "input": {
+                "graphe": {
+                    "rec": {
+                        "index": "0",
+                        "load": "0",
+                        "save": "0"
+                    },
+                    "set": {
+                        "active": "1",
+                        "brightness": "255",
+                        "buffer_history": "512",
+                        "draw_line": "1",
+                        "hue": "255",
+                        "line_width": "1",
+                        "mesh_width_z": "0.5",
+                        "saturation": "255",
+                        "shape_scale": "0.1"
+                    }
+                },
+                "mute": "0",
+                "pan": "0",
+                "volume": "1"
+            },
+            "output": {
+                "graphe": {
+                    "rec": {
+                        "index": "0",
+                        "load": "0",
+                        "save": "0"
+                    },
+                    "set": {
+                        "active": "1",
+                        "brightness": "255",
+                        "buffer_history": "512",
+                        "draw_line": "1",
+                        "hue": "39.624",
+                        "line_width": "1",
+                        "mesh_width_z": "0.5",
+                        "saturation": "255",
+                        "shape_scale": "0.05"
+                    }
+                },
+                "mute": "0",
+                "pan": "0",
+                "volume": "1"
+            },
+            "sampler_0": {
+                "graphe": {
+                    "rec": {
+                        "index": "0",
+                        "load": "0",
+                        "save": "0"
+                    },
+                    "set": {
+                        "active": "1",
+                        "brightness": "255",
+                        "buffer_history": "512",
+                        "draw_line": "1",
+                        "hue": "115.651",
+                        "line_width": "0.1",
+                        "mesh_width_z": "-0.5",
+                        "saturation": "255",
+                        "shape_scale": "0.1"
+                    }
+                },
+                "looper": {
+                    "player_loop_in": "0",
+                    "player_loop_out": "1",
+                    "player_loop_selection": "1",
+                    "position": "0",
+                    "recaller": {
+                        "index": "0",
+                        "load": "0",
+                        "save": "0"
+                    },
+                    "speed": "1"
+                },
+                "player": {
+                    "enable": "1",
+                    "file_index": "2",
+                    "pan": "0",
+                    "volume": "1"
+                },
+                "recorder": {
+                    "enable": "0",
+                    "file_index": "-9",
+                    "record_output": "0"
+                },
+                "speed": {
+                    "debug": "0",
+                    "draw_value": "0",
+                    "interact_enable": "0",
+                    "metronome_enable": "0",
+                    "metronome_interval_ms": "100",
+                    "osc": "/gpio/1",
+                    "smooth_ammount": "5",
+                    "smooth_enable": "0",
+                    "stop_time_threshold": "500",
+                    "value_trim": "1"
+                }
+            },
+            "sampler_1": {
+                "graphe": {
+                    "rec": {
+                        "index": "0",
+                        "load": "0",
+                        "save": "0"
+                    },
+                    "set": {
+                        "active": "1",
+                        "brightness": "255",
+                        "buffer_history": "513",
+                        "draw_line": "1",
+                        "hue": "130.857",
+                        "line_width": "1",
+                        "mesh_width_z": "-0.5",
+                        "saturation": "255",
+                        "shape_scale": "0.1"
+                    }
+                },
+                "looper": {
+                    "player_loop_in": "0",
+                    "player_loop_out": "1",
+                    "player_loop_selection": "1",
+                    "position": "0",
+                    "recaller": {
+                        "index": "0",
+                        "load": "0",
+                        "save": "0"
+                    },
+                    "speed": "1"
+                },
+                "player": {
+                    "enable": "1",
+                    "file_index": "0",
+                    "pan": "0",
+                    "volume": "1"
+                },
+                "recorder": {
+                    "enable": "0",
+                    "file_index": "-9",
+                    "record_output": "0"
+                },
+                "speed": {
+                    "debug": "0",
+                    "draw_value": "0",
+                    "interact_enable": "0",
+                    "metronome_enable": "0",
+                    "metronome_interval_ms": "100",
+                    "osc": "/gpio/1",
+                    "smooth_ammount": "5",
+                    "smooth_enable": "0",
+                    "stop_time_threshold": "500",
+                    "value_trim": "1"
+                }
+            }
+        },
+        "device": {
+            "buffer_size": "512",
+            "input_trim": "1",
+            "master_vol": "1",
+            "reset_audio": "0",
+            "sample_rate": "44100",
+            "set_input": {
+                "enable": "1",
+                "select": "3"
+            },
+            "set_io": {
+                "in_enable": "0",
+                "io_enable": "0",
+                "out_enable": "0",
+                "select": "0"
+            },
+            "set_output": {
+                "enable": "1",
+                "select": "2"
+            }
+        },
+        "recall": {
+            "group": {
+                "interact_enable": "0",
+                "metronome_enable": "0",
+                "metronome_interval_ms": "100",
+                "osc": "/gpio/2"
+            },
+            "index": "0",
+            "interact-tic": {
+                "interact_enable": "0",
+                "metronome_enable": "0",
+                "metronome_interval_ms": "907",
+                "osc": "/gpio/2"
+            },
+            "next": "0",
+            "prev": "0",
+            "reindex": "0"
+        },
+        "render": {
+            "cam_set_reset": "0",
+            "camera-setup": {
+                "rec": {
+                    "index": "0",
+                    "load": "0",
+                    "save": "0"
+                },
+                "set": {
+                    "camera": {
+                        "cam_set_ortho": "1",
+                        "orientation": "0, 0, 0, 0",
+                        "position": "0, 0, 0"
+                    }
+                }
+            },
+            "feedback": {
+                "ammount": "0.592357",
+                "enable": "0",
+                "scale": "1.0286",
+                "x": "1",
+                "y": "1"
+            },
+            "fullscreen": "1"
+        }
+    }
+}

@@ -22,15 +22,21 @@ class Recall
 
 {
 public:
-    void setup(ofxPanel _setup_panel);
+    void setup();
+    void set_panel(ofxPanel _setup_panel);
     void next(bool &b);
+    void prev(bool &b);
+    void reindex(bool &b);
+    void index_folder();
     void update();
-    void prev();
+    
     
     ofxGuiGroup gui;
     ofxPanel setup_panel;
     
     ofParameter<bool> next_b;
+    ofParameter<bool> prev_b;
+    ofParameter<bool> reindex_b;
     ofParameter<int> index;
     
     int file_count;

@@ -20,8 +20,7 @@ class Graphe
 {
 public:
     string graphe_name;
-    ofxGuiGroup gui; //--
-    ofxGuiGroup settings_gui;
+    ofxGuiGroup gui;
     
     void draw_gui();
     int gui_x_offset=0;
@@ -38,6 +37,9 @@ public:
     ofParameter<float> graphe_saturation =0;
     ofParameter<float> graphe_hue =0;
     ofParameter<float> graphe_brightness =0;
+    
+    ofParameter<bool> graphe_line_b=0;
+    void graphe_line_changed(bool &b);
     
     ofVboMesh vbo_mesh;
     
@@ -58,17 +60,7 @@ public:
     
     // preset
     Presets presets;
-//
-//    ofParameter <int> preset_index;
-//    ofParameter <string> preset_comment;
-//    ofxGuiGroup preset_gui;
-//    
-//    ofParameter<bool> preset_load_b;
-//    ofParameter<bool> preset_save_b;
-//
-//    void preset_save(bool &b);
-//    void preset_load(bool &b);
-//    
+
 };
 
 #endif /* graphe_hpp */

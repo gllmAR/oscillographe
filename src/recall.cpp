@@ -8,25 +8,25 @@
 
 #include "recall.hpp"
 
-void Recall::setup(ofxPanel _setup_panel)
+void Recall::setup()
 {
     
-    string path = "recall";
-    ofDirectory dir(path);
-    dir.allowExt("json");
-    dir.listDir();
-    json_vector = dir.getFiles();
 
-    
-    file_count=json_vector.size()-1;
+
+    index_folder();
+
     gui.setup("recall");
     gui.add(next_b.set("next",0));
+    gui.add(prev_b.set("prev",0));
+    gui.add(reindex_b.set("reindex",0));
     gui.add(index.set("index",0,0,file_count));
     
-    setup_panel =_setup_panel;
+
     
     
     next_b.addListener(this, &Recall::next);
+    prev_b.addListener(this, &Recall::prev);
+    reindex_b.addListener(this, &Recall::reindex);
     interact.setup("next", "/gpio/2");
     gui.add(&interact.gui);
     
@@ -35,6 +35,13 @@ void Recall::setup(ofxPanel _setup_panel)
     
     
 }
+//------------------------------------------------
+
+void Recall::set_panel(ofxPanel _setup_panel)
+{
+        setup_panel=_setup_panel;
+}
+
 //------------------------------------------------
 void Recall::update()
 {
@@ -49,6 +56,17 @@ void Recall::update()
 }
 
 //------------------------------------------------
+void Recall::index_folder()
+{
+    string path = "recall";
+    ofDirectory dir(path);
+    dir.allowExt("json");
+    dir.listDir();
+    json_vector = dir.getFiles();
+    file_count=json_vector.size()-1;
+}
+//------------------------------------------------
+
 void Recall::load_from_index()
 {
     setup_panel.loadFromFile(json_vector[index].getAbsolutePath());
@@ -69,9 +87,27 @@ void Recall::next(bool &b)
 
 //------------------------------------------------
 
-void Recall::prev()
+void Recall::prev(bool &b)
 {
+    if(b)
+    {
+        index--;
+        if(index<0){index=file_count;}
+        load_from_index();
+        prev_b=0;
+    }
     
+}
+//------------------------------------------------
+
+void Recall::reindex(bool &b)
+{
+    if(b)
+    {
+        index_folder();
+        index.setMax(file_count);
+        reindex_b =0;
+    }
     
 }
 //------------------------------------------------

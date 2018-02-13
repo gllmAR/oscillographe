@@ -12,10 +12,12 @@ void ofApp::setup(){
 
     cam.setup();
     feedback.setup();
+    recall.setup();
     setup_gui();
-    recall.setup(setup_panel);
-    setup_panel.add(&recall.gui);
+    recall.set_panel(setup_panel);
 
+
+    setup_panel.loadFromFile("oscillographe.json");
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
     settings_sync.setup((ofParameterGroup&)setup_panel.getParameter(),SYNC_INPORT, "localhost", SYNC_OUTPORT);
 
@@ -41,9 +43,10 @@ void ofApp::setup_gui()
     setup_panel.add(&cam.camera_settings_gui);
     setup_panel.add(&audio_io.gui_device);
     setup_panel.add(&audio_io.gui);
+    setup_panel.add(&recall.gui);
     setup_panel.minimizeAll();
     
-    setup_panel.loadFromFile("oscillographe.json");
+
     
     
 

@@ -10,18 +10,15 @@
 
 void Graphe::setup(string name)
 {
-//    std::string str = name;
-//    str+="_graphe";
-//    name=str;
-//    graphe_name = name;
+
     graphe_name = "graphe";
-    settings_gui.setup("settings");
+    //settings_gui.setup("settings");
     presets.setup("graphe");
-    //presets.recalled_gui.add(&settings_gui);
     
 
 presets.recalled_gui.add(graphe_active.set("active",1));
 presets.recalled_gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
+presets.recalled_gui.add(graphe_line_b.set("draw_line",1));
 presets.recalled_gui.add(shape_scale.set("shape_scale",0.10,0,1));
 presets.recalled_gui.add(line_width.set("line_width",1, 0.1, 10));
 presets.recalled_gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
@@ -29,6 +26,7 @@ presets.recalled_gui.add(graphe_saturation.set("saturation", 255, 0, 255));
 presets.recalled_gui.add(graphe_hue.set("hue", 255, 0, 255));
 presets.recalled_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
     
+    graphe_line_b.addListener(this, &Graphe::graphe_line_changed);
     graphe_saturation.addListener(this, &Graphe::set_saturation);
     graphe_hue.addListener(this, &Graphe::set_hue);
     graphe_brightness.addListener(this, &Graphe::set_brightness);
@@ -37,10 +35,12 @@ presets.recalled_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
     
     gui.setup(graphe_name);
 
-    //gui.add(&presets.gui);
     
     
-
+    //vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
+    vbo_mesh.setMode(OF_PRIMITIVE_POINTS);
+    
+    vbo_mesh.enableColors();
     
     set_size(ofGetWidth(), ofGetHeight());
 
@@ -58,8 +58,7 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
             cout<<input_buffer_size<<endl;
         }
         
-        vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
-        vbo_mesh.enableColors();
+
         int vertex_buffer = vbo_mesh.getNumVertices();
         
         for (unsigned int i = 0; i < (input_buffer_size); i++)
@@ -151,37 +150,18 @@ void Graphe::set_hue(float &f)
 
 //--------------------------------------------------------------
 
-//void Graphe::preset_save(bool &b)
-//{
-//    if(preset_save_b)
-//    {
-//    preset_save_b = 0;
-//    std::string str = "graphe_";
-//    str += ofToString(preset_index);
-//    settings_gui.setName(str);
-//    settings_gui.saveToFile("graphe.json");
-//    settings_gui.setName( graphe_name);
-//    }
-//}
-//
-//
-////--------------------------------------------------------------
-//
-//void Graphe::preset_load(bool &b)
-//{
-//    if (preset_load_b)
-//    {
-//    preset_load_b = 0;
-//    std::string str = "graphe_";
-//    str += ofToString(preset_index);
-//    settings_gui.setName(str);
-//    settings_gui.loadFromFile("graphe.json");
-//    
-//    settings_gui.setName( graphe_name);
-//    }
-//}
+void Graphe::graphe_line_changed(bool &b)
+{
+    if(b)
+    {
+    vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
+    } else {
+    vbo_mesh.setMode(OF_PRIMITIVE_POINTS);
+    }
+}
 
 
 //--------------------------------------------------------------
+
 
 

@@ -134,9 +134,9 @@ void Interact_struggle::do_smooth()
 void Interact_tic::setup(string name, string _interact_osc_path)
 {
     interact_osc_path = _interact_osc_path;
-    gui.setup();
-    gui.setName(name);
-    gui.add(interact_osc_path.set("osc", _interact_osc_path));
+    gui.setup("interact-tic");
+   // gui.setName(name);
+    gui.add(interact_osc_path.set("osc", interact_osc_path));
     gui.add(interact_enable.set("interact_enable",0));
     gui.add(metronome_enable.set("metronome_enable",0));
     gui.add(metronome_interval_ms.set("metronome_interval_ms",100, 1,2000));
