@@ -18,10 +18,11 @@ void Audio_io::setup()
     setup_audio();
     
 
-    
+    sine_wave.setup();
     audio_sampler_A.setup(0,buffer_size);
     audio_sampler_B.setup(1,buffer_size);
     gui.add(&gui_input);
+    gui.add(&sine_wave.gui);
     gui.add(&feedback_gui);
     gui.add(&audio_sampler_A.sampler_gui);
     gui.add(&audio_sampler_B.sampler_gui);    
@@ -249,6 +250,7 @@ void Audio_io::audioOut(ofSoundBuffer& output)
             output[i*2  ] = ch1 * master_vol_ammount;
             output[i*2+1] = ch2 * master_vol_ammount;
         }
+        sine_wave.process(output, output);
         last_output_buffer = output;
 
     }
@@ -441,7 +443,7 @@ void Audio_io::set_size(int w, int h)
 {
     input_graphe.set_size(w,h);
     audio_sampler_A.graphe.set_size(w,h);
-        audio_sampler_B.graphe.set_size(w,h);
+    audio_sampler_B.graphe.set_size(w,h);
     output_graphe.set_size(w,h);
 }
 

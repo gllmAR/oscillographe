@@ -21,6 +21,7 @@
 #include "ofxSoundFile.h"
 #include "audio_sampler.hpp"
 #include "graphe.hpp"
+#include "dsp_sine_wave.h"
 
 
 class Audio_io
@@ -137,6 +138,7 @@ public:
     Audio_sampler audio_sampler_A;
     Audio_sampler audio_sampler_B;
     
+    dsp_sine_wave sine_wave;
 };
 
 
