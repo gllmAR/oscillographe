@@ -22,6 +22,7 @@
 #include "audio_sampler.hpp"
 #include "graphe.hpp"
 #include "dsp_sine_wave.h"
+#include "dsp_delay.h"
 
 
 class Audio_io
@@ -138,7 +139,8 @@ public:
     Audio_sampler audio_sampler_A;
     Audio_sampler audio_sampler_B;
     
-    dsp_sine_wave sine_wave;
+    Dsp_Sine_Wave sine_wave;
+    Dsp_Delay delay;
 };
 
 
