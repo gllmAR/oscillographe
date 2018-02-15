@@ -13,7 +13,7 @@
 #include "ofxGui.h"
 
 
-class dsp_sine_wave
+class Dsp_Sine_Wave
 {
 public:
     void setup()

@@ -18,18 +18,19 @@ public:
     vector<float> buffer;
     ofParameter<bool> enable;
     ofParameter<float> mix;
-    ofParameter<int> delay;
+    ofParameter<float> delay;
     ofParameter<float> feedback;
+    int sample_rate;
 
     
     ofxGuiGroup gui;
     
-    void setup()
+    void setup(int _sample_rate)
     {
         gui.setup("delay");
         gui.add(enable.set("enable",0));
-        gui.add(mix.set("mix",0,0,1));
-        gui.add(delay.set("delay",1,1,44100));
+        gui.add(mix.set("mix",.5,0,1));
+        gui.add(delay.set("delay",1,0,10));
         gui.add(feedback.set("feedback",0,0,1));
         
         delay.addListener(this, &Dsp_Delay::set_delay);
@@ -37,13 +38,14 @@ public:
         buffer.resize(delay);
         buffer.assign(delay, 0);
         pos=0;
+        sample_rate=_sample_rate;
     }
     
-    void set_delay(int &i)
+    void set_delay(float &f)
     {
-        if (pos>=i){pos=0;}
+        if (pos>=int(f*sample_rate)){pos=0;}
         
-        buffer.resize(i);
+        buffer.resize(int(f*sample_rate+1));
         
     }
     

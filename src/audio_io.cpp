@@ -19,7 +19,7 @@ void Audio_io::setup()
     
 
     sine_wave.setup();
-    delay.setup();
+    delay.setup(sample_rate);
     audio_sampler_A.setup(0,buffer_size);
     audio_sampler_B.setup(1,buffer_size);
     gui.add(&gui_input);
