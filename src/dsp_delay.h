@@ -20,6 +20,7 @@ public:
     ofParameter<float> mix;
     ofParameter<float> delay;
     ofParameter<float> feedback;
+    ofParameter<bool> clear;
     int sample_rate;
 
     
@@ -30,9 +31,9 @@ public:
         gui.setup("delay");
         gui.add(enable.set("enable",0));
         gui.add(mix.set("mix",.5,0,1));
-        gui.add(delay.set("delay",1,0,10));
+        gui.add(delay.set("delay",1,0.0001,10));
         gui.add(feedback.set("feedback",0,0,1));
-        
+        gui.add(clear.set("clear",0));
         delay.addListener(this, &Dsp_Delay::set_delay);
         
         buffer.resize(delay);
@@ -54,12 +55,18 @@ public:
         pos++;
         pos %= buffer.size();
         float out = buffer[pos];
-        buffer[pos] = feedback*buffer[pos] + in;
+        buffer[pos] = ofClamp(feedback*buffer[pos] + in, -1, 1);
         return in + (out - in)*mix;
     }
     
     void process(ofSoundBuffer &input, ofSoundBuffer &output)
     {
+        if (clear)
+        {
+            pos=0;
+            buffer.assign(buffer.size(), 0);
+            clear=0;
+        }
         if (enable)
         {
             for(int i = 0; i < output.size(); i++)

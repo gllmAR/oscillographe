@@ -247,14 +247,21 @@ void Audio_io::audioOut(ofSoundBuffer& output)
                                 + audio_sampler_A.player_buffer[i*2+1]
                                  + audio_sampler_B.player_buffer[i*2+1]
                                  ) * output_vol_ammount  * pan_2*2*!output_mute, -1, 1);
-            output_buffer_1[i] = ch1;
-            output_buffer_2[i] = ch2;
+//            output_buffer_1[i] = ch1;
+//            output_buffer_2[i] = ch2;
             output[i*2  ] = ch1 * master_vol_ammount;
             output[i*2+1] = ch2 * master_vol_ammount;
         }
         delay.process(output, output);
         sine_wave.process(output, output);
         last_output_buffer = output;
+        // process audio to include all the operation
+        for (int i = 0; i < output.getNumFrames(); i++)
+        {
+            output_buffer_1[i] = output[i*2  ];
+            output_buffer_2[i] = output[i*2+1];
+        }
+        
 
     }
 }
