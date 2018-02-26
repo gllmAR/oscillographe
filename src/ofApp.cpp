@@ -14,12 +14,13 @@ void ofApp::setup(){
     feedback.setup();
     recall.setup();
     setup_gui();
-    recall.set_panel(setup_panel);
+    recall.set_panel(settings_panel);
 
 
-    setup_panel.loadFromFile("oscillographe.json");
+    settings_panel.loadFromFile("oscillographe.json");
+    setup_panel.loadFromFile("setup.json");
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
-    settings_sync.setup((ofParameterGroup&)setup_panel.getParameter(),SYNC_INPORT, "localhost", SYNC_OUTPORT);
+    settings_sync.setup((ofParameterGroup&)settings_panel.getParameter(),SYNC_INPORT, "localhost", SYNC_OUTPORT);
 
 
     
@@ -37,16 +38,19 @@ void ofApp::setup_gui()
 
     
     /* setup panel */
-    setup_panel.setup("oscillographe", "oscillographe.json", 10, 10);
-    setup_panel.add(fps_label.setup("FPS"," "));
+    settings_panel.setup("oscillographe", "oscillographe.json", 10, 10);
+    settings_panel.add(fps_label.setup("FPS"," "));
     cam.camera_settings_gui.add(&feedback.feedback_gui);
-    setup_panel.add(&cam.camera_settings_gui);
+    settings_panel.add(&cam.camera_settings_gui);
+    settings_panel.add(&audio_io.gui);
+    settings_panel.minimizeAll();
+    
+
+    setup_panel.setup("setup", "setup.json", 220, 10);
     setup_panel.add(&audio_io.gui_device);
-    setup_panel.add(&audio_io.gui);
     setup_panel.add(&recall.gui);
     setup_panel.minimizeAll();
     
-
     
     
 
@@ -106,7 +110,9 @@ void ofApp::draw()
     {
         audio_io.draw_gui();
 
+        settings_panel.draw();
         setup_panel.draw();
+        
     }
     if (screen_workaround_to_update)
     {

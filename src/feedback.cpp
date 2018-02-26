@@ -20,7 +20,7 @@ void Screen_feedback::setup()
     feedback_gui.add(feedback_pos_y.set("y", 1, 0, 2 ));
     feedback_gui.add(feedback_scale.set("scale", 1, 0 ,2));
     
-    feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse
+   // feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse?
 }
 
 void Screen_feedback::allocate(int w, int h)

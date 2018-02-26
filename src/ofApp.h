@@ -64,8 +64,8 @@ class ofApp : public ofBaseApp{
 
 
    
-    ofxPanel setup_panel;
-    
+    ofxPanel setup_panel;       // params qui sont statiqc par machine
+    ofxPanel settings_panel;  // paramètre qui évolue
 
     
     ofxLabel fps_label;
