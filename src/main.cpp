@@ -3,19 +3,6 @@
 
 //========================================================================
 int main( ){
-    
-#ifdef TARGET_RASPBERRY_PI
-    ofGLESWindowSettings settings;
-    settings.setGLESVersion(2);
-    ofCreateWindow(settings);
-#else
-    
-    ofSetupOpenGL(1024,768,OF_WINDOW);			// <-------- setup the GL context
-    
-    // this kicks off the running of my app
-    // can be OF_WINDOW or OF_FULLSCREEN
-    // pass in width and height too:
+    ofSetupOpenGL(1024,768,OF_WINDOW);
     ofRunApp(new ofApp());
-#endif
-
 };
