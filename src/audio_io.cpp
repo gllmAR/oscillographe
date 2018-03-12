@@ -24,7 +24,7 @@ void Audio_io::setup()
     audio_sampler_B.setup(1,buffer_size);
     gui.add(&gui_input);
     gui.add(&sine_wave.gui);
-    gui.add(&feedback_gui);
+    //gui.add(&feedback_gui);
     gui.add(&delay.gui);
     gui.add(&audio_sampler_A.sampler_gui);
     gui.add(&audio_sampler_B.sampler_gui);    
@@ -202,9 +202,14 @@ void Audio_io::audioIn(ofSoundBuffer & input)
 {
     if(input_enable || io_input_enable)
     {
-        // process pan
         input_buffer = input;
+        // process pan
+       input_process();
+    }
+}
 
+void Audio_io::input_process()
+{
         float pan_1 = 1-(input_pan*0.5 +0.5);
         float pan_2 = input_pan*0.5 +0.5;
         audio_sampler_A.audio_input(input_buffer, last_output_buffer);
@@ -215,24 +220,22 @@ void Audio_io::audioIn(ofSoundBuffer & input)
             input_buffer_1.assign(buffer_size, 0.0);
             input_buffer_2.assign(buffer_size, 0.0);
         }else{
-            for (int i = 0; i < input.getNumFrames(); i++)
+            for (int i = 0; i < buffer_size; i++)
             {
                 input_buffer_1[i] = input_buffer[i*2  ]
-									*input_volume
-									*pan_1
-									*input_trim ;
+                                    *input_volume
+                                    *pan_1
+                                    *input_trim ;
                 input_buffer_2[i] = input_buffer[i*2+1]
-									*input_volume
-									*pan_2
-									*input_trim;
+                                    *input_volume
+                                    *pan_2
+                                    *input_trim;
             }
         }
-    }
 }
 
 void Audio_io::audioOut(ofSoundBuffer& output)
 {
-    
     if (output_enable || io_output_enable)
     {
         // process pan
@@ -265,7 +268,7 @@ void Audio_io::audioOut(ofSoundBuffer& output)
         sine_wave.process(output, output);
         last_output_buffer = output;
         // process audio to include all the operation
-        for (int i = 0; i < output.getNumFrames(); i++)
+        for (int i = 0; i < buffer_size; i++)
         {
             output_buffer_1[i] = output[i*2  ];
             output_buffer_2[i] = output[i*2+1];

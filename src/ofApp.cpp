@@ -21,7 +21,7 @@ void ofApp::setup(){
     setup_panel.loadFromFile("setup.json");
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
     settings_sync.setup((ofParameterGroup&)settings_panel.getParameter(),SYNC_INPORT, "localhost", SYNC_OUTPORT);
-
+    ofHideCursor();
 
     
 }
@@ -123,13 +123,27 @@ void ofApp::draw()
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
-    if( key == 'g' ){gui_draw=!gui_draw;}
+    if( key == 'g' ){handle_gui();}
     
     if (key == 'f'){cam.set_fullscreen=!cam.set_fullscreen;}
     
     if (key >=48  && key <= 57)
     {
 
+    }
+
+}
+
+void ofApp::handle_gui()
+{
+    gui_draw=!gui_draw;
+    show_mouse = !show_mouse;
+
+    if(show_mouse)
+    {
+        ofShowCursor();
+    } else {
+        ofHideCursor();
     }
 
 }
@@ -151,7 +165,7 @@ void ofApp::mouseDragged(int x, int y, int button)
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button)
 {
-     if( button == 2 ){gui_draw=!gui_draw;}
+     if( button == 2 ){handle_gui();}
 }
 
 //--------------------------------------------------------------

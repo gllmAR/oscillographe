@@ -73,8 +73,9 @@ class ofApp : public ofBaseApp{
     Screen_feedback feedback;
     
 
-    
+    void handle_gui();    
     bool gui_draw = 0;
+    bool show_mouse = 0;
     int app_size_w=100;
     int app_size_h=100;
     
