@@ -10,6 +10,7 @@
 
 #include "interact.hpp"
 
+//--------------------------------------------------------------
 void Interact_struggle::setup(string name, string _interact_osc_path)
 {
     interact_osc_path = _interact_osc_path;
@@ -26,10 +27,9 @@ void Interact_struggle::setup(string name, string _interact_osc_path)
     gui.add(smooth_enable.set("smooth_enable",0));
     gui.add(smooth_amount.set("smooth_ammount",5,1,30));
     gui.add(debug.set("debug",0));
-
-   
 }
 
+//--------------------------------------------------------------
 void Interact_struggle::update()
 {
     now_time = ofGetElapsedTimeMillis();
@@ -47,6 +47,7 @@ void Interact_struggle::update()
     }
 }
 
+//--------------------------------------------------------------
 void Interact_struggle::draw()
 {
     if (interact_enable && draw_value)
@@ -58,6 +59,7 @@ void Interact_struggle::draw()
     }
 }
 
+//--------------------------------------------------------------
 void Interact_struggle::parse_osc(ofxOscMessage m)
 {
     if (m.getAddress() == interact_osc_path.get())
@@ -66,9 +68,9 @@ void Interact_struggle::parse_osc(ofxOscMessage m)
     }
 }
 
+//--------------------------------------------------------------
 void Interact_struggle::increment_value()
 {
-    
     if(value_stop_flag)
     {
         value_stop_flag=0;
@@ -85,6 +87,7 @@ void Interact_struggle::increment_value()
     last_increment_time=now_time;
 }
 
+//--------------------------------------------------------------
 void Interact_struggle::decrement_value()
 {
     if (interact_value > 0 )
@@ -107,12 +110,14 @@ void Interact_struggle::decrement_value()
     last_decrement_time = now_time;
 }
 
+//--------------------------------------------------------------
 float Interact_struggle::get_value()
 {
     cooked_value = ofClamp(interact_value*0.001*value_trim, 0, 3);
     return cooked_value;
 }
 
+//--------------------------------------------------------------
 void Interact_struggle::do_smooth()
 {
     int total = 0;
@@ -129,8 +134,7 @@ void Interact_struggle::do_smooth()
     
 }
 
-/*--------------------------------------------------- */
-
+//--------------------------------------------------------------
 void Interact_tic::setup(string name, string _interact_osc_path)
 {
     interact_osc_path = _interact_osc_path;
@@ -142,6 +146,7 @@ void Interact_tic::setup(string name, string _interact_osc_path)
     gui.add(metronome_interval_ms.set("metronome_interval_ms",100, 1,2000));
 }
 
+//--------------------------------------------------------------
 void Interact_tic::update()
 {
     if(metronome_enable)
@@ -156,6 +161,7 @@ void Interact_tic::update()
     
 }
 
+//--------------------------------------------------------------
 void Interact_tic::parse_osc(ofxOscMessage m)
 {
     if (m.getAddress() == interact_osc_path.get() || return_flag==1)
@@ -163,4 +169,6 @@ void Interact_tic::parse_osc(ofxOscMessage m)
         return_flag = 1;
     }
 }
+
+//--------------------------------------------------------------
 

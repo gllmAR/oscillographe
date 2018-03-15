@@ -5,7 +5,6 @@ void ofApp::setup(){
 
     ofSetVerticalSync(true);
     ofBackground(0, 0, 0);
-    
     ofSetFrameRate(60);
 
     audio_io.setup();
@@ -16,26 +15,19 @@ void ofApp::setup(){
     setup_gui();
     recall.set_panel(settings_panel);
 
-
     settings_panel.loadFromFile("oscillographe.json");
     setup_panel.loadFromFile("setup.json");
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
     settings_sync.setup((ofParameterGroup&)settings_panel.getParameter(),SYNC_INPORT, "localhost", SYNC_OUTPORT);
     ofHideCursor();
-
-    
 }
 
 //--------------------------------------------------------------
-
 void ofApp::setup_gui()
 {
 
-
-
     audio_io.gui.minimizeAll();
     audio_io.gui_device.minimizeAll();
-
     
     /* setup panel */
     settings_panel.setup("oscillographe", "oscillographe.json", 10, 10);
@@ -45,17 +37,10 @@ void ofApp::setup_gui()
     settings_panel.add(&audio_io.gui);
     settings_panel.minimizeAll();
     
-
     setup_panel.setup("setup", "setup.json", 220, 10);
     setup_panel.add(&audio_io.gui_device);
     setup_panel.add(&recall.gui);
     setup_panel.minimizeAll();
-    
-    
-    
-
-    
-    
 }
 
 //--------------------------------------------------------------
@@ -70,22 +55,15 @@ void ofApp::update()
         osc_receiver.getNextMessage(m);
     }
     
-
     cam.update();
-    
     settings_sync.update();
-
     if(gui_draw){fps_label= ofToString(ofGetFrameRate());}
-    
     ofEnableAlphaBlending();
-    
 }
 
 //--------------------------------------------------------------
 void ofApp::draw()
 {
-
-
     feedback.begin();
     ofEnableDepthTest();
 
@@ -96,34 +74,42 @@ void ofApp::draw()
     
     cam.cam.end();
     
-
     ofEnableBlendMode( OF_BLENDMODE_ADD );
     feedback.end();
 
     ofDisableDepthTest();
     
-   ofEnableBlendMode(OF_BLENDMODE_DISABLED);
-   
+    ofEnableBlendMode(OF_BLENDMODE_DISABLED);
 
     
     if (gui_draw)
     {
         audio_io.draw_gui();
-
         settings_panel.draw();
         setup_panel.draw();
-        
     }
+    
     if (screen_workaround_to_update)
     {
         windowResized(ofGetWidth(), ofGetHeight());
         screen_workaround_to_update = 0;
     }
 }
+
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key)
 {
     if( key == 'g' ){handle_gui();}
+    if( key == 'm' )
+    {
+        show_mouse =!show_mouse;
+        if (show_mouse)
+        {
+            ofShowCursor();
+        } else {
+            ofHideCursor();
+        }
+    }
     
     if (key == 'f'){cam.set_fullscreen=!cam.set_fullscreen;}
     
@@ -131,60 +117,25 @@ void ofApp::keyPressed(int key)
     {
 
     }
-
 }
 
+//--------------------------------------------------------------
 void ofApp::handle_gui()
 {
     gui_draw=!gui_draw;
-    show_mouse = !show_mouse;
-
-    if(show_mouse)
+    
+    if (gui_draw)
     {
         ofShowCursor();
     } else {
         ofHideCursor();
     }
+}
 
-}
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key)
-{
-    
-}
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y )
-{
-
-}
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button)
-{
-
-}
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button)
 {
      if( button == 2 ){handle_gui();}
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button)
-{
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y)
-{
-
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y)
-{
-
 }
 
 //--------------------------------------------------------------
@@ -193,25 +144,18 @@ void ofApp::windowResized(int w, int h)
     app_size_w = w;
     app_size_h = h;
     cout << "app size = " << w << " by " << h <<endl;
-    
-    
     audio_io.set_size(w,h);
-    
     feedback.allocate(w,h);
-
 }
+
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg)
 {
+}
 
-}
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo)
-{
-    
-}
 //--------------------------------------------------------------
 void ofApp::exit(){
     audio_io.exit();
 }
+
 //--------------------------------------------------------------

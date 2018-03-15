@@ -34,10 +34,6 @@ class Camera_ctl
     ofParameter<glm::vec3> cam_view_position;
     ofParameter<glm::vec4> cam_view_orientation;
     
-    
-    
-
-    
     ofParameter<bool> cam_set_ortho = 0;
     ofParameter<bool> cam_set_reset = 0;
 

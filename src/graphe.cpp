@@ -8,6 +8,7 @@
 
 #include "graphe.hpp"
 
+//--------------------------------------------------------------
 void Graphe::setup(string name)
 {
 
@@ -16,26 +17,22 @@ void Graphe::setup(string name)
     presets.setup("graphe");
     
 
-presets.recalled_gui.add(graphe_active.set("active",1));
-presets.recalled_gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
-presets.recalled_gui.add(graphe_line_b.set("draw_line",1));
-presets.recalled_gui.add(shape_scale.set("shape_scale",0.10,0,1));
-presets.recalled_gui.add(line_width.set("line_width",1, 0.1, 10));
-presets.recalled_gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
-presets.recalled_gui.add(graphe_saturation.set("saturation", 255, 0, 255));
-presets.recalled_gui.add(graphe_hue.set("hue", 255, 0, 255));
-presets.recalled_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
+    presets.recalled_gui.add(graphe_active.set("active",1));
+    presets.recalled_gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
+    presets.recalled_gui.add(graphe_line_b.set("draw_line",1));
+    presets.recalled_gui.add(shape_scale.set("shape_scale",0.10,0,1));
+    presets.recalled_gui.add(line_width.set("line_width",1, 0.1, 10));
+    presets.recalled_gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
+    presets.recalled_gui.add(graphe_saturation.set("saturation", 255, 0, 255));
+    presets.recalled_gui.add(graphe_hue.set("hue", 255, 0, 255));
+    presets.recalled_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
     
     graphe_line_b.addListener(this, &Graphe::graphe_line_changed);
     graphe_saturation.addListener(this, &Graphe::set_saturation);
     graphe_hue.addListener(this, &Graphe::set_hue);
     graphe_brightness.addListener(this, &Graphe::set_brightness);
     
-    
-    
     gui.setup(graphe_name);
-
-    
     
     //vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
     vbo_mesh.setMode(OF_PRIMITIVE_POINTS);
@@ -47,7 +44,6 @@ presets.recalled_gui.add(graphe_brightness.set("brightness", 255, 0, 255));
 }
 
 //--------------------------------------------------------------
-
 void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector <float> input_buffer_y)
 {
     if (graphe_active) {
@@ -86,10 +82,7 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
     }
 }
 
-
-
 //--------------------------------------------------------------
-
 void Graphe::draw()
 {
     if (graphe_active)
@@ -107,13 +100,12 @@ void Graphe::draw()
 }
 
 //--------------------------------------------------------------
-
 void Graphe::draw_gui()
 {
     gui.draw();
 }
-//--------------------------------------------------------------
 
+//--------------------------------------------------------------
 void Graphe::set_size(int w, int h)
 {
     app_size_w = w;
@@ -121,7 +113,6 @@ void Graphe::set_size(int w, int h)
 }
 
 //--------------------------------------------------------------
-
 void Graphe::set_saturation(float &f)
 {
     ofColor color = line_color.get();
@@ -130,7 +121,6 @@ void Graphe::set_saturation(float &f)
 }
 
 //--------------------------------------------------------------
-
 void Graphe::set_brightness(float &f)
 {
     ofColor color = line_color.get();
@@ -139,7 +129,6 @@ void Graphe::set_brightness(float &f)
 }
 
 //--------------------------------------------------------------
-
 void Graphe::set_hue(float &f)
 {
     ofColor color = line_color.get();
@@ -149,7 +138,6 @@ void Graphe::set_hue(float &f)
 
 
 //--------------------------------------------------------------
-
 void Graphe::graphe_line_changed(bool &b)
 {
     if(b)
@@ -159,7 +147,6 @@ void Graphe::graphe_line_changed(bool &b)
     vbo_mesh.setMode(OF_PRIMITIVE_POINTS);
     }
 }
-
 
 //--------------------------------------------------------------
 

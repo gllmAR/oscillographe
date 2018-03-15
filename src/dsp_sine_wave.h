@@ -46,8 +46,6 @@ public:
         }
     }
     
-
-    
     ofxGuiGroup gui;
     ofParameter<bool> enable;
     ofParameter<float> freq;

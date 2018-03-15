@@ -20,36 +20,23 @@
 
 class ofApp : public ofBaseApp{
 
-	public:
-		void setup();
-		void update();
-		void draw();
-    
-        void setup_gui();
-    
-		void keyPressed(int key);
-		void keyReleased(int key);
-		void mouseMoved(int x, int y );
-		void mouseDragged(int x, int y, int button);
-		void mousePressed(int x, int y, int button);
-		void mouseReleased(int x, int y, int button);
-		void mouseEntered(int x, int y);
-		void mouseExited(int x, int y);
-		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
-		
+public:
+    void setup();
+    void update();
+    void draw();
+    void setup_gui();
+    void keyPressed(int key);
+    void mousePressed(int x, int y, int button);
+    void windowResized(int w, int h);
+    void gotMessage(ofMessage msg);
     void exit();
     
-
     Audio_io audio_io;
     Recall recall;
-
-
-
     
     Camera_ctl cam;
     
+    ofxOscReceiver osc_receiver;
     ofxOscParameterSync settings_sync;
     
     // workaround pour faire fonctionner le fullscreen sur le raspberry pi
@@ -59,28 +46,17 @@ class ofApp : public ofBaseApp{
     int 	drawCounter;
     int     buffer_size_old=0;
     
-    ofxOscReceiver osc_receiver;
-    
-
-
-   
     ofxPanel setup_panel;       // params qui sont statiqc par machine
     ofxPanel settings_panel;  // paramètre qui évolue
 
-    
     ofxLabel fps_label;
     
     Screen_feedback feedback;
     
-
     void handle_gui();    
     bool gui_draw = 0;
     bool show_mouse = 0;
     int app_size_w=100;
     int app_size_h=100;
     
-    
-
-
-      
 };

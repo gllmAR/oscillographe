@@ -8,7 +8,7 @@
 
 #include "feedback.hpp"
 
-
+//--------------------------------------------------------------
 void Screen_feedback::setup()
 {
     
@@ -23,6 +23,7 @@ void Screen_feedback::setup()
    // feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse?
 }
 
+//--------------------------------------------------------------
 void Screen_feedback::allocate(int w, int h)
 {
     screen_size_w = w;
@@ -30,7 +31,8 @@ void Screen_feedback::allocate(int w, int h)
     screen_texture.allocate(w,h,GL_RGBA);
     feedback_plane.resizeToTexture(screen_texture);
 }
-    
+
+//--------------------------------------------------------------
 void Screen_feedback::begin()
 {
     if(feedback_enable)
@@ -48,6 +50,7 @@ void Screen_feedback::begin()
     }
 }
 
+//--------------------------------------------------------------
 void Screen_feedback::end()
 {
     
@@ -60,9 +63,6 @@ void Screen_feedback::end()
 
 
 //------------------------------------------------
-
-
-
 void Fbo_feedback::setup()
 {
     
@@ -79,6 +79,7 @@ void Fbo_feedback::setup()
 //    feedback_plane.rotateDeg(180, 1, 0, 0); //flipper la texture de feedback car inverse
 }
 
+//--------------------------------------------------------------
 void Fbo_feedback::allocate(int w, int h)
 {
     screen_size_w = w;
@@ -98,6 +99,7 @@ void Fbo_feedback::allocate(int w, int h)
     //feedback_plane.resizeToTexture(screen_texture);
 }
 
+//--------------------------------------------------------------
 void Fbo_feedback::begin()
 {
     if(feedback_enable)
@@ -124,6 +126,7 @@ void Fbo_feedback::begin()
     }
 }
 
+//--------------------------------------------------------------
 void Fbo_feedback::end()
 {
     
@@ -133,3 +136,5 @@ void Fbo_feedback::end()
         feed_fbo.draw(0,0,screen_size_w,screen_size_h);
     }
 }
+
+//--------------------------------------------------------------

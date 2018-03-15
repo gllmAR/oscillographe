@@ -8,13 +8,9 @@
 
 #include "camera_ctl.hpp"
 
+//--------------------------------------------------------------
 void Camera_ctl::setup()
 {
-    
-
-    
-
-    
     // camera preset
     
     camera_preset_gui.setup("camera");
@@ -52,8 +48,8 @@ void Camera_ctl::setup()
     
     
 }
-//--------------------------------------------------------------
 
+//--------------------------------------------------------------
 void Camera_ctl::update()
 {
     if (set_fullscreen_old != set_fullscreen)
@@ -66,8 +62,8 @@ void Camera_ctl::update()
     if (cam_set_reset){cam.reset(); cam_set_reset=0;};
     
 }
-//--------------------------------------------------------------
 
+//--------------------------------------------------------------
 void Camera_ctl::cam_get_param(bool &b)
 {
 
@@ -88,8 +84,8 @@ void Camera_ctl::cam_get_param(bool &b)
     presets.save(b);
 
 }
-//--------------------------------------------------------------
 
+//--------------------------------------------------------------
 void Camera_ctl::cam_set_param(bool &b)
 {
     presets.load(b);
@@ -102,3 +98,5 @@ void Camera_ctl::cam_set_param(bool &b)
     cam.setPosition(cam_view_position);
     
 }
+
+//--------------------------------------------------------------

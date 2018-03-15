@@ -10,6 +10,7 @@
 
 #include "presets.hpp"
 
+//--------------------------------------------------------------
 void Presets::setup(string _name)
 {
     //
@@ -39,8 +40,9 @@ void Presets::setup(string _name)
     recaller_gui.minimizeAll();
     gui.minimizeAll();
 }
-//------------------------------------------------
 
+
+//--------------------------------------------------------------
 void Presets::save(bool &b)
 {
         if(save_b)
@@ -58,8 +60,9 @@ void Presets::save(bool &b)
         recalled_gui.setName(recalled_name);
     }
 }
-//------------------------------------------------
 
+
+//--------------------------------------------------------------
 void Presets::load(bool &b)
 {
 
@@ -77,3 +80,5 @@ void Presets::load(bool &b)
         recalled_gui.setName(recalled_name);
     }
 }
+
+//--------------------------------------------------------------

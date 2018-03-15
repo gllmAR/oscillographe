@@ -9,7 +9,7 @@
 
 #include "audio_io.hpp"
 
-
+//--------------------------------------------------------------
 void Audio_io::setup()
 {
     input_graphe.setup("input");
@@ -33,6 +33,7 @@ void Audio_io::setup()
     setup_gui_listener();
 }
 
+//--------------------------------------------------------------
 void Audio_io::reset_audio(bool &b) // pour reset audio en cas de coup dur
 {
     if(reset_audio_b)
@@ -61,7 +62,7 @@ void Audio_io::reset_audio(bool &b) // pour reset audio en cas de coup dur
     }
 }
 
-
+//--------------------------------------------------------------
 void Audio_io::setup_gui()
 {
     //gui est dans le preset , device est dans le setting
@@ -134,6 +135,7 @@ void Audio_io::setup_gui()
 
 }
 
+//--------------------------------------------------------------
 void Audio_io::setup_audio()
 {
     
@@ -159,6 +161,7 @@ void Audio_io::setup_audio()
 
 }
 
+//--------------------------------------------------------------
 void Audio_io::setup_gui_listener()
 {
     master_vol.addListener(this, &Audio_io::set_master_vol_change);
@@ -176,6 +179,7 @@ void Audio_io::setup_gui_listener()
     output_volume.addListener(this, &Audio_io::set_output_vol_change);
   }
 
+//--------------------------------------------------------------
 void Audio_io::exit()
 {
     input_buffer_1.assign(buffer_size, 0.0);
@@ -198,16 +202,17 @@ void Audio_io::exit()
     }
 }
 
+//--------------------------------------------------------------
 void Audio_io::audioIn(ofSoundBuffer & input)
 {
     if(input_enable || io_input_enable)
     {
         input_buffer = input;
-        // process pan
-       input_process();
+        input_process();
     }
 }
 
+//--------------------------------------------------------------
 void Audio_io::input_process()
 {
         float pan_1 = 1-(input_pan*0.5 +0.5);
@@ -234,6 +239,7 @@ void Audio_io::input_process()
         }
 }
 
+//--------------------------------------------------------------
 void Audio_io::audioOut(ofSoundBuffer& output)
 {
     if (output_enable || io_output_enable)
@@ -273,11 +279,10 @@ void Audio_io::audioOut(ofSoundBuffer& output)
             output_buffer_1[i] = output[i*2  ];
             output_buffer_2[i] = output[i*2+1];
         }
-        
-
     }
 }
 
+//--------------------------------------------------------------
 void Audio_io::io_init(int i)
 {
     io_stream.stop();
@@ -307,11 +312,13 @@ void Audio_io::io_init(int i)
     }
 }
 
+//--------------------------------------------------------------
 void Audio_io::io_select_change(int &i)
 {
     io_init(i);
 }
 
+//--------------------------------------------------------------
 void Audio_io::io_enable_change(bool &b)
 {
     if (b)
@@ -326,7 +333,7 @@ void Audio_io::io_enable_change(bool &b)
     }
 }
 
-
+//--------------------------------------------------------------
 void Audio_io::input_init(int selection)
 {
     if(input_enable)
@@ -359,11 +366,13 @@ void Audio_io::input_init(int selection)
     }
 }
 
+//--------------------------------------------------------------
 void Audio_io::input_select_change(int &input_select)
 {
     input_init(input_select);
 }
 
+//--------------------------------------------------------------
 void Audio_io::input_enable_change(bool &input_enable)
 {
     if (input_enable)
@@ -381,6 +390,7 @@ void Audio_io::input_enable_change(bool &input_enable)
     }
 }
 
+//--------------------------------------------------------------
 void Audio_io::output_init(int selection)
 {
     if(output_enable)
@@ -412,15 +422,12 @@ void Audio_io::output_init(int selection)
         }
         output_buffer_1.assign(buffer_size, 0.0);
         output_buffer_2.assign(buffer_size, 0.0);
-
     }
 }
 
-
+//--------------------------------------------------------------
 void Audio_io::update()
 {
-   
-    
     if (audio_sampler_A.interact.interact_enable)
             {
                 audio_sampler_A.interact.update();
@@ -444,6 +451,8 @@ void Audio_io::update()
     output_graphe.update(buffer_size,output_buffer_1, output_buffer_2 );
     
 }
+
+//--------------------------------------------------------------
 void Audio_io::draw_graphes()
 {
     audio_sampler_A.interact.draw();
@@ -454,6 +463,7 @@ void Audio_io::draw_graphes()
     output_graphe.draw();
 }
 
+//--------------------------------------------------------------
 void Audio_io::draw_gui()
 {
     
@@ -461,6 +471,7 @@ void Audio_io::draw_gui()
     
 }
 
+//--------------------------------------------------------------
 void Audio_io::set_size(int w, int h)
 {
     input_graphe.set_size(w,h);
@@ -469,31 +480,37 @@ void Audio_io::set_size(int w, int h)
     output_graphe.set_size(w,h);
 }
 
+//--------------------------------------------------------------
 void Audio_io::output_select_change(int &output_select)
 {
     output_init(output_select);
 }
 
+//--------------------------------------------------------------
 void Audio_io::set_master_vol(float _master_vol)
 {
     master_vol_ammount = _master_vol;
 }
 
+//--------------------------------------------------------------
 void Audio_io::set_master_vol_change(float &f)
 {
     master_vol_ammount = f;
 }
 
+//--------------------------------------------------------------
 void Audio_io::set_output_vol(float _output_vol)
 {
     output_vol_ammount = _output_vol;
 }
 
+//--------------------------------------------------------------
 void Audio_io::set_output_vol_change(float &f)
 {
     output_vol_ammount = f;
 }
 
+//--------------------------------------------------------------
 void Audio_io::output_enable_change(bool &output_enable)
 {
     if (output_enable)
@@ -508,3 +525,5 @@ void Audio_io::output_enable_change(bool &output_enable)
     }
 }
 
+
+//--------------------------------------------------------------
