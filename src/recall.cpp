@@ -18,6 +18,7 @@ void Recall::setup()
     gui.add(prev_b.set("prev",0));
     gui.add(reindex_b.set("reindex",0));
     gui.add(index.set("index",0,0,file_count));
+    gui.add(draw_recall_b.set("console",0));
     
     next_b.addListener(this, &Recall::next);
     prev_b.addListener(this, &Recall::prev);
@@ -45,6 +46,17 @@ void Recall::update()
     }
 
 }
+//--------------------------------------------------------------
+void Recall::draw()
+{
+    if(draw_recall_b)
+    {
+        ofEnableBlendMode( OF_BLENDMODE_ADD );
+       	ofDrawBitmapStringHighlight( json_string_now, glm::vec2(0,size_y-100) );
+        ofDrawBitmapStringHighlight( json_string_next, glm::vec2(200,size_y-100) );
+
+    }
+}
 
 //--------------------------------------------------------------
 void Recall::index_folder()
@@ -61,6 +73,7 @@ void Recall::index_folder()
 void Recall::load_from_index()
 {
     setup_panel.loadFromFile(json_vector[index].getAbsolutePath());
+    get_json_to_strings();
     cout<<json_vector[index].getAbsolutePath()<<endl;
 }
 
@@ -69,10 +82,10 @@ void Recall::next(bool &b)
 {
     if(b)
     {
-    index++;
-    if(index>file_count){index=0;}
-    load_from_index();
-    next_b=0;
+        index++;
+        if(index>file_count){index=0;}
+            load_from_index();
+            next_b=0;
     }
 }
 
@@ -86,7 +99,6 @@ void Recall::prev(bool &b)
         load_from_index();
         prev_b=0;
     }
-    
 }
 
 //--------------------------------------------------------------
@@ -98,7 +110,40 @@ void Recall::reindex(bool &b)
         index.setMax(file_count);
         reindex_b =0;
     }
+}
+//--------------------------------------------------------------
+void Recall::toggle_draw_recall()
+{
+    draw_recall_b=!draw_recall_b;
+}
+//--------------------------------------------------------------
+void Recall::get_json_to_strings()
+{
+    json_buffer = ofBufferFromFile(json_vector[index].getAbsolutePath());
+    json_string_now = json_buffer.getText();
+    remove_chars_from_string( json_string_now, "{}");
+    remove_chars_from_string( json_string_now, "\t");
+    remove_chars_from_string( json_string_now, "\"");
+    int temp_index = index+1;
+    if (temp_index >file_count){temp_index=0;}
+    json_buffer = ofBufferFromFile(json_vector[temp_index].getAbsolutePath());
+    json_string_next = json_buffer.getText();
+    remove_chars_from_string( json_string_next, "{}");
+    remove_chars_from_string( json_string_next, "\t");
+    remove_chars_from_string( json_string_next, "\"");
     
 }
 
+    
 //--------------------------------------------------------------
+void Recall::remove_chars_from_string( string &str, char* charsToRemove ) {
+    for ( unsigned int i = 0; i < strlen(charsToRemove); ++i ) {
+        str.erase( remove(str.begin(), str.end(), charsToRemove[i]), str.end() );
+    }
+}
+//--------------------------------------------------------------
+
+void Recall::set_size(int x, int y)
+{
+    size_y = y;
+}

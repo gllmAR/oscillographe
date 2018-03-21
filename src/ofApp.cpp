@@ -81,7 +81,7 @@ void ofApp::draw()
     
     ofEnableBlendMode(OF_BLENDMODE_DISABLED);
 
-    
+    recall.draw();
     if (gui_draw)
     {
         audio_io.draw_gui();
@@ -110,6 +110,8 @@ void ofApp::keyPressed(int key)
             ofHideCursor();
         }
     }
+    
+    if (key == 'c'){recall.toggle_draw_recall();};
     
     if (key == 'f'){cam.set_fullscreen=!cam.set_fullscreen;}
     
@@ -146,6 +148,7 @@ void ofApp::windowResized(int w, int h)
     cout << "app size = " << w << " by " << h <<endl;
     audio_io.set_size(w,h);
     feedback.allocate(w,h);
+    recall.set_size(w,h);
 }
 
 //--------------------------------------------------------------
