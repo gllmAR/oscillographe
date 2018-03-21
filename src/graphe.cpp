@@ -20,7 +20,7 @@ void Graphe::setup(string name)
     presets.recalled_gui.add(graphe_active.set("active",1));
     presets.recalled_gui.add(buffer_history.set("buffer_history", 512,buffer_size+1,4096));
     presets.recalled_gui.add(graphe_line_b.set("draw_line",1));
-    presets.recalled_gui.add(shape_scale.set("shape_scale",0.10,0,1));
+    presets.recalled_gui.add(shape_scale.set("shape_scale",1,0,2));
     presets.recalled_gui.add(line_width.set("line_width",1, 0.1, 10));
     presets.recalled_gui.add(mesh_width_z.set("mesh_width_z", .1, -2, 2));
     presets.recalled_gui.add(graphe_saturation.set("saturation", 255, 0, 255));
@@ -34,8 +34,7 @@ void Graphe::setup(string name)
     
     gui.setup(graphe_name);
     
-    //vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
-    vbo_mesh.setMode(OF_PRIMITIVE_POINTS);
+    vbo_mesh.setMode(OF_PRIMITIVE_LINE_STRIP);
     
     vbo_mesh.enableColors();
     
@@ -59,8 +58,8 @@ void Graphe::update(int input_buffer_size, vector <float> input_buffer_x, vector
         
         for (unsigned int i = 0; i < (input_buffer_size); i++)
         {
-            ofVec3f coord (input_buffer_x[i]*app_size_w/2*shape_scale*50,
-                           input_buffer_y[i]*app_size_h/2*shape_scale*50,
+            ofVec3f coord (input_buffer_x[i]*app_size_w/2*shape_scale*2.0,
+                           input_buffer_y[i]*app_size_h/2*shape_scale*2.0,
                            buffer_history-i);
             
             if (vertex_buffer > buffer_history)
