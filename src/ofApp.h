@@ -12,7 +12,8 @@
 #include "recall.hpp"
 
 #define HOST "localhost"
-#define SYNC_INPORT 9001
+#define SYNC_SETTINGS_INPORT 9001
+#define SYNC_SETUP_INPORT 9002
 #define SYNC_OUTPORT 9000
 #define INTERACT_PORT 8001
 
@@ -38,6 +39,7 @@ public:
     
     ofxOscReceiver osc_receiver;
     ofxOscParameterSync settings_sync;
+    ofxOscParameterSync setup_sync;
     
     // workaround pour faire fonctionner le fullscreen sur le raspberry pi
     bool screen_workaround_to_update = 1;

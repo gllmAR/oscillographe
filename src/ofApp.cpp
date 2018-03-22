@@ -18,7 +18,10 @@ void ofApp::setup(){
     settings_panel.loadFromFile("oscillographe.json");
     setup_panel.loadFromFile("setup.json");
     osc_receiver.setup(INTERACT_PORT); //pour input de senseur
-    settings_sync.setup((ofParameterGroup&)settings_panel.getParameter(),SYNC_INPORT, "localhost", SYNC_OUTPORT);
+    settings_sync.setup((ofParameterGroup&)settings_panel.getParameter(),
+                        SYNC_SETTINGS_INPORT, "localhost", SYNC_OUTPORT);
+    setup_sync.setup((ofParameterGroup&)setup_panel.getParameter(),
+                     SYNC_SETUP_INPORT, "localhost", SYNC_OUTPORT);
     ofHideCursor();
 }
 
@@ -57,6 +60,7 @@ void ofApp::update()
     
     cam.update();
     settings_sync.update();
+    setup_sync.update();
     if(gui_draw){fps_label= ofToString(ofGetFrameRate());}
     ofEnableAlphaBlending();
 }
