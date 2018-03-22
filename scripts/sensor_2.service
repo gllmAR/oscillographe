@@ -2,7 +2,7 @@
 Description=sensor_2
 After=syslog.target 
 [Service]
-ExecStart=/usr/local/bin/gpioOsc.py -i 24 -d 127.0.0.1 -p 8001 -r 2 -t 1 -b 50 -o /gpio/2
+ExecStart=/usr/local/bin/gpioOsc.py -i 21 -d 127.0.0.1 -p 8001 -r 2 -t 1 -b 50 -o /gpio/2
 Restart=on-failure
 [Install]
 WantedBy=multi-user.target
