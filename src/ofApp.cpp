@@ -56,6 +56,10 @@ void ofApp::update()
     {
         ofxOscMessage m;
         osc_receiver.getNextMessage(m);
+        // updater les reference à interact... devrait être plus dynamique
+        audio_io.audio_sampler_A.interact.parse_osc(m);
+        audio_io.audio_sampler_B.interact.parse_osc(m);
+        recall.interact.parse_osc(m);
     }
     
     cam.update();
@@ -87,6 +91,7 @@ void ofApp::draw()
     ofEnableBlendMode(OF_BLENDMODE_DISABLED);
 
     recall.draw();
+    audio_io.draw_gui();
     if (gui_draw)
     {
         audio_io.draw_gui();

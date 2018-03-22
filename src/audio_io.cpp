@@ -455,8 +455,6 @@ void Audio_io::update()
 //--------------------------------------------------------------
 void Audio_io::draw_graphes()
 {
-    audio_sampler_A.interact.draw();
-    audio_sampler_B.interact.draw();
     input_graphe.draw();
     audio_sampler_A.graphe.draw();
     audio_sampler_B.graphe.draw();
@@ -468,6 +466,9 @@ void Audio_io::draw_gui()
 {
     
     //audio_sampler_A.draw_gui();
+    //audio_sampler_B.draw_gui();
+    audio_sampler_A.interact.draw();
+    audio_sampler_B.interact.draw();
     
 }
 
