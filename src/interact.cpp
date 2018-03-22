@@ -33,8 +33,6 @@ void Interact_struggle::setup(string name, string _interact_osc_path)
 void Interact_struggle::update()
 {
     now_time = ofGetElapsedTimeMillis();
-
-    
     if(metronome_enable && now_time-last_metronome_time>metronome_interval_ms)
     {
         increment_value();
@@ -78,7 +76,6 @@ void Interact_struggle::increment_value()
         int delta_time=now_time-last_increment_time;
         interact_value = ofMap(delta_time,stop_time_threshold,0,0,1000);
         if(debug){cout<<"inc "<< interact_value << endl;}
-        
         //smooth stuff
         if (smooth_index>=smooth_amount){smooth_index=0;}
         smooth_array[smooth_index]=interact_value;
@@ -131,19 +128,18 @@ void Interact_struggle::do_smooth()
     {
         interact_value=0;
     }
-    
 }
 
 //--------------------------------------------------------------
 void Interact_tic::setup(string name, string _interact_osc_path)
 {
-    interact_osc_path = _interact_osc_path;
-    gui.setup("interact-tic");
+	interact_osc_path = _interact_osc_path;
+	gui.setup("interact-tic");
    // gui.setName(name);
-    gui.add(interact_osc_path.set("osc", interact_osc_path));
-    gui.add(interact_enable.set("interact_enable",0));
-    gui.add(metronome_enable.set("metronome_enable",0));
-    gui.add(metronome_interval_ms.set("metronome_interval_ms",100, 1,2000));
+	gui.add(interact_osc_path.set("osc", interact_osc_path));
+	gui.add(interact_enable.set("interact_enable",1));
+	gui.add(metronome_enable.set("metronome_enable",0));
+	gui.add(metronome_interval_ms.set("metronome_interval_ms",100, 1,2000));
 }
 
 //--------------------------------------------------------------
@@ -158,7 +154,6 @@ void Interact_tic::update()
             last_metronome_time = now_time;
         }
     }
-    
 }
 
 //--------------------------------------------------------------
