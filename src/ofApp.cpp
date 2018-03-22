@@ -68,12 +68,13 @@ void ofApp::update()
 //--------------------------------------------------------------
 void ofApp::draw()
 {
+    ofEnableBlendMode( OF_BLENDMODE_ADD );
     feedback.begin();
     ofEnableDepthTest();
 
     cam.cam.begin();
     ofSetColor(255);
-    
+
     audio_io.draw_graphes();
     
     cam.cam.end();
