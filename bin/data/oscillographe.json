@@ -86,7 +86,7 @@
                     "speed": "1"
                 },
                 "player": {
-                    "enable": "1",
+                    "enable": "0",
                     "file_index": "0",
                     "pan": "0",
                     "volume": "1"
@@ -141,7 +141,7 @@
                     "speed": "1"
                 },
                 "player": {
-                    "enable": "1",
+                    "enable": "0",
                     "file_index": "0",
                     "pan": "0",
                     "volume": "1"
