@@ -74,12 +74,12 @@
                     }
                 },
                 "looper": {
-                    "player_loop_in": "0",
-                    "player_loop_out": "1",
+                    "player_loop_in": "0.047",
+                    "player_loop_out": "0.073",
                     "player_loop_selection": "1",
                     "position": "0",
                     "recaller": {
-                        "index": "0",
+                        "index": "3",
                         "load": "0",
                         "save": "0"
                     },
@@ -193,7 +193,7 @@
                 "x": "1",
                 "y": "1"
             },
-            "fullscreen": "0"
+            "fullscreen": "1"
         }
     }
 }
