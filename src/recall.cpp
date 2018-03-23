@@ -67,6 +67,7 @@ void Recall::index_folder()
     string path = "recall";
     ofDirectory dir(path);
     dir.allowExt("json");
+    dir.sort();
     dir.listDir();
     json_vector = dir.getFiles();
     file_count=json_vector.size()-1;
