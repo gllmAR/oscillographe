@@ -287,7 +287,7 @@ void Audio_sampler::recaller_preset_save(bool &b)
     // car les loops sont lié au fichier audio
     // probablement dans un label question de préserver la
 
-    loop_recall_gui.setName(sampler_loops_name);
+    loop_recall_gui.setName("looper");
     }
 }
 
@@ -306,8 +306,8 @@ void Audio_sampler::recaller_preset_load(bool &b)
     preset_path<<player_get_filename()<<".json";
         
     loop_recall_gui.loadFromFile(preset_path.str());
+    loop_recall_gui.setName("looper");
 
-    loop_recall_gui.setName(sampler_loops_name);
     }
 }
 
