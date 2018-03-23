@@ -43,7 +43,7 @@
                         "brightness": "255",
                         "buffer_history": "512",
                         "draw_line": "1",
-                        "hue": "255",
+                        "hue": "54.5648",
                         "line_width": "1",
                         "mesh_width_z": "0.1",
                         "saturation": "255",
@@ -66,9 +66,9 @@
                         "brightness": "255",
                         "buffer_history": "512",
                         "draw_line": "1",
-                        "hue": "255",
+                        "hue": "118",
                         "line_width": "1",
-                        "mesh_width_z": "0.1",
+                        "mesh_width_z": "-0.1",
                         "saturation": "255",
                         "shape_scale": "1"
                     }
@@ -86,7 +86,7 @@
                     "speed": "1"
                 },
                 "player": {
-                    "enable": "0",
+                    "enable": "1",
                     "file_index": "0",
                     "pan": "0",
                     "volume": "1"
@@ -94,19 +94,19 @@
                 "recorder": {
                     "enable": "0",
                     "file_index": "-9",
-                    "record_output": "0"
+                    "record_output": "1"
                 },
                 "speed": {
                     "debug": "0",
                     "draw_value": "0",
-                    "interact_enable": "0",
-                    "metronome_enable": "0",
-                    "metronome_interval_ms": "100",
+                    "interact_enable": "1",
+                    "metronome_enable": "1",
+                    "metronome_interval_ms": "502",
                     "osc": "/gpio/1",
-                    "smooth_ammount": "5",
-                    "smooth_enable": "0",
+                    "smooth_ammount": "3",
+                    "smooth_enable": "1",
                     "stop_time_threshold": "500",
-                    "value_trim": "1"
+                    "value_trim": "1.5"
                 }
             },
             "sampler_1": {
@@ -121,9 +121,9 @@
                         "brightness": "255",
                         "buffer_history": "512",
                         "draw_line": "1",
-                        "hue": "255",
+                        "hue": "144.69",
                         "line_width": "1",
-                        "mesh_width_z": "0.1",
+                        "mesh_width_z": "-0.120645",
                         "saturation": "255",
                         "shape_scale": "1"
                     }
@@ -141,7 +141,7 @@
                     "speed": "1"
                 },
                 "player": {
-                    "enable": "0",
+                    "enable": "1",
                     "file_index": "0",
                     "pan": "0",
                     "volume": "1"
@@ -154,14 +154,14 @@
                 "speed": {
                     "debug": "0",
                     "draw_value": "0",
-                    "interact_enable": "0",
-                    "metronome_enable": "0",
-                    "metronome_interval_ms": "100",
+                    "interact_enable": "1",
+                    "metronome_enable": "1",
+                    "metronome_interval_ms": "525",
                     "osc": "/gpio/1",
                     "smooth_ammount": "5",
-                    "smooth_enable": "0",
+                    "smooth_enable": "1",
                     "stop_time_threshold": "500",
-                    "value_trim": "1"
+                    "value_trim": "1.07411"
                 }
             },
             "sine_wave": {
@@ -193,7 +193,7 @@
                 "x": "1",
                 "y": "1"
             },
-            "fullscreen": "1"
+            "fullscreen": "0"
         }
     }
 }

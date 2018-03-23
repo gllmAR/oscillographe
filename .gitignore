@@ -10,4 +10,4 @@ oscillographe.xcodeproj/xuserdata
 *.xcodeproj
 openFrameworks-Info.plist
 Project.xcconfig
-bin/data/recall/*
+
