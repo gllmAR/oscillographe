@@ -1,0 +1,19 @@
+{
+	"oscillographe" : 	{
+		"audio_io" : 		{
+			"sampler_1" : 			{
+				"looper" : 				{
+					"recaller" : 					{
+						"index": "13",
+						"load" : "1"
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}

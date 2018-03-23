@@ -1,0 +1,15 @@
+{
+	"oscillographe" : 	{
+		"audio_io" : 		{
+			"sampler_0" : 			{
+				"player" : 				{
+					"enable" : "0"
+				}
+
+			}
+
+		}
+
+	}
+
+}
