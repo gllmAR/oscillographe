@@ -52,8 +52,11 @@ void Recall::draw()
     if(draw_recall_b)
     {
         ofEnableBlendMode( OF_BLENDMODE_ADD );
+      
+        ofDrawBitmapStringHighlight( json_name_now, glm::vec2(0,size_y-120) );
        	ofDrawBitmapStringHighlight( json_string_now, glm::vec2(0,size_y-100) );
-        ofDrawBitmapStringHighlight( json_string_next, glm::vec2(200,size_y-100) );
+        ofDrawBitmapStringHighlight( json_name_next, glm::vec2(0,size_y-105) );
+        ofDrawBitmapStringHighlight( json_string_next, glm::vec2(350,size_y-100) );
 
     }
 }
@@ -120,12 +123,15 @@ void Recall::toggle_draw_recall()
 void Recall::get_json_to_strings()
 {
     json_buffer = ofBufferFromFile(json_vector[index].getAbsolutePath());
+    json_name_now = json_vector[index].getFileName();
     json_string_now = json_buffer.getText();
     remove_chars_from_string( json_string_now, "{}");
     remove_chars_from_string( json_string_now, "\t");
     remove_chars_from_string( json_string_now, "\"");
     int temp_index = index+1;
+    //kind of a modulo
     if (temp_index >file_count){temp_index=0;}
+    json_name_next = json_vector[temp_index].getFileName();
     json_buffer = ofBufferFromFile(json_vector[temp_index].getAbsolutePath());
     json_string_next = json_buffer.getText();
     remove_chars_from_string( json_string_next, "{}");

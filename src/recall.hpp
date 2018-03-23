@@ -35,7 +35,9 @@ public:
     void get_json_to_strings();
     ofParameter<bool> draw_recall_b=0;
     ofBuffer json_buffer;
+    std::string json_name_now;
     std::string json_string_now;
+    std::string json_name_next;
     std::string json_string_next;
     void remove_chars_from_string( string &str, char* charsToRemove );
     
