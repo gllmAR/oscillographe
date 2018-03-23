@@ -68,7 +68,7 @@ void Audio_sampler::setup_gui(string _name)
 // recaller
     recaller_gui.setup();
     recaller_gui.setName("recaller");
-    recaller_gui.add(recaller_preset_index.set("index", 0,0,9));
+    recaller_gui.add(recaller_preset_index.set("index", 0,0,99));
     recaller_gui.add(recaller_preset_load_b.set("load", 0));
     recaller_gui.add(recaller_preset_save_b.set("save",0 ));
     

@@ -53,10 +53,10 @@ void Recall::draw()
     {
         ofEnableBlendMode( OF_BLENDMODE_ADD );
       
-        ofDrawBitmapStringHighlight( json_name_now, glm::vec2(0,size_y-120) );
-       	ofDrawBitmapStringHighlight( json_string_now, glm::vec2(0,size_y-100) );
-        ofDrawBitmapStringHighlight( json_name_next, glm::vec2(0,size_y-105) );
-        ofDrawBitmapStringHighlight( json_string_next, glm::vec2(350,size_y-100) );
+        ofDrawBitmapStringHighlight( json_name_now, glm::vec2(20,size_y-120) );
+       	ofDrawBitmapStringHighlight( json_string_now, glm::vec2(20,size_y-100) );
+        ofDrawBitmapStringHighlight( json_name_next, glm::vec2(20,size_y-105) );
+        ofDrawBitmapStringHighlight( json_string_next, glm::vec2(370,size_y-100) );
 
     }
 }
