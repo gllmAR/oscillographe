@@ -102,7 +102,6 @@ public:
     
     void input_init(int selection);
     void audioIn(ofSoundBuffer & input);
-    void input_process();
     void input_select_change(int &input_select);
     void input_enable_change(bool &input_enable);
     

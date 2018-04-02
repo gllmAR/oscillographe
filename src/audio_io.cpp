@@ -208,18 +208,11 @@ void Audio_io::audioIn(ofSoundBuffer & input)
     if(input_enable || io_input_enable)
     {
         input_buffer = input;
-        input_process();
-    }
-}
-
-//--------------------------------------------------------------
-void Audio_io::input_process()
-{
         float pan_1 = 1-(input_pan*0.5 +0.5);
         float pan_2 = input_pan*0.5 +0.5;
         audio_sampler_A.audio_input(input_buffer, last_output_buffer);
         audio_sampler_B.audio_input(input_buffer, last_output_buffer);
-
+        
         if(input_mute)
         {
             input_buffer_1.assign(buffer_size, 0.0);
@@ -228,18 +221,20 @@ void Audio_io::input_process()
             for (int i = 0; i < buffer_size; i++)
             {
                 input_buffer_1[i] = input_buffer[i*2  ]
-                                    *input_volume
-                                    *pan_1
-                                    *input_trim ;
+                *input_volume
+                *pan_1
+                *input_trim ;
                 input_buffer_2[i] = input_buffer[i*2+1]
-                                    *input_volume
-                                    *pan_2
-                                    *input_trim;
+                *input_volume
+                *pan_2
+                *input_trim;
             }
         }
+
+    }
 }
 
-//--------------------------------------------------------------
+//-------------------------------------------------------------
 void Audio_io::audioOut(ofSoundBuffer& output)
 {
     if (output_enable || io_output_enable)
@@ -252,9 +247,6 @@ void Audio_io::audioOut(ofSoundBuffer& output)
 
         for (int i = 0; i < output.getNumFrames(); i++)
         {   float ch1 = (input_buffer_1[i]
-                        //+ (last_output_buffer[i*2 ]
-						//* (1-(feedback_pan*0.5 +0.5))
-						//* feedback_volume)
                         + audio_sampler_A.player_buffer[i*2 ]
                         + audio_sampler_B.player_buffer[i*2 ])
 						* output_vol_ammount
