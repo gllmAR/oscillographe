@@ -98,6 +98,9 @@ public:
     ofxLabel input_label;
     vector <float> input_buffer_1;
     vector <float> input_buffer_2;
+    vector <float> input_buffer_mon_1;
+    vector <float> input_buffer_mon_2;
+    ofParameter<bool> input_monitoring;
     
     
     void input_init(int selection);

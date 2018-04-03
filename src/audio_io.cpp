@@ -77,6 +77,7 @@ void Audio_io::setup_gui()
     gui_device.add(reset_audio_b.set("reset_audio",0));
     gui_device.add(buffer_size.set("buffer_size",512,64,4096));
     gui_device.add(sample_rate.set("sample_rate",44100,8000,192000));
+    gui_device.add(input_monitoring.set("monitoring", 0));
     gui_device.add(input_trim.set("input_trim", 1, 0, 100));
     gui_device.add(master_vol.set("master_vol",1,0,2));
     
@@ -231,6 +232,15 @@ void Audio_io::audioIn(ofSoundBuffer & input)
             }
         }
 
+        if(input_monitoring)
+        {
+            input_buffer_mon_1=input_buffer_1;
+            input_buffer_mon_2=input_buffer_2;
+        }else{
+            input_buffer_mon_1.assign(buffer_size, 0.0);
+            input_buffer_mon_2.assign(buffer_size, 0.0);
+        }
+            
     }
 }
 
@@ -246,19 +256,17 @@ void Audio_io::audioOut(ofSoundBuffer& output)
         audio_sampler_B.audio_process(output);
 
         for (int i = 0; i < output.getNumFrames(); i++)
-        {   float ch1 = (input_buffer_1[i]
+        {
+            float ch1 = (input_buffer_mon_1[i]
                         + audio_sampler_A.player_buffer[i*2 ]
                         + audio_sampler_B.player_buffer[i*2 ])
 						* output_vol_ammount
-						* pan_1*2*!output_mute;
-            float ch2 = (input_buffer_2[i]
-                        //+(last_output_buffer[i*2+1]
-						//*(feedback_pan*0.5 +0.5)
-						//*feedback_volume)
+						* pan_1*!output_mute;
+            float ch2 = (input_buffer_mon_2[i]
                         + audio_sampler_A.player_buffer[i*2+1]
                         + audio_sampler_B.player_buffer[i*2+1])
 						* output_vol_ammount
-						* pan_2*2*!output_mute;
+						* pan_2*!output_mute;
             output[i*2  ] = ch1 * master_vol_ammount;
             output[i*2+1] = ch2 * master_vol_ammount;
         }
@@ -271,6 +279,15 @@ void Audio_io::audioOut(ofSoundBuffer& output)
             output_buffer_1[i] = output[i*2  ];
             output_buffer_2[i] = output[i*2+1];
         }
+        // add audio input if monitoring is disable
+        if (!input_monitoring)
+        {
+         for (int i = 0; i < buffer_size; i++)
+         	{	
+        	output_buffer_1[i]+=input_buffer_1[i];
+        	output_buffer_2[i]+=input_buffer_2[i];
+         	}
+        } 
     }
 }
 
