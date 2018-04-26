@@ -152,13 +152,29 @@ void Audio_sampler::audio_input(ofSoundBuffer& input, ofSoundBuffer& output)
 void Audio_sampler::audio_process(ofSoundBuffer& output)
 {
     player.audioOut(output);
-    player_buffer = output;
+    player_buffer = output * audio_line_volume;
+    if (audio_line_flag)
+    {
+        audio_line_index--;
+        if (audio_line_index == 0)
+        {
+            recaller_preset_load_line();
+            audio_line_volume=0;
+        } else if (audio_line_index <= -(audio_line_total) ) {
+            audio_line_flag=0;
+            audio_line_volume=1;
+        } else if (audio_line_index > 0 ) {
+            audio_line_volume=audio_line_index/audio_line_total;
+        } else if (audio_line_index < 0 ){
+            audio_line_volume=abs(audio_line_index)/audio_line_total;
+        }
+    }
     for (int i = 0; i < output.getNumFrames(); i++)
     {
         if(player_enable) // traiter le player si actif
         {
-            player_buffer_1_wo[i] = player_buffer[i*2  ];
-            player_buffer_2_wo[i] = player_buffer[i*2+1];
+            player_buffer_1_wo[i] = player_buffer[i*2  ] ;
+            player_buffer_2_wo[i] = player_buffer[i*2+1] ;
         } else {
             player_buffer_1_wo[i] = 0;
             player_buffer_2_wo[i] = 0;
@@ -225,7 +241,7 @@ void Audio_sampler::player_loop_selection_changed(bool &b)
 //--------------------------------------------------------------
 void Audio_sampler::player_loop_in_changed(float &f)
 {   // fonction sur mesure
-    if (f>player_loop_out)
+    if (f>=player_loop_out)
     {
         f = player_loop_in = player_loop_out;
     }
@@ -296,7 +312,30 @@ void Audio_sampler::recaller_preset_load(bool &b)
 {
     if (recaller_preset_load_b)
     {
-    recaller_preset_load_b =0;
+        audio_line_index=audio_line_total;
+        audio_line_flag=1;
+        recaller_preset_load_b =0;
+       
+//    recaller_preset_load_b =0;
+//    std::string str = "loop_";
+//    str += ofToString(recaller_preset_index);
+//    //cout<<"[preset load]: "<<str<<endl;
+//    loop_recall_gui.setName(str);
+//    
+//    std::ostringstream preset_path;
+//    preset_path<<player_get_filename()<<".json";
+//        
+//    loop_recall_gui.loadFromFile(preset_path.str());
+//    loop_recall_gui.setName("looper");
+
+    }
+}
+
+//--------------------------------------------------------------
+
+void Audio_sampler::recaller_preset_load_line()
+{
+    
     std::string str = "loop_";
     str += ofToString(recaller_preset_index);
     //cout<<"[preset load]: "<<str<<endl;
@@ -304,12 +343,8 @@ void Audio_sampler::recaller_preset_load(bool &b)
     
     std::ostringstream preset_path;
     preset_path<<player_get_filename()<<".json";
-        
+    
     loop_recall_gui.loadFromFile(preset_path.str());
     loop_recall_gui.setName("looper");
-
-    }
 }
-
-//--------------------------------------------------------------
 

@@ -115,6 +115,12 @@ public:
     //interact stuff
     Interact_struggle interact;
     
+    // line stuff for crossfade when changing loop
+    bool audio_line_flag=0;
+    float audio_line_total=10;
+    float audio_line_index=0;
+    float audio_line_volume=1;
+    void recaller_preset_load_line();
     
     
 };
