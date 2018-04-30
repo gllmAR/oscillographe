@@ -238,10 +238,10 @@ void Audio_sampler::player_position_change(float &f)
 {   //est appele par le gui/preset de audio_io
     if(player_loop_selection)
     {
-        if(f<player_loop_in)
+        if(f<=player_loop_in)
         {
             f=player_loop_in;
-        } else if (f>player_loop_out) {
+        } else if (f>=player_loop_out) {
             f=player_loop_out;
         }
     }
