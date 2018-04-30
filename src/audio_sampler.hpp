@@ -16,6 +16,7 @@
 #include "graphe.hpp"
 #include "presets.hpp"
 #include "interact.hpp"
+#include "audio_param_smooth.hpp"
 
 
 //#define GUI_INIT_OFFSET_X 640
@@ -117,11 +118,10 @@ public:
     
     // line stuff for crossfade when changing loop
     bool audio_line_flag=0;
-    float audio_line_total=10;
-    float audio_line_index=0;
-    float audio_line_volume=1;
+
     void recaller_preset_load_line();
-    
+    Audio_param_smooth amplitude_line;
+
     
 };
 

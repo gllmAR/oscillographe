@@ -38,7 +38,9 @@ void Audio_sampler::setup(int _id, int _buffer_size )
 
 //setup gui
     setup_gui(sampler_name);
-
+    
+ // setup amplitude smoother
+    amplitude_line.setup(1.0, 100, 44100);
 }
 
 //--------------------------------------------------------------
@@ -151,35 +153,47 @@ void Audio_sampler::audio_input(ofSoundBuffer& input, ofSoundBuffer& output)
 //--------------------------------------------------------------
 void Audio_sampler::audio_process(ofSoundBuffer& output)
 {
+
     player.audioOut(output);
-    player_buffer = output * audio_line_volume;
-    if (audio_line_flag)
-    {
-        audio_line_index--;
-        if (audio_line_index == 0)
-        {
-            recaller_preset_load_line();
-            audio_line_volume=0;
-        } else if (audio_line_index <= -(audio_line_total) ) {
-            audio_line_flag=0;
-            audio_line_volume=1;
-        } else if (audio_line_index > 0 ) {
-            audio_line_volume=audio_line_index/audio_line_total;
-        } else if (audio_line_index < 0 ){
-            audio_line_volume=abs(audio_line_index)/audio_line_total;
-        }
-    }
+    player_buffer = output ;
+    
+
     for (int i = 0; i < output.getNumFrames(); i++)
     {
+        amplitude_line.process();
+        float pow_amp = amplitude_line.current_value;
         if(player_enable) // traiter le player si actif
         {
-            player_buffer_1_wo[i] = player_buffer[i*2  ] ;
-            player_buffer_2_wo[i] = player_buffer[i*2+1] ;
+         
+            player_buffer[i*2  ] = player_buffer[i*2  ] * pow_amp;
+            player_buffer[i*2+1] = player_buffer[i*2+1] * pow_amp;
+            
+            player_buffer_1_wo[i] = player_buffer[i*2  ];
+            player_buffer_2_wo[i] = player_buffer[i*2+1];
         } else {
             player_buffer_1_wo[i] = 0;
             player_buffer_2_wo[i] = 0;
         }
     }
+    
+    output=player_buffer;
+    
+    if (audio_line_flag)
+    {
+        cout<<amplitude_line.current_value<<endl;
+        if(amplitude_line.current_value<=0.0001)
+        {
+            recaller_preset_load_line();
+            amplitude_line.current_value=0;
+            cout<<"loading"<<endl;
+            //amplitude_line.set(1000);
+            amplitude_line.target_value=1.0;
+        } else if (amplitude_line.current_value>=0.999790){
+            audio_line_flag=0;
+        }
+        
+    }
+    
 }
 
 
@@ -192,7 +206,6 @@ void Audio_sampler::player_enable_change(bool &player_enable)
         
     } else {
         player.stop();
-        
     }
 }
 
@@ -223,7 +236,18 @@ void Audio_sampler::player_volume_change(float &f)
 //--------------------------------------------------------------
 void Audio_sampler::player_position_change(float &f)
 {   //est appele par le gui/preset de audio_io
+    if(player_loop_selection)
+    {
+        if(f<player_loop_in)
+        {
+            f=player_loop_in;
+        } else if (f>player_loop_out) {
+            f=player_loop_out;
+        }
+    }
+    
     player.setPosition(f);
+    
 }
 
 //--------------------------------------------------------------
@@ -243,7 +267,11 @@ void Audio_sampler::player_loop_in_changed(float &f)
 {   // fonction sur mesure
     if (f>=player_loop_out)
     {
-        f = player_loop_in = player_loop_out;
+        f = player_loop_in = player_loop_out - 0.000001;
+    }
+    if (f>=player_position)
+    {
+        player_position=f;
     }
     player.set_loop_in(f);
 }
@@ -253,7 +281,11 @@ void Audio_sampler::player_loop_out_changed(float &f)
 {   // fonction sur mesure
     if (f<player_loop_in)
     {
-        f = player_loop_out = player_loop_in;
+        f = player_loop_out = player_loop_in+0.000001;
+    }
+    if (f<player_position)
+    {
+        player_position=f;
     }
     player.set_loop_out(f);
 }
@@ -312,22 +344,10 @@ void Audio_sampler::recaller_preset_load(bool &b)
 {
     if (recaller_preset_load_b)
     {
-        audio_line_index=audio_line_total;
         audio_line_flag=1;
-        recaller_preset_load_b =0;
-       
-//    recaller_preset_load_b =0;
-//    std::string str = "loop_";
-//    str += ofToString(recaller_preset_index);
-//    //cout<<"[preset load]: "<<str<<endl;
-//    loop_recall_gui.setName(str);
-//    
-//    std::ostringstream preset_path;
-//    preset_path<<player_get_filename()<<".json";
-//        
-//    loop_recall_gui.loadFromFile(preset_path.str());
-//    loop_recall_gui.setName("looper");
-
+        recaller_preset_load_b=0;
+        //amplitude_line.set(100);
+        amplitude_line.target_value=0;
     }
 }
 
@@ -346,5 +366,8 @@ void Audio_sampler::recaller_preset_load_line()
     
     loop_recall_gui.loadFromFile(preset_path.str());
     loop_recall_gui.setName("looper");
+    player_position = player_loop_in;
+
+
 }
 
