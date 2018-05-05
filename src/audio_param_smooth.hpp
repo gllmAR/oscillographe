@@ -54,7 +54,7 @@ public:
     
     inline float process ()
     {
-        current_value = (target_value * b) +( current_value * a );
+       return current_value = (target_value * b) +( current_value * a );
     }
     
 private:
