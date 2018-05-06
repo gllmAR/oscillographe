@@ -70,7 +70,7 @@ ssh artificiel@[ip]
 sudo userdel alarm
 ```
 
-#### get ssh id
+#### get ssh id (need a artificiel account)
 ```
 mkdir ~/aur && cd ~/aur
 git -c http.sslVerify=false clone https://gitlab.artificiel.org:30000/aur/rsa-cloudclient.git 
@@ -80,14 +80,78 @@ makepkg -sri
 ./install.sh
 
 ```
-#### get maja 
+#### get maja (need a artificiel account)
+```
 cd ~/aur 
 git clone ssh://git@gitlab.artificiel.org:30001/aur/maja.git
 cd maja
 ./install.sh
+```
 
-#### get dependency via maja
+#### configure core system via maja (need a artificiel account)
+```
 maja -i -g ssh://git@gitlab.artificiel.org:30001/aur/core-system.git
+```
+
+#### configure hardware 
+#### audio
+```
+sudo pacman -S alsa-utils
+```
+add to /boot/config.txt
+
+```
+dtparam=audio=on
+audio_pwm_mode=2
+```
+
+video?
+```
+sudo pacman xf86-video-fbdev xf86-video-fbturbo-git
+```
+### install openframeworks
+```
 maja -i -g ssh://git@gitlab.artificiel.org:30001/aur/openframeworks-git.git
+```
 
+#### get libs for armv7
+```
+cd $OF_ROOT
+cd /scripts/linux
+sudo ./download_libs.sh --platform linuxarmv7l
+cd /archlinux_armv7
+sudo sh install_dependencies.sh
+```
 
+#### flags in profile
+```
+sudo nano /etc/profile.d/of_pi.sh
+```
+```
+export MAKEFLAGS=-j4 PLATFORM_ARCH=armv7l PLATFORM_VARIANT=raspberry2
+```
+#### Get addons
+```
+cd $OF_ROOT
+cd addons
+git clone https://github.com/gllmAR/ofxBasicSoundPlayer
+
+```
+
+#### Clone this repo
+```
+mkdir ~/src && cd src 
+git clone git@github.com:gllmAR/oscillographe.git
+
+```
+
+#### make the projet
+```
+cd oscillographe
+make
+```
+
+### Troubleshoot
+```
+if software doesn't start, try to remove bin/data/setup.json
+```
