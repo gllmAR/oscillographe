@@ -53,18 +53,22 @@ sync
 sudo mv root/boot/* boot
 sudo umount boot root
 ```
+unplug uSd card, boot raspberry pi
 
 ### manage userspace 
-#### create user
+
+#### create user / manage key
 ```
 ssh alarm@[ip]
 su [root]
+pacman-key --init
+pacman-key --populate archlinuxarm
 passwd
 useradd -m -g users -G audio,wheel,storage,power,uucp,lock artificiel
 passwd artificiel
 pacman -Sy sudo git base-devel
 nano /etc/sudoers
-	-> comment out wheel 
+	-> comment out wheel (both)
 exit
 exit
 ssh artificiel@[ip]
@@ -108,7 +112,7 @@ audio_pwm_mode=2
 
 video?
 ```
-sudo pacman xf86-video-fbdev xf86-video-fbturbo-git
+sudo pacman -S xf86-video-fbdev xf86-video-fbturbo-git
 ```
 ### install openframeworks
 ```
